@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "vitamin 어노테이션 검색 및 정리!"
+title: "vitamin7777777 어노테이션 검색 및 정리!"
 ---
 
 @ 어노테이션이란 = Annotation(@)은 사전적 의미로는 주석이라는 뜻이다. 자바에서 Annotation은 코드 사이에 주석처럼 쓰이며 특별한 의미, 기능을 수행하도록 하는 기술이다.
