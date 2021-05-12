@@ -53,7 +53,7 @@ title: "vitamin 어노테이션 검색 및 정리!"
 				return new ArrayList<String>();
 			}   
 		}
-        ```
+```
 ```java
 @Autowired = 속성(field), setter method, constructor(생성자)에서 사용하며 Type에 따라 알아서 Bean을 주입 해준다. 객체에 대한 의존성을 주입시킨다. 
 	Annotation을 사용할 시, 스프링이 자동적으로 값을 할당한다. Controller 클래스에서 DAO나 Service에 관한 객체들을 주입 시킬 때 많이 사용한다.
@@ -104,19 +104,15 @@ mail.host = mailserver@mail.com
 ```
 ```java
 @Lazy = 지연로딩을 지원한다. @Component나 @Bean Annotation과 같이 쓰는데 Class가 로드될 때 스프링에서 바로 bean등록을 마치는 것이 아니라 실제로 사용될 때 로딩이 이뤄지게 하는 방법이다.
-@Value = properties에서 값을 가져와 적용할 때 사용한다. 
-```
-		@Value("${value.from.file}") 
+@Value = properties에서 값을 가져와 적용할 때 사용한다.
+@Value("${value.from.file}") 
 	private String valueFromFile; 이라고 구성되어 있으면 value.from.file의 값을 가져와서 해당 변수에 주입해준다.spEL을 이용해서 조금 더 고급스럽게 쓸 수 있다.
 		@Value(#{systemProperties['priority'] ?: 'some default'})
-```java
 @SpringBootApplication = @Configuration, @EnableAutoConfiguration, @ComponentScan 3가지를 하나의 애노테이션으로 합친 것이다.
 @RequestMapping = 요청 URL을 어떤 method가 처리할지 mapping해주는 Annotation이다. Controller나 Controller의 method에 적용한다.
 	요청을 받는 형식인 GET, POST, PATCH, PUT, DELETE 를 정의하기도 한다.요청 받는 형식을 정의하지 않는다면, 자동적으로 GET으로 설정된다.
 	@RequestMapping에 대한 모든 매핑 정보는 Spring에서 제공하는 HandlerMapping Class가 가지고 있다.
-```java
 		@RequestMapping("/list"), @RequestMapping("/home, /about");
-
 		@RequestMapping("/admin", method=RequestMethod.GET)
 		@Controller
 		// 1) Class Level
@@ -149,7 +145,6 @@ mail.host = mailserver@mail.com
 	//기본 도메인이 http://jeong-pro.tistory.com 인 곳에서 온 ajax요청만 받아주겠다. @CrossOrigin(origins = "http://jeong-pro.tistory.com", maxAge = 3600)
 @ModelAttribute = view에서 전달해주는 parameter를 Class(VO/DTO)의 멤버 변수로 binding 해주는 Annotation이다.
 	binding 기준은 `<input name="id" />` 처럼 어떤 태그의 name값이 해당 Class의 멤버 변수명과 일치해야하고 setmethod명도 일치해야한다.
-``` java 
 class Person{
 		String id;
 		public void setId(String id){ this.id = id;}
@@ -163,8 +158,6 @@ class Person{
 			public void show(@ModelAttribute("myMEM") Person person, Model model)
 			{ model.addAttribute(service.read(person.getId())); }
 		}
-```
-```java
 @GetMapping = @RequestMapping(Method=RequestMethod.GET)과 같다. @PostMapping, @PutMapping, @PatchMapping, @DeleteMapping 등 도 있다.
 @SessionAttributes = Session에 data를 넣을 때 쓰는 Annotation이다. @SessionAttributes("name")이라고 하면 Model에 key값이 "name"으로 있는 값은 자동으로 세션에도 저장되게 한다.
 @Valid = 유효성 검증이 필요한 객체임을 지정한다.
@@ -173,8 +166,6 @@ class Person{
 @RequestBody = 요청이 온 데이터(JSON이나 XML형식)를 바로 Class나 model로 매핑하기 위한 Annotation이다.POST나 PUT, PATCH로 요청을 받을때에, 요청에서 넘어온 body 값들을 자바 타입으로 파싱해준다.
 	HTTP POST 요청에 대해 request body에 있는 request message에서 값을 얻어와 매핑한다.RequestData를 바로 Model이나 클래스로 매핑한다.
 	이를테면 JSON 이나 XML같은 데이터를 적절한 messageConverter로 읽을 때 사용하거나 POJO 형태의 데이터 전체로 받는 경우에 사용한다.
-```
-```java
 		@RequestMapping(value = "/book", method = RequestMethod.POST)
 		public ResponseEntity<?> someMethod(@RequestBody Book book) {
 		// we can use the variable named book which has Book model type.
@@ -185,26 +176,17 @@ class Person{
 		}
 		// return some response here
 		}
-```
-```java
 @RequestHeader = Request의 header값을 가져올 수 있다. 메소드의 파라미터에 사용한다.
 		//ko-KR,ko;q=0.8,en-US;q=0.6
 		@RequestHeader(value="Accept-Language")String acceptLanguage 로 사용 
 @RequestParam = @PathVariable과 비슷하다.request의 parameter에서 가져오는 것이다. method의 파라미터에 사용된다.?moviename=thepurge 와 같은 쿼리 파라미터를 파싱해준다.
 	HTTP GET 요청에 대해 매칭되는 request parameter 값이 자동으로 들어간다.url 뒤에 붙는 parameter 값을 가져올 때 사용한다.
-```
-```java
         http://localhost:8080/home?index=1&page=2
-
 		@GetMapping("/home")
 		public String show(@RequestParam("page") int pageNum {
 		}	
-```
-```java
 위의 경우 GET /home?index=1&page=2와 같이 uri가 전달될 때 page parameter를 받아온다.
 	@RequestParam 어노테이션의 괄호 안의 문자열이 전달 인자 이름(실제 값을 표시)이다.
-```
-```java
 @RequestMapping(value = "/search/movie", method = RequestMethod.GET)
 		public ResponseEntity<?> someMethod(@RequestParam String moviename) {
 		// request URI would be like '/search/movie?moviename=thepurge'
@@ -216,42 +198,28 @@ class Person{
 		// return some response here
 		}
 @RequestPart = Request로 온 MultipartFile을 바인딩해준다.
-```
-```java
 @RequestPart("file") MultipartFile file
-```
-```java
 @ResponseBody = HttpMessageConverter를 이용하여 JSON 혹은 xml 로 요청에 응답할수 있게 해주는 Annotation이다.
 	view가 아닌 JSON 형식의 값을 응답할 때 사용하는 Annotation으로 문자열을 리턴하면 그 값을 http response header가 아닌 response body에 들어간다.
 	이미 RestController Annotation이 붙어 있다면, 쓸 필요가 없다.허나 그렇지 않은 단순 컨트롤러라면, HttpResponse로 응답 할 수 있게 해준다.
 	만약 객체를 return하는 경우 JACKSON 라이브러리에 의해 문자열로 변환되어 전송된다.context에 설정된 viewResolver를 무시한다고 보면된다.
 @PathVariable = method parameter 앞에 사용하면서 해당 URL에서 {특정값}을 변수로 받아 올 수 있다.
-```
-```java
 @RequestMapping(value = "/some/path/{id}", method = RequestMethod.GET)
 		public ResponseEntity<?> someMethod(@PathVariable int id) {
 		}
-```
-```java
 	HTTP 요청에 대해 매핑되는 request parameter 값이 자동으로 Binding 된다.	uri에서 각 구분자에 들어오는 값을 처리해야 할 때 사용한다.
 	REST API에서 값을 호출할 때 주로 많이 사용한다.
-```
-```java
 http://localhost:8080/index/1
-
 		@PostMapping("/index/{idx}")
 		@ResponseBody
 		public boolean deletePost(@PathVariable("idx") int postNum) {
 		return postService.deletePost(postNum);
 		}
 		@RequestParam와 @PathVariable 동시 사용 예제
-
 		@GetMapping("/user/{userId}/invoices")
 		public List<Invoice> listUsersInvoices(@PathVariable("userId") int user,
 											  @RequestParam(value = "date", required = false) Date dateOrNull) {
 		}
-```
-```java
 위의 경우 GET /user/{userId}/invoices?date=190101 와 같이 uri가 전달될 때
 	구분자 {userId}는 @PathVariable(“userId”)로,
 	뒤에 이어붙은 parameter는 @RequestParam(“date”)로 받아온다.
@@ -259,11 +227,7 @@ http://localhost:8080/index/1
 @ExceptionHandler(ExceptionClassName.class) = 해당 클래스의 예외를 캐치하여 처리한다.
 @RestControllerAdvice = @ControllerAdvice + @ResponseBody다.
 @ResponseStatus = 사용자에게 원하는 response code와 reason을 return해주는 Annotation이다.
-```
-```java
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "my page URL changed..") => 예외처리 함수 앞에 사용한다.
-```
-```java
 @EnableEurekaServer = Eureka 서버로 만들어준다.
 @EnableDiscoveryClient = Eureka 서버에서 관리될 수 있는 클라이언트 임을 알려주기위한 Annotation이다.
 @Transactional = 데이터베이스 트랜잭션을 설정하고 싶은 method에 Annotation을 적용하면 method 내부에서 일어나는 데이터베이스 로직이 전부 성공하게되거나 
@@ -278,27 +242,17 @@ http://localhost:8080/index/1
 @Cacheable = method 앞에 지정하면 해당 method를 최초에 호출하면 캐시에 적재하고 다음부터는 동일한 method 호출이 있을 때 캐시에서 결과를 가져와서 return하므로 method 호출 횟수를 줄여주는 Annotation이다.
 	주의할 점은 입력이 같으면 항상 출력이 같은 method(=순수 함수)에 적용해야한다.그런데 또 항상 같은 값만 뱉어주는 메서드에 적용하려면 조금 아쉬울 수 있다.
 	따라서 메서드 호출에 사용되는 자원이 많고 자주 변경되지 않을 때 사용하고 나중에 수정되면 캐시를 없애는 방법을 선택할 수 있다.
-```
-```java
 @Cacheable(value="cacheKey"), @Cacheable(key="cacheKey")
-```
-```java
 @CachePut = 캐시를 업데이트하기 위해서 method를 항상 실행하게 강제하는 Annotation 이다.해당 Annotation이 있으면 method 호출을 항상한다. 그러므로 @Cacheable과 상충되어 같이 사용하면 안된다.
 @CacheEvict = 캐시에서 데이터를 제거하는 트리거로 동작하는 method에 붙이는 Annotation이다.
 	캐시된 데이터는 언제가는 지워져야한다. 그러지 않으면 결과값이 변경이 일어났는데도 기존의 데이터(캐시된 데이터)를 불러와서 오류가 발생할 수 있다.물론 캐시 설정에서 캐시 만료시간을 줄 수도 있다.
-```
-```java
 @CacheEvict(value="cacheKey"), @CacheEvict(value="cacheKey", allEntries=true) allEntries는 전체 캐시를 지울지 여부를 선택하는 것이다.
-```
-```java
 @CacheConfig = 클래스 레벨에서 공통의 캐시설정을 공유하는 기능이다.
 @Scheduled = Linux의 crontab처럼 정해진 시간에 실행해야하는 경우에 사용한다.
 		@Scheduled(cron = "0 0 07 * * ?") "초 분 시 일 월 요일 년(선택)에 해당 메서드 호출
 Lombok이란?
 	Lombok은 자바에서 @Getter, @Setter 같은 annotation 기반으로 관련 기존 DTO, VO, Domain Class 작성할 때, 
 	멤버 변수에 대한 Getter/Setter Method, Equals(), hashCode(), ToString()과 멤버 변수에 값을 설정하는 생성자 등등을 자동으로 생성해 주는 라이브러리다.
-```
-```java
 public class BasicSampel {
 			private Integer id;
 			private String name;
