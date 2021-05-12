@@ -3,6 +3,7 @@ layout: post
 title: "vitamin 어노테이션 검색 및 정리!"
 ---
 
+```java
 @ 어노테이션이란 = Annotation(@)은 사전적 의미로는 주석이라는 뜻이다. 자바에서 Annotation은 코드 사이에 주석처럼 쓰이며 특별한 의미, 기능을 수행하도록 하는 기술이다.
 	Annotation 자체는 아무런 동작을 가지지 않는 단순한 표식일 뿐이지만, Reflection을 이용하면 Annotation의 적용 여부와 엘리먼트 값을 읽고 처리할 수 있다.
 @Entity = spring-boot-starter-data-jpa 의존성을 추가하고 @Entiy 어노테이션을 붙이면 테이블과 자바 클래스가 매핑이 됩니다.
@@ -17,6 +18,7 @@ title: "vitamin 어노테이션 검색 및 정리!"
 	클래스 Bean들을 찾아서 Context에 bean등록을 해주는 Annotation이다.
 @Component =//개발자가 직접 작성한 Class를 Bean으로 등록하기 위한 Annotation이다. , 
 	Component에 대한 추가 정보가 없다면 Class의 이름을 camelCase로 변경한 것이 Bean id로 사용된다.
+```
 ```java
 @Component
 		public class Student {
@@ -52,6 +54,7 @@ title: "vitamin 어노테이션 검색 및 정리!"
 			}   
 		}
         ```
+```java
 @Autowired = 속성(field), setter method, constructor(생성자)에서 사용하며 Type에 따라 알아서 Bean을 주입 해준다. 객체에 대한 의존성을 주입시킨다. 
 	Annotation을 사용할 시, 스프링이 자동적으로 값을 할당한다. Controller 클래스에서 DAO나 Service에 관한 객체들을 주입 시킬 때 많이 사용한다.
 @Inject = @Autowired 어노테이션과 비슷한 역할을 한다.
@@ -68,6 +71,7 @@ title: "vitamin 어노테이션 검색 및 정리!"
 @Configuration = 을 클래스에 적용하고 @Bean을 해당 Class의 method에 적용하면 @Autowired로 Bean을 부를 수 있다.
 @Required = setter method에 적용해주면 Bean 생성시 필수 프로퍼티 임을 알린다. Required Annotation을 사용하여 optional 하지 않은, 꼭 필요한 속성들을 정의한다.
 	영향을 받는 bean property를 구성할 시에는 XML 설정 파일에 반드시 property를 채워야 한다.엄격한 체크, 그렇지 않으면 BeanInitializationException 예외를 발생
+```
 ```java
 <!-- Definition for student bean -->
 		<bean id = "student" class = "com.tutorialspoint.Student">
@@ -75,6 +79,7 @@ title: "vitamin 어노테이션 검색 및 정리!"
 			<property name = "age"  value = "11"/>
 		</bean>
 ```
+```java
 @Qualifier("id123") = @Autowired와 같이 쓰이며, 같은 타입의 Bean 객체가 있을 때 해당 아이디를 적어 원하는 Bean이 주입될 수 있도록 하는 Annotation이다.
 	같은 타입이 존재하는 경우 ex) 동물 = 원숭이, 닭, 개, 돼지같은 타입의 Bean이 두 개 이상이 존재하는 경우에 Spring이 어떤 Bean을 주입해야 할지 알 수 없어서
 	Spring Container를 초기화하는 과정에서 예외를 발생시킨다. 이 경우 @Qualifier을 @Autowired와 함께 사용하여 정확히 어떤 bean을 사용할지 지정하여 특정 의존 객체를 주입할 수 있도록 한다.
@@ -86,23 +91,30 @@ title: "vitamin 어노테이션 검색 및 정리!"
 @PropertySource = 해당 프로퍼티 파일을 Environment로 로딩하게 해준다. 
 	클래스에 @PropertySource("classpath:/settings.properties")라고 적고 클래스 내부에 @Resource를 Environment타입의 멤버 변수앞에 적으면 매핑된다.
 @ConfigurationProperties = yaml파일 읽는다. default로 classpath:application.properties 파일이 조회된다.
+```
 - [ ] 	속성 클래스를 따로 만들어두고 그 위에 (prefix="mail")을 써서 프로퍼티의 접두사를 사용할 수 있다.
-		mail.host = mailserver@mail.com
+```java
+mail.host = mailserver@mail.com
 
 		mail.port = 9000
 
 		mail.defaultRecipients[0] = admin@mail.com
 
 		mail.defaultRecipients[1] = customer@mail.com
+```
+```java
 @Lazy = 지연로딩을 지원한다. @Component나 @Bean Annotation과 같이 쓰는데 Class가 로드될 때 스프링에서 바로 bean등록을 마치는 것이 아니라 실제로 사용될 때 로딩이 이뤄지게 하는 방법이다.
 @Value = properties에서 값을 가져와 적용할 때 사용한다. 
+```
 		@Value("${value.from.file}") 
 	private String valueFromFile; 이라고 구성되어 있으면 value.from.file의 값을 가져와서 해당 변수에 주입해준다.spEL을 이용해서 조금 더 고급스럽게 쓸 수 있다.
 		@Value(#{systemProperties['priority'] ?: 'some default'})
+```java
 @SpringBootApplication = @Configuration, @EnableAutoConfiguration, @ComponentScan 3가지를 하나의 애노테이션으로 합친 것이다.
 @RequestMapping = 요청 URL을 어떤 method가 처리할지 mapping해주는 Annotation이다. Controller나 Controller의 method에 적용한다.
 	요청을 받는 형식인 GET, POST, PATCH, PUT, DELETE 를 정의하기도 한다.요청 받는 형식을 정의하지 않는다면, 자동적으로 GET으로 설정된다.
 	@RequestMapping에 대한 모든 매핑 정보는 Spring에서 제공하는 HandlerMapping Class가 가지고 있다.
+```java
 		@RequestMapping("/list"), @RequestMapping("/home, /about");
 
 		@RequestMapping("/admin", method=RequestMethod.GET)
@@ -152,6 +164,7 @@ class Person{
 			{ model.addAttribute(service.read(person.getId())); }
 		}
 ```
+```java
 @GetMapping = @RequestMapping(Method=RequestMethod.GET)과 같다. @PostMapping, @PutMapping, @PatchMapping, @DeleteMapping 등 도 있다.
 @SessionAttributes = Session에 data를 넣을 때 쓰는 Annotation이다. @SessionAttributes("name")이라고 하면 Model에 key값이 "name"으로 있는 값은 자동으로 세션에도 저장되게 한다.
 @Valid = 유효성 검증이 필요한 객체임을 지정한다.
@@ -160,6 +173,7 @@ class Person{
 @RequestBody = 요청이 온 데이터(JSON이나 XML형식)를 바로 Class나 model로 매핑하기 위한 Annotation이다.POST나 PUT, PATCH로 요청을 받을때에, 요청에서 넘어온 body 값들을 자바 타입으로 파싱해준다.
 	HTTP POST 요청에 대해 request body에 있는 request message에서 값을 얻어와 매핑한다.RequestData를 바로 Model이나 클래스로 매핑한다.
 	이를테면 JSON 이나 XML같은 데이터를 적절한 messageConverter로 읽을 때 사용하거나 POJO 형태의 데이터 전체로 받는 경우에 사용한다.
+```
 ```java
 		@RequestMapping(value = "/book", method = RequestMethod.POST)
 		public ResponseEntity<?> someMethod(@RequestBody Book book) {
@@ -172,11 +186,13 @@ class Person{
 		// return some response here
 		}
 ```
+```java
 @RequestHeader = Request의 header값을 가져올 수 있다. 메소드의 파라미터에 사용한다.
 		//ko-KR,ko;q=0.8,en-US;q=0.6
 		@RequestHeader(value="Accept-Language")String acceptLanguage 로 사용 
 @RequestParam = @PathVariable과 비슷하다.request의 parameter에서 가져오는 것이다. method의 파라미터에 사용된다.?moviename=thepurge 와 같은 쿼리 파라미터를 파싱해준다.
 	HTTP GET 요청에 대해 매칭되는 request parameter 값이 자동으로 들어간다.url 뒤에 붙는 parameter 값을 가져올 때 사용한다.
+```
 ```java
         http://localhost:8080/home?index=1&page=2
 
@@ -184,8 +200,10 @@ class Person{
 		public String show(@RequestParam("page") int pageNum {
 		}	
 ```
-	위의 경우 GET /home?index=1&page=2와 같이 uri가 전달될 때 page parameter를 받아온다.
+```java
+위의 경우 GET /home?index=1&page=2와 같이 uri가 전달될 때 page parameter를 받아온다.
 	@RequestParam 어노테이션의 괄호 안의 문자열이 전달 인자 이름(실제 값을 표시)이다.
+```
 ```java
 @RequestMapping(value = "/search/movie", method = RequestMethod.GET)
 		public ResponseEntity<?> someMethod(@RequestParam String moviename) {
@@ -197,23 +215,27 @@ class Person{
 		}
 		// return some response here
 		}
-```
 @RequestPart = Request로 온 MultipartFile을 바인딩해준다.
+```
 ```java
 @RequestPart("file") MultipartFile file
 ```
+```java
 @ResponseBody = HttpMessageConverter를 이용하여 JSON 혹은 xml 로 요청에 응답할수 있게 해주는 Annotation이다.
 	view가 아닌 JSON 형식의 값을 응답할 때 사용하는 Annotation으로 문자열을 리턴하면 그 값을 http response header가 아닌 response body에 들어간다.
 	이미 RestController Annotation이 붙어 있다면, 쓸 필요가 없다.허나 그렇지 않은 단순 컨트롤러라면, HttpResponse로 응답 할 수 있게 해준다.
 	만약 객체를 return하는 경우 JACKSON 라이브러리에 의해 문자열로 변환되어 전송된다.context에 설정된 viewResolver를 무시한다고 보면된다.
 @PathVariable = method parameter 앞에 사용하면서 해당 URL에서 {특정값}을 변수로 받아 올 수 있다.
+```
 ```java
 @RequestMapping(value = "/some/path/{id}", method = RequestMethod.GET)
 		public ResponseEntity<?> someMethod(@PathVariable int id) {
 		}
 ```
+```java
 	HTTP 요청에 대해 매핑되는 request parameter 값이 자동으로 Binding 된다.	uri에서 각 구분자에 들어오는 값을 처리해야 할 때 사용한다.
 	REST API에서 값을 호출할 때 주로 많이 사용한다.
+```
 ```java
 http://localhost:8080/index/1
 
@@ -229,16 +251,19 @@ http://localhost:8080/index/1
 											  @RequestParam(value = "date", required = false) Date dateOrNull) {
 		}
 ```
-	위의 경우 GET /user/{userId}/invoices?date=190101 와 같이 uri가 전달될 때
+```java
+위의 경우 GET /user/{userId}/invoices?date=190101 와 같이 uri가 전달될 때
 	구분자 {userId}는 @PathVariable(“userId”)로,
 	뒤에 이어붙은 parameter는 @RequestParam(“date”)로 받아온다.
 @ControllerAdvice = Class 위에 ControllerAdvice를 붙이고 어떤 예외를 잡아낼 것인지는 각 메소드 상단에 @ExceptionHandler(예외클래스명.class)를 붙여서 기술한다.
 @ExceptionHandler(ExceptionClassName.class) = 해당 클래스의 예외를 캐치하여 처리한다.
 @RestControllerAdvice = @ControllerAdvice + @ResponseBody다.
 @ResponseStatus = 사용자에게 원하는 response code와 reason을 return해주는 Annotation이다.
+```
 ```java
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "my page URL changed..") => 예외처리 함수 앞에 사용한다.
 ```
+```java
 @EnableEurekaServer = Eureka 서버로 만들어준다.
 @EnableDiscoveryClient = Eureka 서버에서 관리될 수 있는 클라이언트 임을 알려주기위한 Annotation이다.
 @Transactional = 데이터베이스 트랜잭션을 설정하고 싶은 method에 Annotation을 적용하면 method 내부에서 일어나는 데이터베이스 로직이 전부 성공하게되거나 
@@ -253,21 +278,26 @@ http://localhost:8080/index/1
 @Cacheable = method 앞에 지정하면 해당 method를 최초에 호출하면 캐시에 적재하고 다음부터는 동일한 method 호출이 있을 때 캐시에서 결과를 가져와서 return하므로 method 호출 횟수를 줄여주는 Annotation이다.
 	주의할 점은 입력이 같으면 항상 출력이 같은 method(=순수 함수)에 적용해야한다.그런데 또 항상 같은 값만 뱉어주는 메서드에 적용하려면 조금 아쉬울 수 있다.
 	따라서 메서드 호출에 사용되는 자원이 많고 자주 변경되지 않을 때 사용하고 나중에 수정되면 캐시를 없애는 방법을 선택할 수 있다.
+```
 ```java
 @Cacheable(value="cacheKey"), @Cacheable(key="cacheKey")
 ```
+```java
 @CachePut = 캐시를 업데이트하기 위해서 method를 항상 실행하게 강제하는 Annotation 이다.해당 Annotation이 있으면 method 호출을 항상한다. 그러므로 @Cacheable과 상충되어 같이 사용하면 안된다.
 @CacheEvict = 캐시에서 데이터를 제거하는 트리거로 동작하는 method에 붙이는 Annotation이다.
 	캐시된 데이터는 언제가는 지워져야한다. 그러지 않으면 결과값이 변경이 일어났는데도 기존의 데이터(캐시된 데이터)를 불러와서 오류가 발생할 수 있다.물론 캐시 설정에서 캐시 만료시간을 줄 수도 있다.
+```
 ```java
 @CacheEvict(value="cacheKey"), @CacheEvict(value="cacheKey", allEntries=true) allEntries는 전체 캐시를 지울지 여부를 선택하는 것이다.
 ```
+```java
 @CacheConfig = 클래스 레벨에서 공통의 캐시설정을 공유하는 기능이다.
 @Scheduled = Linux의 crontab처럼 정해진 시간에 실행해야하는 경우에 사용한다.
 		@Scheduled(cron = "0 0 07 * * ?") "초 분 시 일 월 요일 년(선택)에 해당 메서드 호출
 Lombok이란?
 	Lombok은 자바에서 @Getter, @Setter 같은 annotation 기반으로 관련 기존 DTO, VO, Domain Class 작성할 때, 
 	멤버 변수에 대한 Getter/Setter Method, Equals(), hashCode(), ToString()과 멤버 변수에 값을 설정하는 생성자 등등을 자동으로 생성해 주는 라이브러리다.
+```
 ```java
 public class BasicSampel {
 			private Integer id;
@@ -309,15 +339,18 @@ import lombok.Data;
 
 		}
 ```
+```java
 	위 두 샘플 코드를 통해 확인했듯이 Lombok을 사용한 코드가 매우 짧아졌다. 필요한 곳에 적당한 Lombok Annotation만 붙여 주기만 하면 끝이다. 
 	Annotation도 문자 그대로 이해할 수 있을 정도로 매우 직관적이다. @Getter 는 getter() 함수를, @Setter는 setter() 함수를 생성하고
 	@EqualsAndHashCode 는 equals() 함수와 hashCode() 함수를 자동으로 생성해준다.
 Lombok Annotation
 @NoArgsConstructor = 기본생성자를 자동으로 추가한다.
+```
 ```java
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 ```
-	기본생성자의 접근 권한을 protected로 제한한다.생성자로 protected Posts() {}와 같은 효과
+```java
+기본생성자의 접근 권한을 protected로 제한한다.생성자로 protected Posts() {}와 같은 효과
 	Entity Class를 프로젝트 코드상에서 기본생성자로 생성하는 것은 금지하고, JPA에서 Entity 클래스를 생성하는것은 허용하기 위해 추가한다.
 @AllArgsConstructor = 모든 필드 값을 파라미터로 받는 생성자를 추가한다.
 @RequiredArgsConstructor = final이나 @NonNull인 필드 값만 파라미터로 받는 생성자를 추가한다.final: 값이 할당되면 더 이상 변경할 수 없다.
@@ -327,15 +360,19 @@ Lombok Annotation
 	Controller에서 @RequestBody로 외부에서 데이터를 받는 경우엔 기본생성자 + set method를 통해서만 값이 할당된다.
 	그래서 이때만 setter를 허용한다.Entity Class에는 Setter를 설정하면 안된다.차라리 DTO 클래스를 생성해서 DTO 타입으로 받도록 하자
 @ToString = Class 내 모든 필드의 toString method를 자동 생성한다.
+```
 ```java
 @ToString(exclude = "password")
 ```
-	특정 필드를 toString() 결과에서 제외한다.클래스명(필드1이름=필드1값, 필드2이름=필드2값, …) 식으로 출력된다.
+```java
+특정 필드를 toString() 결과에서 제외한다.클래스명(필드1이름=필드1값, 필드2이름=필드2값, …) 식으로 출력된다.
 @EqualsAndHashCode = equals와 hashCode method를 오버라이딩 해주는 Annotation이다.
+```
 ```java
 @EqualsAndHashCode(callSuper = true)
 ```
-	callSuper 속성을 통해 equals와 hashCode 메소드 자동 생성 시 부모 클래스의 필드까지 감안할지 안 할지에 대해서 설정할 수 있다.
+```java
+callSuper 속성을 통해 equals와 hashCode 메소드 자동 생성 시 부모 클래스의 필드까지 감안할지 안 할지에 대해서 설정할 수 있다.
 	즉, callSuper = true로 설정하면 부모 클래스 필드 값들도 동일한지 체크하며, callSuper = false로 설정(기본값)하면 자신 클래스의 필드 값들만 고려한다.
 @Builder = 어느 필드에 어떤 값을 채워야 할지 명확하게 정하여 생성 시점에 값을 채워준다.
 	Constructor와 Builder의 차이 : 생성 시점에 값을 채워주는 역할은 똑같다.하지만 Builder를 사용하면 어느 필드에 어떤 값을 채워야 할지 명확하게 인지할 수 있다.
@@ -351,10 +388,12 @@ Controller에서 쓸 DTO 클래스란??
 	Entity 클래스와 DTO 클래스를 분리하는 이유는 View Layer와 DB Layer를 철저하게 역할 분리하기 위해서다.
 	테이블과 매핑되는 Entity 클래스가 변경되면 여러 클래스에 영향을 끼치게 되는 반면 View와 통신하는 DTO 클래스(Request/ Response 클래스)는 자주 변경되므로 분리해야 한다.
 @Table = Entity Class에 매핑할 테이블 정보를 알려준다. 
+```
 ```java
 @Table(name = "USER")
 ```
-	Annotation을 생략하면 Class 이름을 테이블 이름 정보로 매핑한다.
+```java
+Annotation을 생략하면 Class 이름을 테이블 이름 정보로 매핑한다.
 @Id = 해당 테이블의 PK 필드를 나타낸다.
 @GeneratedValue = PK의 생성 규칙을 나타낸다.가능한 Entity의 PK는 Long 타입의 Auto_increment를 추천 ,스프링 부트 2.0에선 옵션을 추가하셔야만 auto_increment가 된다.
 	기본값은 AUTO로, MySQL의 auto_increment와 같이 자동 증가하는 정수형 값이 된다.
@@ -363,6 +402,7 @@ Controller에서 쓸 DTO 클래스란??
 	문자열의 경우 VARCHAR(255)가 기본값인데, 사이즈를 500으로 늘리고 싶거나(ex: title),타입을 TEXT로 변경하고 싶거나(ex: content) 등의 경우에 사용
 Test
 MockMvc = 웹 애플리케이션을 애플리케이션 서버에 배포하지 않고도 스프링 MVC의 동작을 재현할 수 있는 클래스
+```
 ```java
 @RunWith(SpringJUnit4ClassRunner.class)
 		@ContextHierarchy({
@@ -384,6 +424,7 @@ MockMvc = 웹 애플리케이션을 애플리케이션 서버에 배포하지 �
 			// ..
 		}
 ```
+```java
 @ContextHierarchy = 테스트용 DI 컨테이너 만들 때 빈 정의 파일을 지정
 		AppConfig.class
 		WebMvcConfig.class
@@ -392,9 +433,8 @@ MockMvc = 웹 애플리케이션을 애플리케이션 서버에 배포하지 �
 		WebApplicationContext
 	테스트할 Application Context를 인젝션
  MockMvc = 	테스트할 컨텍스트를 지정한 MockMvc를 생성
-단독 모드
-
 스프링 MVC 설정을 '스프링 테스트' 측에서 처리 , 스프링 테스트가 생성된 DI 컨테이너를 사용해 스프링 MVC 동작을 재현 , 스프링 테스트의 각종 설정은 테스트 케이스 측에서 커스텀 가능 ,스프링 MVC 기능을 이용하면서도 단위 테스트 관점에서 컨트롤러 테스트
+```
 ```java
 public class WelcomeControllerTest {
 			MockMvc mockMvc;
@@ -418,6 +458,7 @@ public class WelcomeControllerTest {
 			this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 		}
 ```
+```java
 @InjectMocks = 테스트 대상의 컨트롤러에 지정
 @Mock / @Spy = 모의화하는 컴포넌트에 @Mock이나 @Spy 지정
 테스트 대상의 컨트롤러(@InjectMocks)에 대해 모의화한 컴포넌트(@Mock)를 인잭션
@@ -425,6 +466,7 @@ public class WelcomeControllerTest {
 		@RunWith(MockitoJUnitRunner.class) 같은효과
 	테스트 대상의 컨트롤러를 지정해 MockMvc를 생성
 	서블릿 필터 추가 , MockMvc에 서블릿 필터 추가 가능
+```
 ```java
 @Before
 		public void setUpMockMvc() {
@@ -441,12 +483,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 ```
+```java
 MockMvcRequestBuilders = 요청 데이터를 설정할 때 사용할 static 메서드
 MockMvcResultMatchers = 실행 결과를 검증할 때 사용할 static 메서드
 MockMvcResultHandlers = 실행 결과를 로그 등으로 출력할 때 사용할 static 메서드
 테스트 실행
 	컨트롤러를 호출할 때 필요한 요청 데이터를 설정
 	MockMvc에 요청을 의뢰
+```
 - [ ] 컨트롤러 핸들러 메소드
 ```java
 @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -463,6 +507,7 @@ MockMvcResultHandlers = 실행 결과를 로그 등으로 출력할 때 사용�
 					.andExpect(forwardedUrl("/WEB-INF/index.jsp"));
 		}
 ```
+```java
 perform()
 	DispathcherServlet에 요청을 의뢰
 	MockMvcRequestBuilders를 사용해 설정한 요청 데이터를 perform()의 인수로 전달
@@ -473,7 +518,6 @@ perform()
 MockHttpServletRequestBuilder
 MockMultipartHttpServletRequestBuilderd의 팩토리 메서드
 MockHttpServletRequestBuilder 주요 메서드
-
 param / params
 요청 파라미터 설정
 header / headers
@@ -490,9 +534,9 @@ flashAttr
 sessionAttr
 세션 스코프에 객체를 설정
 MockMultipartHttpServletRequestBuilderd 주요 메서드
-
 file
 업로드할 파일 지정
+```
 ```java
 @Test
 public void testBooks() throws Exception {
@@ -503,11 +547,11 @@ public void testBooks() throws Exception {
     .andExpect(status().isOk());
 }
 ```
+```java
 실행 결과 검증
 ResultActions의 andExpect()
 인수에 실행결과를 검증하는 ResultMatcher 지정 (MockMvcResultMatchers에서 제공)
 MockMvcResultMatchers 주요 메서드
-
 status
 HTTP 상태 코드 검증
 header
@@ -532,11 +576,10 @@ flash
 request
 서블릿 3.0부터 지원되는 비동기 처리의 상태나 요청 스코프의 상태, 세션 스코프의 상태 검증
 주의
-
 MockMvc에서 뷰나 HttpMessageConverter가 생성한 응답 본문을 검증할 수 있음
 JSP를 뷰로 사용할 때는 응답 분문이 언제나 비어 있어 그 결과를 검증할 수 없음
 실행결과검증 구현
-
+```
 ```java
 @Test
 public void testBooks() throws Exception {
@@ -545,18 +588,19 @@ public void testBooks() throws Exception {
           .andExpect(content().string("[{\"bookId\":\"1234\",\"name\":\"슬랙으로 협업하기\"}]"));
 }
 ```
+```java
 실행 결과 출력
 ResultActions의 andDo()
 인수에 실행 결과를 처리할 수 있는 ResultHandler 지정
 스프링 테스트는 MockMvc ResultHandler의 팩토리 클래스를 통해 다양한 ResultHandler 제공
 MockMvcResultHandlers
-
 log
 실행결과를 디버딩 레벨에서 로그로 출력
 org.springframework.test.web.servlet.result
 print
 실행결과를 임의의 출력대상에 출력
 출력대상을 지정하지 않으면 기본으로 System.out 출력
+```
 ```java
 @Test
 public void testBooks() throws Exception {
@@ -565,12 +609,13 @@ public void testBooks() throws Exception {
            .andDo(log());
 }
 ```
+```java
 bcrypt = 비밀번호 해시함수로 Niels Provos와 David Mazieres에 의해 만들어졌으며 Blowfish라는 암호에 기반하였다. 
 	Bcrypt는 조정할 수 있는 해시알고리즘을 써서 패스워드를 저장한다.
 	Bcrypt는 패스워드를 해싱할 때 내부적으로 랜덤한 솔트를 생성하기 때문에 같은 문자열에 대해서 다른 인코드된 결과를 반환한다. 하지만 공통된 점은 매번 길이가 60인 String을 만든다.
-	
 @ManyToOne = 어노테이션은 @OneToMany와 크게 다르지 않습니다. 다만 @OneToMany가 1:N이라고 한다면 @ManyToOne은 N:1 관계라고 보면 됩니다. 
 예를 들머 회원과 핸드폰의 관계에서 핸드폰을 보면 됩니다. 핸드폰은 자신을 소유한 회원이 있습니다. 하지만 이 회원은 핸드폰을 여러개 소지할 수도 있고 하나만 소지할 수도 있겠죠. 
 회원쪽에서 핸드폰을 바라본다면 @OneToMany 관계지만 핸드폰이 회원을 바라본다면 @ManyToOne이 되는겁니다.
 @Query = //@Query 시큐리티가 제공하는 쿼리 @ 안에서 쿼리문 작성 가능 
+```
 
