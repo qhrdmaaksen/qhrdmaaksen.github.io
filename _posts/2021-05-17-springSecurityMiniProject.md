@@ -8,6 +8,7 @@ https://start.spring.io/
 <br>
 위 사이트 주소로 접속하면 아래와 같은 화면이 출력될거야 
 <br>
+<img src="_posts/img.png">
 ![img.png](img.png)
 <br>
 여기서 자신에게 맞는 프로젝트 설정을 지정해주고 ctrl + b 단축키를 눌러서  Dependencies 에 우선적으로
