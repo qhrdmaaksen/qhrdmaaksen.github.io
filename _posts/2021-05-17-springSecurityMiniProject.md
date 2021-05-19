@@ -24,6 +24,8 @@ Web 과 Thymeleaf 정도만 추가해서 프로젝트 생성을 해준 후 ctrl 
 <br>
 위와 같이 https://start.spring.io/ 에서 설정했던 SpringSecurity 를 확인할수있어!
 <br>
-
+그리고 정상 작동이되는지 확인해보자 아래와같이 확인된다면 정상이야!
+<br>
+![20210519_184503.png](../img/20210519_184503.png)
 
 
