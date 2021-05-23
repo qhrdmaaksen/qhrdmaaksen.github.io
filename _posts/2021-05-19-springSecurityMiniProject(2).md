@@ -47,7 +47,7 @@ public class MainController {
         }else {
             model.addAttribute("message", principal.getName() + "님 안녕하세요 , vitamin7777777 의 메인 화면입니다.");
         }
-        return "index" ;
+        return "index";
     }
     @GetMapping("/info")
     public String info (Model model){
