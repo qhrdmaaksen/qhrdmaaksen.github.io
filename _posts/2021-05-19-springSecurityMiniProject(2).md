@@ -69,4 +69,6 @@ public class MainController {
         return "admin" ;
     }
 }
-```
+```  
+index와 마찬가지로 나는 dashboard , admin , info 페이지까지 만들어주고  
+실행을 해봤어 그럼 어떻게나오는지 한번 봐볼까 ??  
