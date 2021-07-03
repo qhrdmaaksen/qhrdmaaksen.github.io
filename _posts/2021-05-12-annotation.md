@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "vitamin 어노테이션 검색 및 정리!"
 ---
 

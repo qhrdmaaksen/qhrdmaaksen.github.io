@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "예외와 예외 처리의 개념!"
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "[Java]SpringSecurity 시작하기(1)"
 ---
 
