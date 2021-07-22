@@ -2,7 +2,7 @@
 title: "Configuration"
 permalink: /docs/configuration/
 excerpt: "Settings for configuring and customizing the theme."
-last_modified_at: 2020-08-04T11:26:21-04:00
+last_modified_at: 2021-05-11T10:40:42-04:00
 toc: true
 ---
 
@@ -131,7 +131,7 @@ You also have the option of customizing the separation character used in SEO-fri
 
 _Example:_ `title_separator: "|"` would produce page titles like `Sample Page | My Awesome Site`.
 
-**Note:** Long site titles have been known to break the masthead layout. Avoid adding a long "tagline" to the title prevent this from happening eg. `My Awesome Site is the Best Because I Say So".
+**Note:** Long site titles have been known to break the masthead layout. Avoid adding a long "tagline" to the title prevent this from happening eg. `My Awesome Site is the Best Because I Say So`.
 {: .notice--warning}
 
 ### Site subtitle
@@ -161,7 +161,7 @@ The base hostname and protocol for your site. If you're hosting with GitHub Page
 
 GitHub Pages now [forces `https://` for new sites](https://help.github.com/articles/securing-your-github-pages-site-with-https/) so be mindful of that when setting your URL to avoid mixed-content warnings.
 
-**Note:** Jekyll 3.3 overrides this value with `url: http://localhost:4000` when running `jekyll serve` locally in development. If you want to avoid this behavior set `JEKYLL_ENV=production` to [force the environment](http://jekyllrb.com/docs/configuration/#specifying-a-jekyll-environment-at-build-time) to production.
+**Note:** Jekyll 3.3 overrides this value with `url: http://localhost:4000` when running `jekyll serve` locally in development. If you want to avoid this behavior set `JEKYLL_ENV=production` to [force the environment](https://jekyllrb.com/docs/configuration/environments/) to production.
 {: .notice--warning}
 
 ### Site base URL
@@ -333,7 +333,7 @@ For example,
 
 ### Comments
 
-[**Disqus**](https://disqus.com/), [**Discourse**](https://www.discourse.org/), [**Facebook**](https://developers.facebook.com/docs/plugins/comments), [**utterances**](https://utteranc.es/), and static-based commenting via [**Staticman**](https://staticman.net/) are built into the theme. First set the comment provider you'd like to use:
+[**Disqus**](https://disqus.com/), [**Discourse**](https://www.discourse.org/), [**Facebook**](https://developers.facebook.com/docs/plugins/comments), [**utterances**](https://utteranc.es/), [**giscus**](https://giscus.app/) and static-based commenting via [**Staticman**](https://staticman.net/) are built into the theme. First set the comment provider you'd like to use:
 
 | Name             | Comment Provider          |
 | ---------------- | ------------------------- |
@@ -343,6 +343,7 @@ For example,
 | **staticman_v2** | Staticman v2 / v3         |
 | **staticman**    | Staticman v1 (deprecated) |
 | **utterances**   | utterances                |
+| **giscus**       | giscus                    |
 | **custom**       | Other                     |
 
 Then add `comments: true` to each document you want comments visible on.
@@ -422,6 +423,35 @@ comments:
   utterances:
     theme: "github-light" # "github-dark"
     issue_term: "pathname"
+```
+
+#### giscus comments
+
+To use giscus you will need to [install the app](https://github.com/apps/giscus) to your GitHub repository.
+
+The next step is to go to <https://giscus.app> and fill out the desired settings. This will generate JavaScript that will provide you with the settings you will need to configure things below.
+
+You'll need to ensure you've added the following to `_config.yml`:
+
+```yaml
+repository: # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+```
+
+**Note:** Make sure the repo is public, otherwise your readers will not be able to view the issues/comments. The [discussions feature](https://docs.github.com/en/discussions) also needs to be active on your repo.
+{: .notice--warning}
+
+To enable giscus on the front end set `comments.provider` and the other additional options.
+
+```yaml
+comments:
+  provider: "giscus"
+  giscus:
+    repo_id              : # Shown during giscus setup at https://giscus.app
+    category_name        : # Full text name of the category
+    category_id          : # Shown during giscus setup at https://giscus.app
+    discussion_term      : # "pathname" (default), "url", "title", "og:title"
+    reactions_enabled    : # '1' for enabled (default), '0' for disabled
+    theme                : # "light" (default), "dark", "dark_dimmed", "transparent_dark", "preferred_color_scheme"
 ```
 
 #### Static-based comments via Staticman
