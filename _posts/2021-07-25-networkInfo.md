@@ -2,6 +2,7 @@
 layout: single
 title: "자바와 네트워크에 대해 알아보자!!"
 ---
+###교과 이미지 출처 : 한양사이버대학교 민병석 교수님 자료
 ###java and networking!
  <li>네트워크로 연결된 컴퓨터의 정보, 웹문서 정보를 탐색할 수 있다.</li>
  <li>컴퓨터 간에 데이터 통신을 지원하는 java.net package 제공</li>
@@ -48,10 +49,77 @@ title: "자바와 네트워크에 대해 알아보자!!"
 <li>throws 는 예외가 발생하면 해당 메소드 내에서 처리하지 않고, 자신을 호출하는 메소드에서 처리하도록 함</li>
 <li>오브젝트 생성이나 메소드는 throws IOException 내에서 사용함</li>
 
+```java
+public static void main(String[] args) throws IOEeception {
+    ...
+    InputStream ist = URL.openStream();
+    ...
+  }
+```
+<li>메소드 내에서 처리하기 위해서는 try {...} catch (IOException e) {...} 블록으로 예외 처리를 함 </li>
 
+```java
+public static void main(String[] args) {
+    try{
+        ...
+        InputStream ist = URL.openStream();
+        ...
+    }catch(IOException e){
+        ...
+    }
+  }
+```
 
+###6) URLConnection 클래스
+<li>원격지 자원의 속성을 알아내기 위한 목적으로 사용함</li>
+<li>원격 컴퓨터와 연결된 상태에서 원격지 자원의 속성을 탐색함</li>
 
+![URLConnection_Import_Method.png](../img/URLConnection_Import_Method.png)
 
+###6-1) URLConnection 클래스 원격지 자원의 속성 정보를 가져오는 순서
+<ol>
+  <li>URL 클래스를 이용하여, 접속하려는 컴퓨터의 정보를 갖는 URL 오브젝트를 생성함</li>
+  <li>URL 클래스의 openConnection() 메소드를 실행해서 URLConnection 오브젝트를 생성함</li>
+  <li>URLConnection 오브젝트를 이용해서 속성을 가져옴</li>
+  <li>URLConnection 클래스의 getInputStream() 메소드, 또는 URL 클래스의 OpenStream() 메소드를 사용해서 원격지로부터 정보를 읽기 위한 InputStream 오브젝트를 생성함</li>
+  <li>OpenStream() 메소드를 실행하면 자동으로 URL 클래스의 OpenConnection() 메소드를 호출한 후 , openStream() 메소드를 실행함</li>
+  <li>InputStream 오브젝트를 이용해서 원격지의 정보를 읽어옴</li>
+</ol>
+
+<p>구현 코드</p>
+
+```java
+package com.company;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Date;
+
+public class URLConnectionTest {
+    public static void main(String[] args) throws IOException {
+        URL naver = new URL("http://www.naver.com/") ;
+        URLConnection naverOn = naver.openConnection() ;
+
+        System.out.println("문서의 타입 : " + naverOn.getContentType());
+        System.out.println("문서의 최종 수정 일자 : " + new Date(naverOn.getLastModified()));
+
+        System.out.println("문서 내용 : ");
+        InputStream input = naverOn.getInputStream();
+
+        int i = 500 ;
+        int c ;
+        while (((c = input.read()) != -1) && (--i > 0)){
+            System.out.print((char)c);
+        }
+        input.close();
+    }
+}
+```
+<p>코드 실행</p>
+
+![URLConnectionTestResult.png](../img/URLConnectionTestResult.png)
 
 
 
