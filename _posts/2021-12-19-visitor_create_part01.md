@@ -278,3 +278,37 @@ public class writeBean extends Element { //element 상속받아 사용
     }
 }
 ```
+######write_end.jsp 에 write.html 에 저장버튼을 눌렀을때 실행되는 jsp
+```js
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+  <jsp:useBean id="SQL_Manager" class="jspbook.ch11.QueryManager" scope="session" />
+  <jsp:useBean id="DB_con" class="jspbook.ch11.JDBCcon" scope="application" />
+  <jsp:useBean id="insert" class="jspbook.ch11.writeBean" scope="page" />
+  <jsp:setProperty name="insert" property="*"/> /*필드에 이름을 매치시켜 메소드들이 가동이되서 데이터가 프로퍼티에 */
+  <% SQL_Manager.setConnection(DB_con.getConnection()); %>/*커넥션 정보얻어오기*/
+
+<%
+System.out.println("----------------------------------------------------");
+System.out.println(insert.toString());//insert 에 들어오는 내용을 string으로 출력
+System.out.println("----------------------------------------------------");
+
+SQL_Manager.update(insert.getInsert());
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+  <title>글쓰기 확인</title>
+</head>
+<script type="text/javascript">
+  function go_list(){
+  alert("작성된 글이 성공적으로 등록되었습니다.")/*메세지 창 출력*/
+  location.href="list.jsp?pg_count=0";/*곧 생성할 list.jsp의 첫번째 페이지로 이동*/
+}
+</script>
+<body onload="go_list();">--웹페이지가 로드될때 go_list 함수 이벤트발생--
+
+</body>
+</html>
+```
