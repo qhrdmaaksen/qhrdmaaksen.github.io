@@ -14,6 +14,8 @@ title: "(MYSQL활용)방명록 만들기 과정(part01) 및 에러 해결!"
 
 <br>
 
+![visitor_file_plan.png](../img/visitor_file_plan.png)
+
 ####1-1. 1) 필요한 파일 준비
 <ol>
   <li>write.html 글 작성을 보여주는 파일</li>
