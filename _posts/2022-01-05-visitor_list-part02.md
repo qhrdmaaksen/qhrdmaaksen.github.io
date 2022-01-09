@@ -47,12 +47,12 @@ Jsp Beans 를 사용한 방명록
     <table align="center" width="550" border="0">
         <tr>
             <td align="right" width="183">
-                <%if (list.getIremain()==0 && list.getCurrent()<1){%><!--페이지를채운나머지 글이0개이고 보여주는페이지의번호가 0이라면 공백-->
+                <%if (list.getIremain()==0 && list.getCurrent()<1){ %><!--페이지를채운나머지 글이0개이고 보여주는페이지의번호가 0이라면 공백-->
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                <%}else if (list.getCurrent()!=0){%><!--현재페이지의번호가 0번이아니라면 이전목록 보여주기-->
+                <%}else if (list.getCurrent()!=0){ %><!--현재페이지의번호가 0번이아니라면 이전목록 보여주기-->
                 <a href="list.jsp?pg_count=<%=list.getCurrent()-1%>">
                     <img src="img/left.jpg" width="50" height="50" border="0" alt="이전목록"> </a>
-                <%}else{%>
+                <%}else{ %>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <%}%>
             </td>
@@ -62,9 +62,9 @@ Jsp Beans 를 사용한 방명록
                 </a>
             </td>
             <td align="left" width="183">
-                <% if (list.getCurrent()==list.getIvalue()-1&&list.getIremain()==0){%>
+                <% if (list.getCurrent()==list.getIvalue()-1&&list.getIremain()==0){ %>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                <%} else if (list.getCurrent() != list.getIvalue()) {%>
+                <%} else if (list.getCurrent() != list.getIvalue()) { %>
                     <a href="list.jsp?pg_count=<%=list.getCurrent()+1%>"><!--다음페이지로가기위해서 +1-->
                         <img src="img/right.jpg" width="50" height="50" border="0" alt="다음목록">
                     </a>
@@ -73,7 +73,7 @@ Jsp Beans 를 사용한 방명록
         </tr>
     </table>
     <!--한 페이지에 해당되는 부분 보여주기-->
-    <%for (int i = list.getIstart(); i < list.getIend(); i++){%>
+    <%for (int i = list.getIstart(); i < list.getIend(); i++){ %>
         <table align="center" border="1" width="550">
             <hr>
             <tr>
@@ -109,14 +109,14 @@ Jsp Beans 를 사용한 방명록
     <table align="center" width="550" border="0">
         <tr>
             <td align="right" width="183">
-                <%if (list.getIremain()==0&&list.getCurrent()<1){%>
+                <%if (list.getIremain()==0&&list.getCurrent()<1){ %>
                     &nbsp&nbsp&nbsp&nbsp
-                <%}else if (list.getCurrent()!=0){%>
+                <%}else if (list.getCurrent()!=0){ %>
                 <a href="list.jsp"pg_count="<%=list.getCurrent()-1%>">
                     <img src="img/left.jpg" width="50" height="50" border="0"
                         alt="이전목록">
                 </a>
-                <%}else {%>
+                <%}else { %>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <%}%>
             </td>
@@ -126,9 +126,9 @@ Jsp Beans 를 사용한 방명록
                 </a>
             </td>
             <td align="left" width="183">
-                <%if (list.getCurrent()==list.getIvalue()-1&&list.getIremain()==0){%>
+                <%if (list.getCurrent()==list.getIvalue()-1&&list.getIremain()==0){ %>
                     &nbsp&nbsp&nbsp&nbsp
-                <%}else if (list.getCurrent()!=list.getIvalue()){%>
+                <%}else if (list.getCurrent()!=list.getIvalue()){ %>
                 <a href="list.jsp?pg_count=<%=list.getCurrent()+1%>">
                     <img src="img/right.jpg" width="50" height="50" border="0" alt="다음목록">
                 </a>

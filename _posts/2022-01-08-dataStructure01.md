@@ -34,7 +34,10 @@ title: "C언어 자료구조 공부01"
 위치보관은 복사본이 필요하지 않은 경우 위치 보관 형태로 보관
 
 위치(참조)보관하는 방법(문법)에는 포인터가 사용된다.
+
 </pre>
+
+![dataSturctureMemory01.png](../img/dataSturctureMemory01.png)
 
 ```java
 #include <stdio.h>
@@ -60,4 +63,141 @@ int main() {
   printf("%s\n", s);
   printf("%s\n", "HELLO!");
   }
+```
+```java
+#include <stdio.h>
+#include <stdlib.h>
+//포인트 구조체 사용자 정의
+//이 구조체의 타입은 point 로 정의하겠다.
+typedef struct Point
+{
+    int x;
+    int y;
+}Point;
+int main() {
+    Point pt = { 1,2 };
+    //&pt 주소 를 포인트 pp로 담기
+    Point* pp = &pt; 
+    printf("(%d,%d)", pt.x, pt.y);
+    printf("(%d,%d)", (*pp).x, (*pp).y);
+    printf("(%d,%d)", pp->x, pp->y);
+    printf("(%d,%d)", (&pt)->x, (&pt)->y);
+
+    return 0;
+}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+////포인트 구조체 사용자 정의
+////이 구조체의 타입은 point 로 정의하겠다.
+//typedef struct Point
+//{
+//    int x;
+//    int y;
+//}Point;
+//int main() {
+//    Point pt = { 1,2 };
+//
+//    printf("(%d,%d)", pt.x, pt.y);
+//
+//
+//    return 0;
+//}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+////포인트 구조체 사용자 정의
+//struct Point
+//{
+//    int x;
+//    int y;
+//};
+//int main() {
+//    Point p1; //int 형 x,y 4바이트씩 2개=8바이트 메모리사용
+//    Point p2;//int 형 x,y 4바이트씩 2개=8바이트 메모리사용
+//
+//    int n; //int 형 4바이트 메모리 사용
+//
+//    n = 10;
+//    //멤버 참조 연산자
+//    p1.x = 1;
+//    p1.y = 2;
+//    //멤버 참조 연산자
+//    p2.x = 2;
+//    p2.y = 4;
+//    
+//    printf("(%d,%d)", p1.x, p1.y);
+//    printf("(%d,%d)", p2.x, p2.y);
+//
+//    return 0;
+//}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+//int main() {
+//    int x = 1, y = 2; 
+//    int x2 = 2, y2 = 4;
+//    printf("(%d,%d)\n", x, y);
+//    printf("(%d,%d)\n", x2, y2);
+//
+//    return 0;
+//}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+//int main() {
+//    int arr[5];
+//    int* pa = (int*)malloc(sizeof(int) * 5);
+//    for (int i = 0; i < 5; i++)
+//    {
+//        arr[i] = 10 * i;
+//        pa[i] = 10 * i;
+//    }
+//    for (int i = 0; i < 5; i++)
+//    {
+//        printf("%d %d\n", arr[i], pa[i]);
+//    }
+//    return 0;
+//}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+//int main() {
+//    int arr[10];
+//    arr[0] = 10;
+//    arr[1] = 20;
+//    arr[2] = 30;
+//    arr[3] = 40;
+//    arr[4] = 50;
+//    arr[5] = 60;
+//    arr[6] = 70;
+//    arr[7] = 80;
+//    arr[8] = 90;
+//    arr[9] = 100;
+//    for (int i = 0; i < 10; i++)
+//    {
+//        printf("%d\n", arr[i]);
+//    }
+//    //heap 메모리 할당하기
+//    int* p;
+//
+//    p = (int*)malloc(sizeof(int)*10);//4byte 10개 할당
+//    p[0] = 10;
+//    p[1] = 20;
+//    p[2] = 30;
+//    p[3] = 40;
+//    p[4] = 50;
+//    p[5] = 60;
+//    p[6] = 70;
+//    p[7] = 80;
+//    p[8] = 90;
+//    p[9] = 100;
+//    for (int i = 0; i < 10; i++)
+//    {
+//        printf("%d\n", p[i]);
+//    }
+//    free(p);//free 함수는 메모리 삭제함수
+//    return 0;
+//}
+
 ```
