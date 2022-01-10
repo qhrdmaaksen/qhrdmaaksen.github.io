@@ -12,6 +12,7 @@ title: "C언어 자료구조 공부01"
   <li></li>
 </ol>
 <pre>
+<strong>Chapter1</strong>
 자료를 표현하는 방식에는 크게 2가지가있다.
 1 = 연속하게 표현하는 방식
 2 = 비 연속하게 표현하는 방식
@@ -38,7 +39,133 @@ title: "C언어 자료구조 공부01"
 </pre>
 
 ![dataSturctureMemory01.png](../img/dataSturctureMemory01.png)
+<pre>
+<strong>Chapter2</strong>
+</pre>
+![referens_addr.png](../img/referens_addr.png)
+![self_referens_node.png](../img/self_referens_node.png)
 
+```java
+#include <stdio.h>
+#include <stdlib.h>
+//자기 참조형 구조체 node
+struct Node
+{
+    //데이터 
+    int data;
+    //위치(주소)
+    Node* link;
+};
+int main() {
+    //변수 n1,n2,n3 에 데이터 값을 대입시키고 위치는 NULL
+    Node n1 = { 10,NULL };
+    Node n2 = { 20,NULL };
+    Node n3 = { 30,NULL };
+    //변수 n1에 n2주소 저장,n2에 n3주소 저장
+    n1.link = &n2;
+    n2.link = &n3;
+    //데이터 출력
+    printf("%d\n", n1.data);
+    printf("%d\n", n2.data);
+    printf("%d\n", n3.data);
+    //주소를 참조한 데이터 출력
+    printf("%d\n", n1.data);
+    printf("%d\n", n1.link->data);
+    printf("%d\n", n1.link->link->data);
+    return 0;
+}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+////자기 참조형 구조체 node
+//struct Node
+//{
+//    //데이터 
+//    int data;
+//    //위치(주소)
+//    Node* link;
+//};
+//int main() {
+//
+//    return 0;
+//}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+////포인트 구조체 사용자 정의
+////이 구조체의 타입은 point 로 정의하겠다.
+//typedef struct Point
+//{
+//    int x;
+//    int y;
+//}Point;
+//int main() {
+//    //stack에 저장하기
+//    Point arr[5] = { {1,1}, {2,2}, {3,3}, {4,4}, {5,5} };
+//    //heap에 저장하기
+//    Point* p = (Point*)malloc(sizeof(Point) * 5);
+//    p[0].x = 1;
+//    p[0].y = 1;
+//    p[1].x = 2;
+//    p[1].y = 2;
+//    p[2].x = 3;
+//    p[2].y = 3;
+//    p[3].x = 4;
+//    p[3].y = 4;
+//    p[4].x = 5;
+//    p[4].y = 5;
+//    for (int i = 0; i < 5; i++)
+//    {
+//        //stack 에 있는 내용물 출력
+//        printf("(%d,%d)\n", arr[i].x, arr[i].y);
+//    }
+//    for (int i = 0; i < 5; i++)
+//    {
+//        //heap 에 있는 내용물 출력
+//        printf("(%d,%d)\n", p[i].x, p[i].y);
+//    }
+//    free(p);
+//    return 0;
+//}
+
+//#include <stdio.h>
+//#include <stdlib.h>
+////포인트 구조체 사용자 정의
+////이 구조체의 타입은 point 로 정의하겠다.
+//typedef struct Point
+//{
+//    int x;
+//    int y;
+//}Point;
+//int main() {
+//    //stack에 저장하기
+//    Point arr[5] = { {1,1}, {2,2}, {3,3}, {4,4}, {5,5} };
+//    //heap에 저장하기
+//    Point* p = (Point*)malloc(sizeof(Point)*5);
+//    p[0].x = 1;
+//    p[0].y = 1;
+//    p[1].x = 2;
+//    p[1].y = 2;
+//    p[2].x = 3;
+//    p[2].y = 3;
+//    p[3].x = 4;
+//    p[3].y = 4;
+//    p[4].x = 5;
+//    p[4].y = 5;
+//    for (int i = 0; i < 5; i++)
+//    {
+//        //stack 에 있는 내용물 출력
+//        printf("(%d,%d)\n", arr[i].x,arr[i].y);
+//    }
+//    for (int i = 0; i < 5; i++)
+//    {
+//        //heap 에 있는 내용물 출력
+//        printf("(%d,%d)\n", p[i].x, p[i].y);
+//    }
+//    free(p);
+//    return 0;
+//}
+```
 ```java
 #include <stdio.h>
 int main() {
