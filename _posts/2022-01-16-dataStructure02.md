@@ -12,6 +12,73 @@ title: "c언어 자료구조 part02!"
   1부터 5사이라면 3이 중간값 기준이된다.
 </pre>
 
+![DS_part02_01.png](../img/DS_part02_01.png)
+![DS_part02_02.png](../img/DS_part02_02.png)
+
+```java
+#include <stdio.h>
+#include <stdlib.h>
+//서버
+struct Stack
+{
+	//동적 메모사용하기에 포인트 변수로바꿔주자
+	int* stack;
+	int top;
+};
+void Push(Stack* st, int data)
+{
+	st->stack[st->top] = data;
+	++st->top;
+}
+int Pop(Stack* st)
+{
+	--st->top; //*top = *top - 1;
+	return st->stack[st->top];
+}
+void InitStack(Stack* st,int cap) {
+	st->stack = (int*)malloc(sizeof(int) * cap);
+	st->top = 0;//top 위치 초기화
+}
+void UninitStack(Stack* st) {
+	free(st->stack);//동적메모리공간초기화
+	st->top = 0;
+}
+////////////////////////
+//클라이언트
+int main()
+{
+	Stack st;
+	Stack st2;
+
+	//스택 초기화 함수
+	//스택 heap메모리공간 500
+	InitStack(&st,500);
+
+	Push(&st, 10);
+	Push(&st, 20);
+	Push(&st, 30);
+
+	printf("%d\n", Pop(&st));
+	printf("%d\n", Pop(&st));
+	printf("%d\n", Pop(&st));
+
+	//스택 마무리 초기화 함수
+	UninitStack(&st);
+
+	InitStack(&st2,10);//스택 heap메모리 공간 10
+
+	Push(&st2, 100);
+	Push(&st2, 200);
+
+	printf("%d\n", Pop(&st2));
+	printf("%d\n", Pop(&st2));
+
+	UninitStack(&st2);
+	return 0;
+}
+
+```
+
 ```java
 #include <stdio.h>
 #include <stdlib.h>
