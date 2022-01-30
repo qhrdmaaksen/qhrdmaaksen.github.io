@@ -10,10 +10,86 @@ title: "c언어 자료구조 part02!"
   못 찾았다면 2부터 9 또 못찾으면 3부터 8까지의 계속해서 좁히며 검색 만약 
   중간값 기준으로 1또는 10사이의 값을 찾았다면 다시 줄인다. 5부터 10사이라면 7이 중간값
   1부터 5사이라면 3이 중간값 기준이된다.
+  추상화 정의에대해 다시한번 공부하는 계기가되었다.
 </pre>
 
 ![DS_part02_01.png](../img/DS_part02_01.png)
 ![DS_part02_02.png](../img/DS_part02_02.png)
+![circle_queue02.png](../img/circle_queue02.png)
+![circle_queue.png](../img/circle_queue.png)
+
+queue.h header (구조체 정의 및 인터페이스 추상화)
+
+```java
+#pragma once
+typedef struct q_
+{
+	int* queue;
+	int front, rear;
+	int capacity;//메모리 변수를 보관하기위한 변수
+}Queue;
+//서버(Queue)
+void Push(Queue* q, int data);
+int Pop(Queue* q);
+void InitQueue(Queue* q, int cap);
+void UninitQueue(Queue* q);
+```
+
+queue.cpp (함수 정의)
+```java
+#include <stdlib.h>
+#include "Queue.h"
+//함수의 구현정보or정의정보
+void Push(Queue* q, int data) {
+	//큐에 0번째에 데이터를 보관하고 rear 1 증가,rear 는 5를 넘기지않는다.
+	if ((q->rear + 1) % 5 == q->front)
+	{
+		return;
+	}
+	q->rear = (q->rear + 1) % q->capacity;
+	q->queue[q->rear] = data;//큐공간에 rear가 가르키는 곳에 data 보관
+}
+int Pop(Queue* q) {
+	if (q->front == q->rear)
+	{
+		return	0xffffff;
+	}
+	q->front = (q->front + 1) % q->capacity;
+	return q->queue[q->front];
+}
+void InitQueue(Queue* q, int cap) {
+	q->queue = (int*)malloc(sizeof(int) * cap);
+	q->capacity = cap;
+	q->front = q->rear = 0;
+}
+void UninitQueue(Queue* q) {
+	free(q->queue);
+	q->front = q->rear = 0;
+}
+```
+
+client.cpp
+```java
+#include <stdio.h>
+#include "Queue.h"
+int main() {
+	Queue q; 
+
+	InitQueue(&q,100);
+	Push(&q, 10);
+	Push(&q, 20);
+	Push(&q, 30);
+	Push(&q, 40);
+	Push(&q, 50);
+	
+	printf("queue : %d\n", Pop(&q));
+	printf("queue : %d\n", Pop(&q));
+	printf("queue : %d\n", Pop(&q));
+	printf("queue : %d\n", Pop(&q));
+	printf("queue : %d\n", Pop(&q));
+	UninitQueue(&q);
+}
+```
 
 ```java
 #include <stdio.h>
