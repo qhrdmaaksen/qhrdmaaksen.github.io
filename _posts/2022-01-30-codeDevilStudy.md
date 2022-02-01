@@ -137,3 +137,183 @@ title: "자바스크립트 기초00"
         //2.스타일링을 설정할 수 없다. (그래서 html 과 css로 만드는 모달창을 많이 활용함)
         //장점으로 기본 대화상자는 빠르고 간단하게 적용가능해 활용을 많이함
 ```
+
+```js
+//String() 문자열 변환
+        //Number() 숫자형 변환
+        //Boolean() 불린형 변환
+        console.log(
+            String(3),
+            String(name),
+            String(true),
+            String("xxx"),
+            String(null),
+            String(undefined)
+        );
+        console.log(
+            Number(123),
+            //Number(123asd),
+            Number(true),//true 1반환
+            Number(false),//false 0반환
+            Number(0),// 0반환
+            Number(`0`),// true반환
+            Number(undefined),// 0반환
+            Number(``),// false반환
+            Number(` `)// true 반환
+        );
+        //Boolean() 의 false
+        //숫자 0 , 빈 문자열 `` , null , undefined , NaN
+        console.log(
+            Boolean(0),
+            Boolean(``),
+            Boolean(null),
+            Boolean(undefined),
+            Boolean(NaN)
+        );
+        //수능 당사자 19세에게 인사말
+        let exam_age = 19;
+        if (exam_age>20) {
+            console.log(`성인입니다, 시험 대상자가 아닙니다.`);
+        } else if(exam_age===19){
+            console.log(`시험 대상자입니다. 수능 대박나세요`);
+        } else {
+            console.log(`안녕히가세요`);
+        }
+        // OR _ 이름이 MINWOO 이거나 , 성인이면 통과
+        // AND _ 이름이 MINWOO 이며 , 성인이면 통과
+        let or_name = `minwoo`;
+        let or_age = 21;
+        if (or_name === `minwoo` && or_age ===21) {
+            console.log(`이름이 MINWOO 이며 , 성인`);
+        } else {
+            console.log(`해당되는 조건이 없습니다.`);
+        }
+        // NOT
+        // 나이를 입력받아 성인이 아니면 통과안됨
+        //let age_adult = prompt(`나이를 입력해주세요.`);
+        //let age_adult2 = age_adult >= 20;
+        // if (age_adult2) {
+        //     console.log(`성인입니다.`);
+        // } else if(!age_adult2){
+        //     console.log(`성인이아닙니다. 돌아가세요.`);
+        // }
+        //1부터 10까지 로그
+        for (let i = 1; i <= 10; i++) {
+            console.log(i);
+        }
+        console.log(`--------------------`);
+        let i = 0;
+        while (i<10) {
+            console.log(i+1);
+            i++;
+        }
+        //continue,짝수만
+        for (let i = 0; i < 10; i++) {
+            if (i%2) {
+                continue;
+            }
+            console.log(i);
+        }
+        //사고 싶은 과일을 물어보고 가격 알려주기
+        //사과 : 100원
+        //바나나 : 200원
+        //키위 : 300원
+        //멜론 : 400원
+        //수박 : 400원
+        let fruits = prompt(`사고 싶은 과일을 입력해주시면 가격을 알 수 있습니다.`);
+        switch (fruits) {
+            case `사과`:
+                console.log(`사과는 100원 입니다.`);
+                break;
+            case `바나나`:
+                console.log(`바나나는 200원 입니다.`);
+                break;
+            case `키위`:
+                console.log(`키위는 300원 입니다.`);
+                break;
+            //break; 를 넣어주지 않았기에 break 를 만나기전까지 수행한다.
+            case `멜론`:
+            case `수박`:
+                console.log(`400원 입니다.`);
+                break;
+            case `` :
+                console.log(`과일 이름을 입력하지 않았습니다.`);
+                break;    
+            case null :
+                console.log(`과일 이름을 입력하지 않았습니다.`);
+                break;
+            default:
+                console.log(`목록에 해당 과일 이름은 없습니다. 목록을 확인해주세요.`);
+                break;
+        }
+```
+
+```js
+//함수
+        function sayHello(name) {
+            console.log(`Hello,${name}`);
+        }
+        sayHello(`minwoo`);
+        console.log(`--------------------`);
+
+        //전역 변수
+        let msg = `hello`;
+        console.log(`함수 호출 전`);
+        console.log(msg);
+
+        function myName(name) {
+            //지역 변수
+            if (name) {
+                msg += `, ${name}`;
+                console.log(`함수 내부 호출`);
+                console.log(msg);
+            }
+        }
+        myName(`MINWOO`);
+        console.log(`함수 호출 후`);
+        console.log(msg);
+
+        //or
+        let newName = `min`;
+
+        function say2Hello(name) {
+            let newName = name || `friend`;
+            let msg = `hello, ${newName}`;
+            console.log(msg);
+        }
+        say2Hello();
+        say2Hello(`joon`);
+        console.log(`--------------------------`);
+        //default value
+        function say3Hello(name = `friend`) {
+            let msg = `hello, ${name}`;
+            console.log(msg);
+        }
+        say3Hello();
+        say3Hello(`min`);
+        console.log(`---------------------`);
+        //return 값 반환
+        function returntest(num1, num2) {
+            return num1 + num2;
+        }
+        let return_result =
+            returntest(3, 3);
+        console.log(return_result);
+        console.log(`--------------`);
+        //함수 표현식
+        let fun_expression = function() {
+            console.log(`error`);
+        }
+        fun_expression();
+        console.log(`------------`);
+        //화살표 함수
+        let arrow_fun = () => {
+            console.log(`arrow`);
+        }
+        arrow_fun();
+        console.log(`--------------`);
+        //화살표 함수, 리턴 문
+        let arrow_fun_re = (num3, num4) => num3 + num4;
+        let result_arrow = arrow_fun_re(5, 5);
+        console.log(result_arrow);
+```
