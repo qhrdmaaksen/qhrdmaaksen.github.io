@@ -317,3 +317,80 @@ title: "자바스크립트 기초00"
         let result_arrow = arrow_fun_re(5, 5);
         console.log(result_arrow);
 ```
+
+```js
+//객체
+        const superman = {
+            ob_name: `vitamin`,
+            ob_age: 35,
+        };
+        console.log(superman.ob_name);
+        console.log(superman.ob_age);
+        //객체에 추가
+        superman.skin = (`yellow`);
+        console.log(superman.skin);
+        superman.hair = (`black`);
+        console.log(superman.hair);
+        console.log('superman: ', superman);
+        //객체에서 삭제
+        delete superman.skin;
+        console.log('superman: ', superman);
+        //함수를 하나 만들어서 이름과 나이를 받아서 객체를 반환하는 함수
+        function get_name_age(name, age) {
+
+            return {
+                name: name,
+                age: age,
+                hobby: `game`,
+            };
+        };
+        let minwoo = get_name_age(`minwoo`, 35);
+
+        console.log(minwoo);
+        //위 함수를 축약형으로 변환
+        let get_name_age1 = (name, age) => {
+
+            return {
+                name,
+                age,
+                hobby: `game`,
+            };
+        };
+        let minwoo1 = get_name_age1(`minwoo`, 35);
+        console.log(minwoo);
+        //minwoo 1 에 age 가 있는지 여부 확인
+        console.log(`age` in minwoo1);
+        console.log(`============`);
+        //성인 미성년자 판별
+        let minjee = {
+            name: `minjee`,
+            age: 33,
+        };
+        let minseok = {
+            name: `minseok`,
+            age: 19,
+        };
+        let minwoo00 = {
+            name: `minwoo`,
+        };
+
+        function judgment_adult(user) {
+            if (user.age < 20 || !(`age` in user)) {
+                return false;
+            }
+            return true;
+        };
+        console.log(`성인 판별 코드`);
+        console.log(`성인 판별 : `, judgment_adult(minjee));
+        console.log(`성인 판별 : `, judgment_adult(minseok));
+        console.log(`성인 판별 : `, judgment_adult(minwoo00));
+        console.log(`===========`);
+        //객체 for.......in
+        let minwoo01 = {
+            name: `min`,
+            age: 35,
+        };
+        for (i in minwoo01) {
+            console.log(minwoo01[i]);
+        }
+```
