@@ -394,3 +394,78 @@ title: "자바스크립트 기초00"
             console.log(minwoo01[i]);
         }
 ```
+
+```js
+ //method:객체 프로퍼티로 할당 된 함수
+        let superman2 = {
+            name: `minwoo`,
+            age: 35,
+            fly: function() {
+                console.log(`날아가유`);
+            },
+        };
+        superman2.fly();
+        let user = {
+            name: `minwoo`,
+            say4Hello: function() {
+                console.log(`hello, ${this.name}`);
+            },
+        };
+        user.say4Hello();
+        console.log(`==============`);
+        //method
+        let boy = {
+            name: `vita777`,
+            showName: function() {
+                // <-- method 에서는 객체를 직접 써주기 보다는 this 를 사용해주는게 좋다.
+                console.log(`hello, i'm ${this.name}`); //console 에 ${boy.name}으로 입력해주면 아래 boy=null이 적용돼 찾을 수 없고 ,
+                //this.name 은 오로지 객체안에 name 을 가르키기때문에 man.showName(); 은 vita777을 출력하게된다.
+            },
+        };
+        let man = boy;
+        boy = null;
+        man.showName();
+        // let boy = {
+        //     name: `minmin`,
+        //     sayThis: () => { //화살표 함수로 method를 작성하면 this 는 boy 를 가리키는게아니라 window 전역 객체를 가리킴
+        //         console.log(this); // this 는 boy 객체를 가리킴
+        //     }
+        // };
+        // boy.sayThis();
+        //method 를 사용해서this 를 사용한다면 화살표함수는 사용하지 않는게 좋다.
+        console.log(`================`);
+        //배열(문자,숫자,객체,함수,불린 등도 포함될 수 있다.)
+        //배열은 몇개의 method 를 가지고있다.
+        //push(): 배열 끝에 추가
+        //pop(): 배열 끝 요소 제거
+        //unshift(): 배열 앞에 추가
+        //shift(): 배열 앞 제거
+        let days = [`화`, `수`, `목`, `금`, `토`];
+        console.log(`현재 배열`);
+        console.log(days);
+        console.log('배열 제일 앞에 "월"추가');
+        days.unshift(`월`);
+        console.log(days);
+        console.log('배열 제일 끝에 "일"추가');
+        days.push(`일`);
+        console.log(days);
+        console.log('배열 제일 끝에 "일" 제거');
+        days.pop(`일`);
+        console.log(days);
+        console.log('배열 제일 앞에 "월" 제거');
+        days.shift(`월`);
+        console.log(days);
+        console.log("배열의 0 번째 '월' 로 변경");
+        days[0] = `월`;
+        console.log(days);
+        console.log(`배열 전체 길이 보기`);
+        console.log(days.length);
+        console.log("for 문 사용해서 차례로 출력");
+        for (let index = 0; index < days.length; index++) {
+            console.log('days[index]: ', days[index]);
+        }
+        console.log("for ..of 문 사용해서 차례로 출력");
+        for (const iterator of days) {
+            console.log(iterator);
+        }
+```
