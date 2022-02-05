@@ -4,13 +4,7 @@ title: "C언어 자료구조 공부01"
 ---
 
 ######자료구조 공부하기, part 01 
-<ol>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-</ol>
+
 <pre>
 <strong>Chapter1</strong>
 자료를 표현하는 방식에는 크게 2가지가있다.
