@@ -133,6 +133,30 @@ title: "깃 기초 사용법을 알아두자!!"
     동기화)내가작업하는게있다면 git add . and commit 해주고 ,master branches 에 바뀐게있다면 master pull해주기
   </dd>
   <dt>
+    새 리포지토리 remote 추가 / 기존 리포지토리 remote 제거
+  </dt>
+  <dd>
+    추가 : git remote add origin 주소 / 기존 제거 : git remote remove origin
+  </dd>
+  <dt>
+
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
 
   </dt>
   <dd>
