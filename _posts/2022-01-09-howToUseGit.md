@@ -108,8 +108,8 @@ title: "깃 기초 사용법을 알아두자!!"
 </dl>
 <hr>
 
-###chapter 3
-####회사에서 작업 후 병합 
+###chapter 3 ####회사에서 작업 후 병합
+
 <p>!!!ps 절대! git push origin master 에 혹시나 습관처럼 절대 push 하지말자!</p>
 <dl>
   <dt>
@@ -139,9 +139,16 @@ title: "깃 기초 사용법을 알아두자!!"
     추가 : git remote add origin 주소 / 기존 제거 : git remote remove origin
   </dd>
   <dt>
-
+    fatal: refusing to merge unrelated histories 에러 메세지 발생시
   </dt>
   <dd>
+    push 전에 먼저 pull을 해서 프로젝트를 병합해 주어야 한다.
+
+pull 명령 실행시 이런 문구와 함께 진행되지 않는다면, 다음의 명령으로 실행한다.
+
+git pull origin 브런치명 --allow-unrelated-histories
+
+--allow-unrelated-histories 이 명령 옵션은 이미 존재하는 두 프로젝트의 기록(history)을 저장하는 드문 상황에 사용된다고 한다. 즉, git에서는 서로 관련 기록이 없는 이질적인 두 프로젝트를 병합할 때 기본적으로 거부하는데, 이것을 허용해 주는 것이다.
 
   </dd>
   <dt>

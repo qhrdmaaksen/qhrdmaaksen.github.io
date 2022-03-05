@@ -6,6 +6,7 @@ title: "리액트를 배워보자(웹게임) 01"
 # 민우의 블로그 테스트중입니다.
 
 ```html
+
 리액트 =
 - 사용자 인터페이스를 만들기 위한 js 라이브러리
 - 데이터 처리를 쉽게 함
@@ -80,15 +81,15 @@ webPack 은 쪼개어진 자바스크립트 파일을 html 이 실행 할 수 �
 
   확장자를 리액트를 사용할땐 jsx 로 설정해주는게 다른사람이 파일을 볼때도 이것은 리액트가 들어가있겠구나라고 인지시켜주기에 jsx로 확장자를 설정해주자
 
-  파일을 쪼개서 사용할때에 위에는 아래와 같이 적어주고 
+  파일을 쪼개서 사용할때에 위에는 아래와 같이 적어주고
   const React = require(`react`); //npm 에서 react 를 불러옴
   const { Component } = React; //React.Component 를 줄일 수 있다
 
-  아래에는 아래와 같이 작성해놓으면된다 
+  아래에는 아래와 같이 작성해놓으면된다
   module.exports = WordRelay ; //쪼갠 파일의 컴포넌트를 밖에서도 사용할 수 있도록 설정
 
 ----------------------------------------------------------------------------------------------------------------------------------
-module 시스템이 생기면서 몇만개의 클래스중에서 몇개만 사용하고싶다면 
+module 시스템이 생기면서 몇만개의 클래스중에서 몇개만 사용하고싶다면
 const WordRelay = require(`./WordRelay`); 와 같이 필요한것만 불러서 사용할수 있게됐다
 ----------------------------------------------------------------------------------------------------------------------------------
 webpack.config.js 에 설정
@@ -111,12 +112,12 @@ module.exports = {
   } // 출력
 }
 -------------------------------------------------------------
-터미널에 webpack 을 작성하자 만약 안된다면 
+터미널에 webpack 을 작성하자 만약 안된다면
 
 첫번째로 터미널에 npx webpack 을 입력하거나
 
 두번째로
-package.json 에 scripts 에 따로 
+package.json 에 scripts 에 따로
 "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack"
@@ -128,6 +129,6 @@ npm i -D @babel/core //core 에는 바벨의 기본적인것이 들어있음
 npm i @babel/preset-env // 사용하고있는 브라우저에 맞게 최신문법을 옛날 문법을 지원하는것으로 바꿔줌
 npm i @babel/preset-react // jsx 도 지원해줌
 npm i babel-loader //바벨과 웹팩을 연결해줌
-npm i -D @babel/plugin-proposal-class-properties // 
+npm i -D @babel/plugin-proposal-class-properties //
 
 ```
