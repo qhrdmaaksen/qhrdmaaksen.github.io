@@ -5,7 +5,6 @@ title: "리액트를 배워보자(웹게임) 01"
 
 # 민우의 블로그 테스트중입니다.
 
-
 ```js
 
 리액트 =
@@ -54,9 +53,9 @@ webPack 은 쪼개어진 자바스크립트 파일을 html 이 실행 할 수 �
 
   Hooks - 함수컴포넌트에서도 ref 랑 state 를 사용 할 수 있게 해줌
 
-  class 사용시 render 함수만 재실행되지만 함수 컴포넌트 사용시엔 전체가 재실행된다 ?
+  <span>class</span> 사용시 render 함수만 재실행되지만 함수 컴포넌트 사용시엔 전체가 재실행된다 ?
 
-  html 에서 속성에 class 를 사용하지않으며 className 을 사용한다
+  html 에서 속성에 <span> class </span> 를 사용하지않으며 className 을 사용한다
 
   html 에서 속성 for 를 사용하지 않으며 htmlFor 를 사용한다
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -67,9 +66,53 @@ webPack 은 쪼개어진 자바스크립트 파일을 html 이 실행 할 수 �
   필요한 정보를 입력해준 후 yes 엔터
 
   터미널에 npm i react react-dom 입력  (리액트랑 리액트 돔을 설치하겠다)
-  다음으로  npm i  -D webpack webpack-cli 리액트할때 필요한 웹팩을 설치해줘야함
-  다음으로 폴더에 webpack.config.js 파일 생성후 module.exports = { }; 작성
-  다음으로 client.jsx 파일 생성 후 const React = require('react'); const ReactDOM = require('react-dom'); 작성(리액트와 리액트돔 불러오기)
+  다음으로  npm i  - webpack webpack-cli 리액트할때 필요한 웹팩을 설치해줘야함
+  다음으로 
+  //바벨 설치 -D 는 개발자 모드
+npm i -D @babel/core //core 에는 바벨의 기본적인것이 들어있음
+npm i -D @babel/preset-env // 사용하고있는 브라우저에 맞게 최신문법을 옛날 문법을 지원하는것으로 바꿔줌
+npm i -- @babel/preset-react // jsx 도 지원해줌
+npm i -D babel-loader //바벨과 웹팩을 연결해줌
+npm i -D @babel/plugin-proposal-class-properties //필요하다면 설치 
+
+  다음으로 폴더에 webpack.config.js 파일 생성후 아래와 같이 작성
+const path = require('path')
+
+module.exports = {
+  name: 'wordrelay-setting',
+  mode: 'development', // 실서비스 사용할땐 : production 으로 변경
+  devtool: 'eval', // 빠르게
+  resolve: {
+    extensions: ['.js', '.json', '.jsx', '.css']
+  },
+  entry: {
+    app: ['./client'] // 입력 할 파일 설정 ( WordRelay.jsx 파일을 client.jsx 에서 불러오고있기때문에 적어줄 필요없다), resolve 에서 확장자를 설정해줬기에 따로 확장자를 안붙여줘도된다
+  }, // 입력
+
+  module: {
+    rules: [
+      {
+        test: /\.jsx?/, // js & jsx 파일을 룰에 적용
+        loader: 'babel-loader', // js & jsx 에 바벨을 적용해서 예전 문법에도 적용돼 돌아갈수있도록 해준다
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: ['@babel/plugin-proposal-class-properties']
+        }
+      }
+    ]
+  }, // modules - 엔트리에있는 파일을 읽고 거기에 모듈을 적용 후 아웃풋에 출력
+
+  output: {
+    path: path.join(__dirname, 'dist'), // dist 폴더 경로 설정
+    filename: 'app.js' // 원하는 파일
+  }
+}
+-------------------------------------------------------------
+  다음으로 client.jsx 파일 생성 후 
+  const React = require('react'); 
+  const ReactDOM = require('react-dom'); // (리액트와 리액트돔 불러오기)
+  const GuGuDan = require('./GuGuDan') // const 변수 = require('파일경로및이름')
+  ReactDOM.render(<component />, document.querySelector('#root'))
   이렇게 하면 더이상 위에 파일들을 더이상 html에 표기하지 않아도된다 babel 포함
 
   <body>
@@ -84,35 +127,18 @@ webPack 은 쪼개어진 자바스크립트 파일을 html 이 실행 할 수 �
 
   파일을 쪼개서 사용할때에 위에는 아래와 같이 적어주고
   const React = require(`react`); //npm 에서 react 를 불러옴
+  
+  <p>class 사용시엔</p>
   const { Component } = React; //React.Component 를 줄일 수 있다
 
-  아래에는 아래와 같이 작성해놓으면된다
-  module.exports = WordRelay ; //쪼갠 파일의 컴포넌트를 밖에서도 사용할 수 있도록 설정
+  제일 아래에는 아래와 같이 작성해놓으면된다
+  module.exports = componentName ; //쪼갠 파일의 컴포넌트를 밖에서도 사용할 수 있도록 설정
 
 ----------------------------------------------------------------------------------------------------------------------------------
 module 시스템이 생기면서 몇만개의 클래스중에서 몇개만 사용하고싶다면
 const WordRelay = require(`./WordRelay`); 와 같이 필요한것만 불러서 사용할수 있게됐다
 ----------------------------------------------------------------------------------------------------------------------------------
-webpack.config.js 에 설정
-const path = require('path')
 
-module.exports = {
-  name: 'wordrelay-setting',
-  mode: 'development', // 실서비스 사용할땐 : production 으로 변경
-  devtool: 'eval', // 빠르게
-  resolve: { // 확장자를 알아서 설정해줄 수 있게 설정
-    extensions: ['.js', '.jsx']
-  },
-
-  entry: {
-    app: ['./client'] // 입력 할 파일 설정 ( WordRelay.jsx 파일을 client.jsx 에서 불러오고있기때문에 적어줄 필요없다), resolve 에서 확장자를 설정해줬기에 따로 확장자를 안붙여줘도된다
-  }, // 입력
-  output: {
-    path: path.join(__dirname, 'dist'), // dist 폴더 경로 설정
-    filename: 'app.js' // 원하는 파일
-  } // 출력
-}
--------------------------------------------------------------
 터미널에 webpack 을 작성하자 만약 안된다면
 
 첫번째로 터미널에 npx webpack 을 입력하거나
@@ -125,11 +151,7 @@ package.json 에 scripts 에 따로
   },
   와 같이 ex_ "dev": "webpack" 설정해주고 npm run dev 를 해주면 실행된다 webpack.config.js 에 mode: "development" 를 넣어줬지만 만약 안넣었다면 package.json 에서 따로 넣어줄수도있다
 
-//바벨 설치
-npm i -D @babel/core //core 에는 바벨의 기본적인것이 들어있음
-npm i @babel/preset-env // 사용하고있는 브라우저에 맞게 최신문법을 옛날 문법을 지원하는것으로 바꿔줌
-npm i @babel/preset-react // jsx 도 지원해줌
-npm i babel-loader //바벨과 웹팩을 연결해줌
-npm i -D @babel/plugin-proposal-class-properties //
 
+정말...오타조심하자 ㅠㅠ 
+npx webpack .. or 무언가를 설치할때.. 다시한번 꼭 터미널 경로 확인하자 정말정말 ! 
 ```
