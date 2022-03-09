@@ -76,6 +76,7 @@ npm i -D @babel/plugin-proposal-class-properties //필요하다면 설치
 
   다음으로 폴더에 webpack.config.js 파일 생성후 아래와 같이 작성
 const path = require('path')
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin') // 핫 로드? 리로딩
 
 module.exports = {
   name: 'wordrelay-setting',
@@ -143,17 +144,15 @@ module 시스템이 생기면서 몇만개의 클래스중에서 몇개만 사�
 const WordRelay = require(`./WordRelay`); 와 같이 필요한것만 불러서 사용할수 있게됐다
 ----------------------------------------------------------------------------------------------------------------------------------
 
-터미널에 webpack 을 작성하자 만약 안된다면
+터미널에 첫번째로 터미널에 npx webpack 을 입력해 dist 폴더 생성 후 
 
-첫번째로 터미널에 npx webpack 을 입력하거나
-
-두번째로
+두번째로 
 package.json 에 scripts 에 따로
 "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack"
+    "dev": "webpack serve --env development"
   },
-  와 같이 ex_ "dev": "webpack" 설정해주고 npm run dev 를 해주면 실행된다 webpack.config.js 에 mode: "development" 를 넣어줬지만 만약 안넣었다면 package.json 에서 따로 넣어줄수도있다
+  와 같이 ex_ "dev": "" 설정해주고 npm run dev 를 해주면 실행된다 webpack.config.js 에 mode: "development" 를 넣어줬지만 만약 안넣었다면 package.json 에서 따로 넣어줄수도있다
 
 
 정말...오타조심하자 ㅠㅠ
@@ -211,5 +210,10 @@ const HooksRelay = () => {
     }
   }
 ---------------------------------------------------------------------------------------------------------------------------------
-Hooks 에서는
+export const hello = 'hello'; // import { hello } 와 같다 (변수 ?) 한번에 변수명만다르게해서 여러개를 사용할수도있다
+노드 모듈 시스템에서 exports.hello = 'a' 와 module.export = { hello: 'a'}; 와 같다
+const React = require('react') 와 같이 require 는 노드에서 사용하고 
+react 에서는 import React, { Component } from 'react' 로 사용한다 ,  export 도 마찬가지 ? import 나 export const 를 보고 당황하지 말자
+export default NumberBaseBall; // import NumberBaseBall 과 같다 (module.export = NumberBaseBall; 와 호환되지만 좀 다름)
+
 ```
