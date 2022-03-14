@@ -3,7 +3,7 @@ layout: single
 title: "리액트를 배워보자(웹게임) 01"
 ---
 
-# 민우의 블로그 테스트중입니다.
+# 민우의 블로그 테스트중입니다 
 
 ```js
 
@@ -52,8 +52,14 @@ webPack 은 쪼개어진 자바스크립트 파일을 html 이 실행 할 수 �
   직접 내가 만든 함수는 화살표 함수를 꼭 사용해야한다 . function 을 사용하게됐을 경우 this 가 달라진다.
 
 Hooks - 함수컴포넌트에서도 ref 랑 state 를 사용 할 수 있게 해줌
+- ref를 사용하면 current 를 같이 넣어줘야한다
 -  html 에서 속성에 class 를 사용하지않으며 className 을 사용한다
 -  html 에서 속성 for 를 사용하지 않으며 htmlFor 를 사용한다
+
+  state 와 ref 의 차이점 (값을 바꾸고싶다는 의미는 같음)
+  - setState 를 사용하면 리턴부분이 다시 실행된다.(렌더링)
+  - ref 가 사용될땐 리턴부분이 다시실행되지않는다.
+  리턴 부분이 렌더링되지않게(화면에 영향을 끼치고싶지않다면) 하고싶다면 ref 를 사용하면된다. 
 
   hooks 가 아닌 class 사용시 render 함수만 재실행되지만 함수 컴포넌트 사용시엔 전체가 재실행된다 ?
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -240,14 +246,14 @@ export default NumberBaseBall; // import NumberBaseBall 과 같다 (module.expor
           })}
           객체 키 값으로 사용
 ----------------------------------------------------------------
-배열에 추가할땐 
+배열에 추가할땐
 js 에서는 array.push(2) 과 같이 추가해줬지만 react 에서는 새로운 변수 variableNew = [...originVariable,2] 와같이 추가해줘야한다
 originVariable === variableNew ( 예전 state 와 현재 state 가 false 가 되어야 렌더링을 해주기때문에 ?)
 -----------------------------------
 const { result, value, tries } = this.state // 구조분해
 this.state.result 는 result 와 같아진다
 
-<Try key={`${i + 1}차 시도 : `} tryInfo={v} /> // html 에서는 속성이라 부르지만 리액트에서는 props 라고 불림 
+<Try key={`${i + 1}차 시도 : `} tryInfo={v} /> // html 에서는 속성이라 부르지만 리액트에서는 props 라고 불림
 
 예전 state 로 현재 state 를 만들때엔 함수형 state 를 사용
   this.setState((prevState) => { // 예전 상태를 나타냄
@@ -257,4 +263,146 @@ this.state.result 는 result 와 같아진다
 
 ----------------------------------------------------------------
 port 번호 지정해주고 터미널  링크 찍고 타서 작업하자 ( 데브서버 반영이 안될 경우 )
+----------------------------------------------------------------
+컴포넌트 최적화
+class Test extends Component {
+  state = {
+    counter: 0,
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) { // 컴포넌트 최적화 (필요할때만 렌더링?)
+    if (this.state.counter !== nextState.counter) { // 현재 카운터와 미래의 카운터가 같지않으면 렌더링
+      return true
+    }
+    return false
+  }
+    ----------------------------------------------------------------
+  자식 컴포넌트에서 모두 PureComponent 를 사용하고있다면 부모 코드에도 PureComponent 를 넣어주자
+  hooks 도 memo 를 넣어주자
+  import React, { PureComponent, memo } from 'react'; // class 의 pure component 와 같이 hooks 에서는 memo 를 추가해준다
+
+const TryHooks = memo(({ tryInfo }) => { // hooks 에서 props 구조 분해 사용 ,  memo 추가 ( state 나 props 가 바뀌었을때만 렌더링을 해줌)
+    ----------------------------------------------------------------
+class component 에서 ref 를 설정할때 import React, { Component, createRef } from 'react'; 
+createRef 를 만들어주면된다 . 로직에 inputRef = createRef() 넣어주면 input에 ref 에서도 그냥 this.inputRef 만 넣어주면됨
+대신 hooks component 와 같이 input.current.focus() 와 같이 current를 추가해줘야함 이렇게하면 hooks 와 class component 가 
+ref 추가에대해 코드가 비슷해짐
+    ----------------------------------------------------------------
+    render(){
+      렌더 안에는 setState() 를 사용하면안된다. 렌더와 setState 가 서로 실행되기때문에 ?
+    }
+      ----------------------------------------------------------------
+props 는 부모쪽에서 바꿔줘야하지 자식 컴포넌트에 props 를 직접적으로 바꾸면 안된다. 
+바꾸려면 아래와 같이 바꿀수있다 ( state 로 만들어서 바꾼다) 그래야 부모한테 영향을 안끼친다
+import React, { PureComponent, memo, useState } from 'react'; // class 의 pure component 와 같이 hooks 에서는 memo 를 추가해준다
+
+const TryHooks = memo(({ tryInfo }) => { // hooks 에서 props 구조 분해 사용 ,  memo 추가 ( state 나 props 가 바뀌었을때만 렌더링을 해줌)
+
+  const [result, setResult] = useState(tryInfo.try) 
+
+  const onClick = () => {
+    setResult('1')
+  }
+
+  return (
+    <li>
+      <div>{tryInfo.try}</div>
+      <div onClick={onClick}>{result}</div>
+    </li> // key 는 고유해야한다
+  )
+})
+export default TryHooks;
+    ----------------------------------------------------------------
+    props 는 자식에게만 넘길수있으며 만약 뛰어넘어 손주에게 바로 넘기려한다면 context api 를 사용한다
+    ----------------------------------------------------------------
+  react 는 항상 js 역할만 담당한다는것을 인지하자
+  render( ) 안에서는 for 와 if 를 사용할 수 없기때문에 다른방식을 사용해야한다 . ( 부호 연산자, 삼항 연산자, 반복문은 map)
+
+  false, undefined, null 은 jsx 에서 tag 없음을 의미한다
+
+  class component 를 사용할땐 구조분해 하는걸 습관화하자 this.state 같이 너무 자주 사용하는 경우가 많기때문이다
+  const { state } = this.state
+  ex_ state = ({
+    state: '',
+  })
+  state.current.focus()
+====================================================================================================================
+리턴안에서 if 조건문 사용하는 방법
+  return (
+    <>
+      <div id="screen" className={state} onClick={onClickScreen}>
+        {message}
+      </div>
+      {(() => {                    {/* 리턴문안에서 if 문 사용하기 */}
+        if (result.length === 0) {
+          return null
+        } else {
+          return <>
+            <div>평균 시간 : {result.reduce((a, c) => a + c) / result.length}ms</div>
+            <button onClick={onReset}>리셋</button>
+          </>
+        }
+      })}
+      {/*{renderAverage()}if 문 사용하려고 잠깐 막아놓음*/} 
+    </>
+  )
+====================================================================================================================
+배열안에 jsx 를 사용 할수 있다 , jsx 에서 배열을 리턴할 수 있다
+====================================================================================================================
+
+Hooks 는 라이프 사이클을 가지고있지 않다. 하지만 비슷하게 아래와 같이 사용할 수 있다
+
+useEffect(() => { // componentDidMount , componentDidUpdate 역할 ( 1 대 1 대응은 아님 )
+
+    return () => { // componentWillUnmount 역할
+
+    }
+  }, []) // 배열에는 계속 바뀌는 state 지정? ( componentDidUpdate ?) 
+  // 배열에는 꼭 useEffect 를 다시 실행할 값만 넣자
+-------------------
+useEffect 는 여러번 사용할 수 있다 . 계속해서 바뀔 state 를 따로 지정해야 할 경우
+- 화면이 바뀐 다음에 실행 
+----------------------------------------------------------------
+부모 컴포넌트가 렌더링 될때마다 자식 컴포넌트도 렌더링 된다 이럴때 따로 지정하고 싶다면 memo 사용
+------------------------------------------------------------------------------------------------
+useLayoutEffect 는 화면이 바뀌기전에 발생, 화면 바뀌는걸 감지하는 이펙트
+
+/*hooks useEffect =
+                                                              useEffect 는 세로 
+                          result , imgCoords , score
+componentDidMount
+componentDidUpdate
+componentWillUnmount
+
+// class component
+componentDidMount() {
+  this.setState({
+    imgCoords: 2,
+    score: 1,
+    result: 3
+  })
+}
+// hooks component
+useEffect(()=> {
+  setImgCoords(2)
+  setScore(1)
+}[score, imgCoords])
+
+useEffect(()=> {
+  setResult(3)
+}[result])
+*/
+================================================================================================================
+/*라이프 사이클 = 클래스의 경우 -> constructor -> rendering -> ref 부분실행 -> componentDidMount -> (setState or props바뀔때 -> shouldComponentUpdate(true)
+ -> render -> componentDidUpdate -> 부모가 나를 없앨을때 -> componentWillUnmount -> 소멸 */
+
+componentDidMount () { // 렌더가 처음 성공적으로 실행되었다면 componentDidMount 가 실행됨, 하지만 setState로 리렌더링이 될때엔 실행되진않음
+
+componentWillUnmount () { // 컴포넌트가 제거되기 직전에 실행됨 , 부모가 자식 컴포넌트를 없앴을때 실행됨
+
+componentDidUpdate () { // 리렌더링 후에 실행됨
+
+class component 경우 componentDidMount or componentDidUpdate 에서 모든 state를 조건문으로 분기 처리한다
+----------------------------------------------------------------
+비동기 함수가 지역변수를 참조하면 클로즈 에러 발생
 ```
