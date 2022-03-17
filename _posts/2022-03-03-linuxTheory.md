@@ -7,7 +7,7 @@ title: "리눅스 이론01"
 
 ```HTML
 
-MD047/single-trailing-newline: Files should end with a single newline charactermarkdownlint
+vmware install , vmware-config setting ( spec )
 
 
 ```
