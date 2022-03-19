@@ -5,6 +5,8 @@ title: "반응형 웹 basic"
 
 # 반응형 웹
 
+```js
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -202,3 +204,5 @@ title: "반응형 웹 basic"
     </div>
   </body>
 </html>
+
+```

@@ -5,7 +5,7 @@ title: "제이쿼리 모바일 basic"
 
 # 제이쿼리 모바일 html , css
 
-```html
+```js
 <!DOCTYPE html>
 <html lang="en">
 
