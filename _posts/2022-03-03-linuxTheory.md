@@ -35,5 +35,28 @@ vmware install
 스냅샷잡기
 -workstation pro 에서 파일 누르고 오픈으로 Server 선택 -> 위에 vm 옵션에 스냅샷 ->take snapshot -> 이름및셋팅 -> 스냅샷지점으로 이동하려면 vm에 스냅샷에 스냅샷 매니저에서 지정한이름으로 위치로 goto  -> player 에서 부팅후 정상작동확인
 
+Client mode 에서 manager mode 변경 = terminal 에서 su - 입력
+
+text mode
+- 초기설정을 영어로 쓴다
+- 자원을 적게사용한다
+- 소프트웨어설정에서 minimal install 선택
+- 파티션은 swap 4g
+- 필수 패키지2개 = 명령어 yum -y install net-tools system-config-network-tui
+- system-config-network -> 네트워크 설정(dhcp 끄기)
+- vi text mode 명령어 = vi /etc/sysconfig/selinux -> selinux = disabled 변경(i 누르면 insert mode)-> esc -> :wq(console mode)
+
+-- 해상도 변경
+- vi /boot/grub2/grub.cfg -> :set nu -> 75행 -> gfxpayload=800x600x16, 800x600 -> esc :wq 
+
+- 재시작 reboot
+- 비번 변경 passwd
+- 파일 옮기기
+-- cd /etc/yum. repos. d/ ->mkdir backup -> ls -> mv fedora-up* backup -> ls-> backup fedora.repo 확인
+
+- 필수 패키지5개 = 명령어 yum -y install bind-utils ncftp wget unzip tar
+
+WinClient 설치
+-  
 
 ```
