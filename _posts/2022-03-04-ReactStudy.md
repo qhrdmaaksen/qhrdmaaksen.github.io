@@ -68,7 +68,6 @@ Hooks - 함수컴포넌트에서도 ref 랑 state 를 사용 할 수 있게 해�
   webPack 을 사용하기 전에 npm 과 node 를 준비해야한다
   터미널로 사용될 폴더지정이 되있다면 npm init 해주고
   필요한 정보를 입력해준 후 yes 엔터
-
   터미널에 npm i react react-dom 입력  (리액트랑 리액트 돔을 설치하겠다)
   다음으로  npm i webpack webpack-cli 리액트할때 필요한 웹팩을 설치해줘야함
   다음으로 webpack5번전으로시작한다면 npm i react-refresh @pmmmwh/react-refresh-webpack-plugin -D
@@ -98,12 +97,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?/, // js & jsx 파일을 룰에 적용
+        test: /\.jsx?$/, // js & jsx 파일을 룰에 적용
         loader: 'babel-loader', // js & jsx 에 바벨을 적용해서 예전 문법에도 적용돼 돌아갈수있도록 해준다
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
-          plugins: ['@babel/plugin-proposal-class-properties', `react-refresh/babel`],
-        }
+          plugins: [`react-refresh/babel`],
+        },
+        exclude: path.join(__dirname, 'node_modules'),
       }
     ]
   }, // modules - 엔트리에있는 파일을 읽고 거기에 모듈을 적용 후 아웃풋에 출력
@@ -111,6 +111,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'), // dist 폴더 경로 설정
     filename: 'app.js', // 원하는 파일
+    publicPath: './dist',
   },
   devServer: {
     devMiddleware: { publicPath: '/dist'}, // 버전 업 되면서 변경됨 (웹팩 명령어 실행할때 dist 폴더안에 생성해줌)
@@ -120,11 +121,18 @@ module.exports = {
 }
 -------------------------------------------------------------
   다음으로 client.jsx 파일 생성 후
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TicTacToe from './TicTacToeClass';
+ReactDOM.render(<TicTacToe />, document.querySelector('#root'));
+
+또는 
+
   const React = require('react');
   const ReactDOM = require('react-dom'); // (리액트와 리액트돔 불러오기)
   const GuGuDan = require('./GuGuDan') // const 변수 = require('파일경로및이름')
   ReactDOM.render(<component />, document.querySelector('#root'))
-  이렇게 하면 더이상 위에 파일들을 더이상 html에 표기하지 않아도된다 babel 포함
+  이렇게 하면 더이상 위에 파일들을 더이상 html에 표기하지 않아도된다(script, link 등) babel 포함
 
   <body>
   <div id="root"></div>
@@ -405,4 +413,53 @@ componentDidUpdate () { // 리렌더링 후에 실행됨
 class component 경우 componentDidMount or componentDidUpdate 에서 모든 state를 조건문으로 분기 처리한다
 ----------------------------------------------------------------
 비동기 함수가 지역변수를 참조하면 클로즈 에러 발생
+
+useMemo - 복잡한 함수 결과 값을 기억  (함수 리턴값)
+// useMemo 는 값을 기억한다 input [] 이 바뀌기 전까지
+useRef - 일반 값을 기억
+useCallback - 함수 자체를 기억
+
+}, [timeouts.current]); // useEffect 는 로직을 실행하는데 input [] 이 바뀔때 실행 
+
+useCallback 안에 state 는 항상 [] 인풋에다가도 넣어줘야한다 . (인풋값이 바뀌어야 새로 실행된다)
+const onClickRedo = useCallback(() => { // useCallback 은 함수를 기억한다. input [winNumbers] 가 바뀌기 전까지만
+
+hooks 는 순서가 중요하다
+
+자식 컴포넌트의 함수를 넘길때 (프롭스) 이럴땐 useCallback 을 꼭 사용해주자, 사용하지 않으면 부모로부터 받은 프롭스가 바뀌었다 인식하기에 리렌더링을 하게된다
+
+훅스들은 최상위에 두도록하자
+
+훅스를 한번 선언하면 그 순서(실행순서)가 바뀌지않게해야하며 조건문 안에 훅스를 넣으면 안되고 함수나 반복문 안에도 웬만하면 넣지 말자
+
+useEffect 안에서 훅스(useState)등을 넣지 말자
+
+useEffect 로직은 componentDidMount 에 쓰일 로직을 넣는다. input[] 은 componentDidUpdate 라고 생각하자 상태변환이 될 state 를 넣어주자
+
+class는 함수 한 번 선언하면 다시 선언될 일이 없습니다.
+
+useEffect(() => {
+  // ajax 
+}, [])
+
+const mounted = useRef(false)
+useEffect(()=>{
+  if (!mounted.current) {
+    mounted.current = true 
+  } else {
+    // ajax
+  }
+}, [바뀌는 값]) // componentDidUpdate 에서만 , componentDidMount 에서는 x
+
+dispatch({ type: 'SET_WINNER', winner: '0'}) // 디스패치안에는 액션을 만들어주고 액션안에 타입을 만들어줘야한다
+
+const reducer = (state, action) => { // 액션을 dispatch 할때마다 reducer 가 실행
+	switch (action.type) {
+		case 'SET_WINNER':
+			// state.winner = action.winner ; 이렇게(초기 값을 직접 바꿈) 하면 안된다
+			return {
+				...state, // 새로운 객체를 만들어서 값을 바꿔줘야한다.
+				winner: action.winner,
+
+action 의 이름은 보통 모두 대문자로 하는게 규칙이다햣
 ```
