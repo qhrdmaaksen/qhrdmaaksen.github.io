@@ -433,6 +433,7 @@ hooks 는 순서가 중요하다
 훅스를 한번 선언하면 그 순서(실행순서)가 바뀌지않게해야하며 조건문 안에 훅스를 넣으면 안되고 함수나 반복문 안에도 웬만하면 넣지 말자
 
 useEffect 안에서 훅스(useState)등을 넣지 말자
+비동기 상태에 따라서 처리할땐 useEffect 를 사용한다 
 
 useEffect 로직은 componentDidMount 에 쓰일 로직을 넣는다. input[] 은 componentDidUpdate 라고 생각하자 상태변환이 될 state 를 넣어주자
 
@@ -462,4 +463,14 @@ const reducer = (state, action) => { // 액션을 dispatch 할때마다 reducer 
 				winner: action.winner,
 
 action 의 이름은 보통 모두 대문자로 하는게 규칙이다햣
+
+프롭스로 넣어두는 데이터는 useCallback 에 넣어주는게 좋으며 , 계속해서 값이 바뀔것같은 것은 input[] 에 넣어주면된다
+
+렌더링을 리팩토링할떄 memo 를 먼저 사용해보고 적용이안된다면 최후의 수단으로 useMemo 를 사용해보자
+useMemo 사용시 기억을 해제할땐 input[] 에는 바뀔여지가있는 state 를 넣어주자
+
+useReducer 는 useState 가 많을때 state 를 하나로 묶어주는 역할
+useReducer 에서 state 를 바꿀때엔 action 을 통해 dispatch 해서 초기 state는 건들지 않으면서 새로만들어 바꾼다
+Reducer와 useReducer 차이점은 Reducer 는 state 가 동기적으로 바뀌는데 useReducer는 비동기적으로 바뀐다
+
 ```
