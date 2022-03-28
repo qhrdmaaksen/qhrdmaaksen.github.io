@@ -15,6 +15,7 @@ title: "예외와 예외 처리의 개념!"
   
 **예외 처리**  
 예외가 발생할 것 같은 처리를 수행할 경우에 try 문 , catch 문, finally문 사용
+
 ```java
 try {
     //예외가 일어날 것 같은 처리를 기술함
@@ -29,6 +30,7 @@ try {
 ```  
 예외 발생 예상 메소드는 **throw**를 사용, 메소드에서 생길수 있는 예외 클래스를 지정해 둠  
 but 메소드를 호출한 곳에 예외를 받아 줄 catch 문이 없으면 , 컴파일 에러 발생
+
 ```java
 class Args {
     public static void main(String[] args){
@@ -46,9 +48,11 @@ class Args {
       }        
 }
 ```
+
 3/**사용자 정의 예외 만들기**  
 1)기존 정의된 예외 클래스외에 필요에 따라 새로운 예외 클래스를 정의하여 사용할 수 있음  
 2)보통 exception 클래스로부터 상속받는 클래스를 만들지만,예외 클래스를 선택할수있음
+
 ```java
 class MyException1 extends Exception{
   //noting

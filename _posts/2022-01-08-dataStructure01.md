@@ -3,7 +3,7 @@ layout: single
 title: "C언어 자료구조 공부01"
 ---
 
-######자료구조 공부하기, part 01 
+#### 자료구조 공부하기, part 01
 
 <pre>
 <strong>Chapter1</strong>
@@ -33,9 +33,11 @@ title: "C언어 자료구조 공부01"
 </pre>
 
 ![dataSturctureMemory01.png](../img/dataSturctureMemory01.png)
+
 <pre>
 <strong>Chapter2</strong>
 </pre>
+
 ![referens_addr.png](../img/referens_addr.png)
 ![self_referens_node.png](../img/self_referens_node.png)
 
@@ -45,7 +47,7 @@ title: "C언어 자료구조 공부01"
 //자기 참조형 구조체 node
 struct Node
 {
-    //데이터 
+    //데이터
     int data;
     //위치(주소)
     Node* link;
@@ -74,7 +76,7 @@ int main() {
 ////자기 참조형 구조체 node
 //struct Node
 //{
-//    //데이터 
+//    //데이터
 //    int data;
 //    //위치(주소)
 //    Node* link;
@@ -160,6 +162,7 @@ int main() {
 //    return 0;
 //}
 ```
+
 ```java
 #include <stdio.h>
 int main() {
@@ -176,6 +179,7 @@ int main() {
   printf("%d %d %d %d\n", pa[0], pa[1], pa[2], pa[3]);
 }
 ```
+
 ```java
 #include <stdio.h>
   int main() {
@@ -185,6 +189,7 @@ int main() {
   printf("%s\n", "HELLO!");
   }
 ```
+
 ```java
 #include <stdio.h>
 #include <stdlib.h>
@@ -198,7 +203,7 @@ typedef struct Point
 int main() {
     Point pt = { 1,2 };
     //&pt 주소 를 포인트 pp로 담기
-    Point* pp = &pt; 
+    Point* pp = &pt;
     printf("(%d,%d)", pt.x, pt.y);
     printf("(%d,%d)", (*pp).x, (*pp).y);
     printf("(%d,%d)", pp->x, pp->y);
@@ -246,7 +251,7 @@ int main() {
 //    //멤버 참조 연산자
 //    p2.x = 2;
 //    p2.y = 4;
-//    
+//
 //    printf("(%d,%d)", p1.x, p1.y);
 //    printf("(%d,%d)", p2.x, p2.y);
 //
@@ -256,7 +261,7 @@ int main() {
 //#include <stdio.h>
 //#include <stdlib.h>
 //int main() {
-//    int x = 1, y = 2; 
+//    int x = 1, y = 2;
 //    int x2 = 2, y2 = 4;
 //    printf("(%d,%d)\n", x, y);
 //    printf("(%d,%d)\n", x2, y2);

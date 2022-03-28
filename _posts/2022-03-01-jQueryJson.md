@@ -3,7 +3,7 @@ layout: single
 title: "제이쿼리 및 이벤트 활용 01"
 ---
 
-# 제이쿼리 및 이벤트 활용 01
+## 제이쿼리 및 이벤트 활용 01
 
 ```js
 
@@ -58,7 +58,7 @@ title: "제이쿼리 및 이벤트 활용 01"
     </div>
   </div>
   <script>
-    //마우스 이벤트 - 마우스가 요소안으로 진입하면 mouseenter 이벤트 발생 
+    //마우스 이벤트 - 마우스가 요소안으로 진입하면 mouseenter 이벤트 발생
     //반대로 마우스 요소를 빠져나가면 mouseleave 이벤트 발생
     //위에서 배웠던 mousedown은 마우스가 클릭되있는 순간 발생
     //mouseup 은 마우스가 클릭되었다가 떼지는 순간 이벤트 발생
@@ -72,7 +72,7 @@ title: "제이쿼리 및 이벤트 활용 01"
   </script>
   <hr>
   <script>
-    //focus와 blur 이벤트 
+    //focus와 blur 이벤트
     $(document).ready(function () {
       $(`#focusInputEx`).focus(function () {
         $(this).css(`background-color`, `yellow`)

@@ -155,7 +155,7 @@ To make customizing the colors used in code highlighted blocks, a base of sixtee
 
 Code block colors can easily be changed by overriding any of the following color variables:
 
-##### Default
+####  Default
 
 ![default-code-block]({{ '/assets/images/default-code-block.jpg' | relative_url }})
 
@@ -179,7 +179,7 @@ $base0e: #c792ea;
 $base0f: #ff5370;
 ```
 
-##### Solarized light
+####  Solarized light
 
 ![solarized-light-code-block]({{ '/assets/images/solarized-light-code-block.jpg' | relative_url }})
 
@@ -203,7 +203,7 @@ $base0e: #6c71c4 !default;
 $base0f: #d33682 !default;
 ```
 
-##### Contrast
+####  Contrast
 
 ![contrast-code-block]({{ '/assets/images/contrast-code-block.jpg' | relative_url }})
 
@@ -227,7 +227,7 @@ $base0e: #ff73fd;
 $base0f: #b18a3d;
 ```
 
-##### Dark
+####  Dark
 
 ![dark-code-block]({{ '/assets/images/dark-code-block.jpg' | relative_url }})
 
@@ -251,7 +251,7 @@ $base0e: #ad00a1;
 $base0f: #cc6633;
 ```
 
-##### Dirt
+####  Dirt
 
 ![dirt-code-block]({{ '/assets/images/dirt-code-block.jpg' | relative_url }})
 
@@ -275,7 +275,7 @@ $base0e: #bb90e2;
 $base0f: #b49368;
 ```
 
-##### Dracula
+####  Dracula
 
 ![dracula-code-block]({{ '/assets/images/dracula-code-block.jpg' | relative_url }})
 
@@ -300,7 +300,7 @@ $base0e: #b45bcf;
 $base0f: #00f769;
 ```
 
-##### Neon
+####  Neon
 
 ![neon-code-block]({{ '/assets/images/neon-code-block.jpg' | relative_url }})
 
@@ -324,7 +324,7 @@ $base0e: #ad00a1;
 $base0f: #cc6633;
 ```
 
-##### Plum
+####  Plum
 
 ![plum-code-block]({{ '/assets/images/plum-code-block.jpg' | relative_url }})
 
@@ -348,7 +348,7 @@ $base0e: #ad00a1;
 $base0f: #cc6633;
 ```
 
-##### Sunrise
+####  Sunrise
 
 ![sunrise-code-block]({{ '/assets/images/sunrise-code-block.jpg' | relative_url }})
 

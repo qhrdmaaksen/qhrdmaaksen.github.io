@@ -36,6 +36,7 @@ void UninitQueue(Queue* q);
 ```
 
 queue.cpp (함수 정의)
+
 ```java
 #include <stdlib.h>
 #include "Queue.h"
@@ -69,11 +70,12 @@ void UninitQueue(Queue* q) {
 ```
 
 client.cpp
+
 ```java
 #include <stdio.h>
 #include "Queue.h"
 int main() {
-	Queue q; 
+	Queue q;
 
 	InitQueue(&q,100);
 	Push(&q, 10);
@@ -81,7 +83,7 @@ int main() {
 	Push(&q, 30);
 	Push(&q, 40);
 	Push(&q, 50);
-	
+
 	printf("queue : %d\n", Pop(&q));
 	printf("queue : %d\n", Pop(&q));
 	printf("queue : %d\n", Pop(&q));
@@ -230,7 +232,7 @@ int main()
 //			left = middle + 1;
 //			break;
 //		case 0:
-//			return middle;			
+//			return middle;
 //		}
 //	}
 //
@@ -268,7 +270,7 @@ int main()
 //int Bsearch(int list[], int size, int data) {
 //    int left = 0;
 //    int right = size - 1;
-//    
+//
 //    while (1)
 //    {
 //        int middle = (left + right) / 2;
@@ -386,7 +388,7 @@ int main()
 //    {
 //        printf("list[%d]:%d\n", idx, list[idx]);
 //    }
-//    
+//
 //    return 0;
 //}
 
@@ -523,7 +525,7 @@ int main()
 ////자기 참조형 구조체 node
 //struct Node
 //{
-//    //데이터 
+//    //데이터
 //    int data;
 //    //위치(주소)
 //    Node* link;

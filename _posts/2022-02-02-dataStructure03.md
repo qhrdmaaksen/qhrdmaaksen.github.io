@@ -3,7 +3,8 @@ layout: single
 title: "자료구조03_정렬"
 ---
 
-# 자료구조 정렬
+## 자료구조 정렬
+
 <ul>
 <li>선택정렬</li>
 <li>삽입정렬</li>
@@ -86,7 +87,7 @@ void Swap(int* pa, int* pb) {
 }
 void InsertionSort(int list[], int size) {
 
-	int cur = 4; 
+	int cur = 4;
 	int value = list[cur];
 	int j;
 	for ( j = cur-1; 1 ; --j)
@@ -97,7 +98,7 @@ void InsertionSort(int list[], int size) {
 		}
 		else
 		{
-			break; 
+			break;
 		}
 	}
 	list[j + 1] = value;
@@ -115,8 +116,8 @@ int main() {
 	int size = 8;
 
 	PrintList(list, size);
-	
-	InsertionSort(list, size); 
+
+	InsertionSort(list, size);
 
 	PrintList(list, size);
 	return 0;
@@ -151,7 +152,7 @@ void Swap(int* pa, int* pb) {
 	int value;
 	void BubbleSort(int list[], int size) {
 
-		for (int i = 0; i < size-1; i++)//제일 마지막 부터 다시 앞으로 줄이며 
+		for (int i = 0; i < size-1; i++)//제일 마지막 부터 다시 앞으로 줄이며
 		{
 
 		for (int j = 0; j < (size-1)-i; ++j)//제일 큰 수를 제일 마지막에 위치
@@ -183,13 +184,14 @@ int main() {
 	return 0;
 };
 ```
+
 퀵 정렬
 ![quick_sort01.png](../img/quick_sort01.png)
 ![quick_sort02.png](../img/quick_sort02.png)
 
 ```js
  순서대로 나열하기 -퀵 정렬-
-//하나의 리스트를 피벗(pivot)을 기준으로 두 개의 비균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음, 
+//하나의 리스트를 피벗(pivot)을 기준으로 두 개의 비균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음,
 //두 개의 정렬된 부분 리스트를 합하여 전체가 정렬된 리스트가 되게 하는 방법이다.
 #include <stdio.h>
 #include <algorithm>
@@ -261,7 +263,7 @@ int main() {
 
 ```js
 //순서대로 나열하기 -힙 정렬-
-//하나의 리스트를 피벗(pivot)을 기준으로 두 개의 비균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음, 
+//하나의 리스트를 피벗(pivot)을 기준으로 두 개의 비균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음,
 //두 개의 정렬된 부분 리스트를 합하여 전체가 정렬된 리스트가 되게 하는 방법이다.
 #include <stdio.h>
 #include <algorithm>

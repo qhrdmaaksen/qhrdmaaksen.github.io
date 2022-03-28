@@ -158,7 +158,7 @@ Bad headings:
 
 # Heading
 ### Heading (skipped H2)
-##### Heading (skipped H4)
+####  Heading (skipped H4)
 ```
 {% endcapture %}
 

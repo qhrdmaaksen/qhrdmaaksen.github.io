@@ -4,6 +4,9 @@ title: "SpringSecurity(2)Controller, 각 페이지 View 출력!"
 ---
 
 ### 스프링 시큐리티
+
+```js
+
 오늘은 Controller 에서 view 에 보여줄 로직을 간단하게 만들어보자!
 <br>
 먼저 view 단을 만들어줄거야 , resources 에서 templates 폴더를 만들어주자
@@ -31,8 +34,11 @@ title: "SpringSecurity(2)Controller, 각 페이지 View 출력!"
   <h1 th:text="${message}">Hello</h1>
 </body>
 </html>
+
 ```
+
 그 후 controller 에서 view message 에 들어갈 내용을 입력해줘볼까?
+
 ```java
 @Controller //@ 주로 view 를 반환하기 위해서 사용
 public class MainController {
@@ -70,5 +76,7 @@ public class MainController {
     }
 }
 ```  
+
 index와 마찬가지로 나는 dashboard , admin , info 페이지까지 만들어주고  
 실행을 해봤어 그럼 어떻게나오는지 한번 봐볼까 ??  
+

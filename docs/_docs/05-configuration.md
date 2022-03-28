@@ -464,7 +464,7 @@ Transform user comments into `_data` files that live inside of your GitHub repos
 **Note:** Please note that as of September 2018, Staticman is reaching GitHub API limits due to its popularity, and it is recommended by its maintainer that users deploy their own instances for production (use `site.staticman.endpoint`).  Consult the Staticman "[Get Started](https://staticman.net/docs/index.html)" guide for more info.
 {: .notice--warning}
 
-##### Add Staticman as a collaborator on GitHub (legacy)
+####  Add Staticman as a collaborator on GitHub (legacy)
 
 1. Allow Staticman push access to your GitHub repository by clicking on **Settings**, then the **Collaborators** tab and adding your GitHub bot as a collaborator.
 2. To accept the pending invitation visit: `https://{your Staticman v2/3 API}/v[2|3]/connect/{your GitHub username}/{your repository name}`.
@@ -472,9 +472,9 @@ Transform user comments into `_data` files that live inside of your GitHub repos
 **Note:** The new GitHub App authentication method is recommended for GitHub repositories to avoid the API rate limit.
 {: .notice--info}
 
-##### Configure Staticman
+####  Configure Staticman
 
-###### Staticman v3
+####  Staticman v3
 
 Due to the [support for GitLab](https://github.com/eduardoboucas/staticman/pull/219), the URL scheme has been changed.  Between `v3/entry/` and `/{your Git username}`, one needs to input a Git service provider (either `github` or `gitlab`).  For example
 
@@ -490,7 +490,7 @@ comments:
     endpoint  : https://{your Staticman v3 API}/v3/entry/github/
 ```
 
-###### Staticman v2
+####  Staticman v2
 
 Default settings have been provided in [`staticman.yml`](https://github.com/mmistakes/minimal-mistakes/blob/master/staticman.yml) and are commented to guide you through setup. View the [full list of configurations](https://staticman.net/docs/configuration).
 
@@ -531,7 +531,7 @@ comments:
 **Note:** Staticman is currently compatible with GitHub and GitLab based repositories. [Support for GitLab Pages](https://github.com/eduardoboucas/staticman/issues/22) is already available at [Staticman v3](https://github.com/eduardoboucas/staticman/pull/219).
 {: .notice--warning}
 
-###### Staticman v1 (deprecated)
+####  Staticman v1 (deprecated)
 
 Default settings have been provided in `_config.yml`. The important ones to set are `provider: "staticman"`, `branch`, and `path`. View the [full list of configurations](https://staticman.net/docs/configuration).
 
@@ -557,7 +557,7 @@ staticman:
         format           : "iso8601" # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
 ```
 
-##### Comment moderation
+####  Comment moderation
 
 By default comment moderation is enabled in `staticman.yml`. As new comments are submitted Staticman will send a pull request. Merging these in will approve the comment, close the issue, and automatically rebuild your site (if hosted on GitHub Pages).
 
@@ -568,7 +568,7 @@ To skip this moderation step simply set `moderation: false`.
 
 ![pull-request webhook]({{ "/assets/images/mm-staticman-pr-webhook.jpg" | relative_url }})
 
-##### reCAPTCHA support (v2 only)
+####  reCAPTCHA support (v2 only)
 
 To enable Google's reCAPTCHA to aid in spam detection you'll need to:
 
@@ -774,7 +774,7 @@ baidu_site_verification: "code-iA0wScWXN1"
 
 To improve the appearance of links shared from your site to social networks like Twitter and Facebook be sure to configure the following.
 
-##### Site Twitter username
+####  Site Twitter username
 
 Twitter username for the site. For pages that have custom author Twitter accounts assigned in their YAML Front Matter or data file, they will be attributed as a **creator** in the Twitter Card.
 
@@ -790,7 +790,7 @@ And if I assign `@mmistakes` as an author account it will appear in the Twitter 
 **Note**: You need to validate cards are working and have Twitter [approve Player Cards](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/player-card) before they will begin showing up.
 {: .notice--warning}
 
-##### Facebook Open Graph
+####  Facebook Open Graph
 
 If you have a Facebook ID or publisher page add them:
 
@@ -810,7 +810,7 @@ facebook:
 **ProTip:** To debug Open Graph data use [this tool](https://developers.facebook.com/tools/debug/og/object?q=https%3A%2F%2Fmademistakes.com) to test your pages. If content changes aren't reflected you will probably have to hit the **Fetch new scrape information** button to refresh.
 {: .notice--info}
 
-##### Open Graph default image
+####  Open Graph default image
 
 For pages that don't have a `header.image` assigned in their YAML Front Matter, `site.og_image` will be used as a fallback. Use your logo, icon, avatar or something else that is meaningful. Just make sure it is place in the `/assets/images/` folder, a minimum size of 120px by 120px, and less than 1MB in file size.
 
@@ -835,7 +835,7 @@ Documents who have a `header.image` assigned in their YAML Front Matter will app
   <figcaption>Shared page on Facebook with header image assigned.</figcaption>
 </figure>
 
-##### Include your social profile in search results
+####  Include your social profile in search results
 
 Use markup on your official website to add your [social profile information](https://developers.google.com/structured-data/customize/social-profiles#adding_structured_markup_to_your_site) to the Google Knowledge panel in some searches. Knowledge panels can prominently display your social profile information.
 

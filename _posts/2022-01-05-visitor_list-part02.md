@@ -3,7 +3,8 @@ layout: single
 title: "(MYSQL활용)방명록 만들기 과정(part02)!"
 ---
 
-#######목록을 보여줄 list.jsp, listBean.java 와 글 삭제에 관련된 delete.jsp , delete_end.jsp
+#### #목록을 보여줄 list.jsp, listBean.java 와 글 삭제에 관련된 delete.jsp , delete_end.jsp
+
 먼저 첫 번째 문제
 게시물 등록 건수가 0개로나왔다 찾아본 결과... 끔찍한 실수를 저질렀다<br>
 테이블의 이름이 visit_board 라 생각했는데 boad 였다... 변경해주니 값이 잘들어오고<br>
@@ -344,6 +345,6 @@ public class listBean {
     }
 }
 ```
+
 ![form_resultValueInsert.png](../img/form_resultValueInsert.png)
 ![db_insert_clear.png](../img/db_insert_clear.png)
-######

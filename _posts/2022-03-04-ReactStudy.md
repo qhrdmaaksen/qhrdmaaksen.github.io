@@ -3,10 +3,9 @@ layout: post
 title: "리액트를 배워보자(웹게임) 01"
 ---
 
-# 민우의 블로그 테스트중입니다
+## 리액트 제로초 강의 정리
 
 ```js
-
 리액트 =
 - 사용자 인터페이스를 만들기 위한 js 라이브러리
 - 데이터 처리를 쉽게 함
@@ -59,7 +58,7 @@ Hooks - 함수컴포넌트에서도 ref 랑 state 를 사용 할 수 있게 해�
   state 와 ref 의 차이점 (값을 바꾸고싶다는 의미는 같음)
   - setState 를 사용하면 리턴부분이 다시 실행된다.(렌더링)
   - ref 가 사용될땐 리턴부분이 다시실행되지않는다.
-  리턴 부분이 렌더링되지않게(화면에 영향을 끼치고싶지않다면) 하고싶다면 ref 를 사용하면된다. 
+  리턴 부분이 렌더링되지않게(화면에 영향을 끼치고싶지않다면) 하고싶다면 ref 를 사용하면된다.
 
   hooks 가 아닌 class 사용시 render 함수만 재실행되지만 함수 컴포넌트 사용시엔 전체가 재실행된다 ?
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -126,7 +125,7 @@ import ReactDOM from 'react-dom';
 import TicTacToe from './TicTacToeClass';
 ReactDOM.render(<TicTacToe />, document.querySelector('#root'));
 
-또는 
+또는
 
   const React = require('react');
   const ReactDOM = require('react-dom'); // (리액트와 리액트돔 불러오기)
@@ -291,22 +290,22 @@ class Test extends Component {
 
 const TryHooks = memo(({ tryInfo }) => { // hooks 에서 props 구조 분해 사용 ,  memo 추가 ( state 나 props 가 바뀌었을때만 렌더링을 해줌)
     ----------------------------------------------------------------
-class component 에서 ref 를 설정할때 import React, { Component, createRef } from 'react'; 
+class component 에서 ref 를 설정할때 import React, { Component, createRef } from 'react';
 createRef 를 만들어주면된다 . 로직에 inputRef = createRef() 넣어주면 input에 ref 에서도 그냥 this.inputRef 만 넣어주면됨
-대신 hooks component 와 같이 input.current.focus() 와 같이 current를 추가해줘야함 이렇게하면 hooks 와 class component 가 
+대신 hooks component 와 같이 input.current.focus() 와 같이 current를 추가해줘야함 이렇게하면 hooks 와 class component 가
 ref 추가에대해 코드가 비슷해짐
     ----------------------------------------------------------------
     render(){
       렌더 안에는 setState() 를 사용하면안된다. 렌더와 setState 가 서로 실행되기때문에 ?
     }
       ----------------------------------------------------------------
-props 는 부모쪽에서 바꿔줘야하지 자식 컴포넌트에 props 를 직접적으로 바꾸면 안된다. 
+props 는 부모쪽에서 바꿔줘야하지 자식 컴포넌트에 props 를 직접적으로 바꾸면 안된다.
 바꾸려면 아래와 같이 바꿀수있다 ( state 로 만들어서 바꾼다) 그래야 부모한테 영향을 안끼친다
 import React, { PureComponent, memo, useState } from 'react'; // class 의 pure component 와 같이 hooks 에서는 memo 를 추가해준다
 
 const TryHooks = memo(({ tryInfo }) => { // hooks 에서 props 구조 분해 사용 ,  memo 추가 ( state 나 props 가 바뀌었을때만 렌더링을 해줌)
 
-  const [result, setResult] = useState(tryInfo.try) 
+  const [result, setResult] = useState(tryInfo.try)
 
   const onClick = () => {
     setResult('1')
@@ -351,7 +350,7 @@ export default TryHooks;
           </>
         }
       })}
-      {/*{renderAverage()}if 문 사용하려고 잠깐 막아놓음*/} 
+      {/*{renderAverage()}if 문 사용하려고 잠깐 막아놓음*/}
     </>
   )
 ====================================================================================================================
@@ -365,18 +364,18 @@ useEffect(() => { // componentDidMount , componentDidUpdate 역할 ( 1 대 1 대
     return () => { // componentWillUnmount 역할
 
     }
-  }, []) // 배열에는 계속 바뀌는 state 지정? ( componentDidUpdate ?) 
+  }, []) // 배열에는 계속 바뀌는 state 지정? ( componentDidUpdate ?)
   // 배열에는 꼭 useEffect 를 다시 실행할 값만 넣자
 -------------------
 useEffect 는 여러번 사용할 수 있다 . 계속해서 바뀔 state 를 따로 지정해야 할 경우
-- 화면이 바뀐 다음에 실행 
+- 화면이 바뀐 다음에 실행
 ----------------------------------------------------------------
 부모 컴포넌트가 렌더링 될때마다 자식 컴포넌트도 렌더링 된다 이럴때 따로 지정하고 싶다면 memo 사용
 ------------------------------------------------------------------------------------------------
 useLayoutEffect 는 화면이 바뀌기전에 발생, 화면 바뀌는걸 감지하는 이펙트
 
 /*hooks useEffect =
-                                                              useEffect 는 세로 
+                                                              useEffect 는 세로
                           result , imgCoords , score
 componentDidMount
 componentDidUpdate
@@ -419,7 +418,7 @@ useMemo - 복잡한 함수 결과 값을 기억  (함수 리턴값)
 useRef - 일반 값을 기억
 useCallback - 함수 자체를 기억
 
-}, [timeouts.current]); // useEffect 는 로직을 실행하는데 input [] 이 바뀔때 실행 
+}, [timeouts.current]); // useEffect 는 로직을 실행하는데 input [] 이 바뀔때 실행
 
 useCallback 안에 state 는 항상 [] 인풋에다가도 넣어줘야한다 . (인풋값이 바뀌어야 새로 실행된다)
 const onClickRedo = useCallback(() => { // useCallback 은 함수를 기억한다. input [winNumbers] 가 바뀌기 전까지만
@@ -433,20 +432,20 @@ hooks 는 순서가 중요하다
 훅스를 한번 선언하면 그 순서(실행순서)가 바뀌지않게해야하며 조건문 안에 훅스를 넣으면 안되고 함수나 반복문 안에도 웬만하면 넣지 말자
 
 useEffect 안에서 훅스(useState)등을 넣지 말자
-비동기 상태에 따라서 처리할땐 useEffect 를 사용한다 
+비동기 상태에 따라서 처리할땐 useEffect 를 사용한다
 
 useEffect 로직은 componentDidMount 에 쓰일 로직을 넣는다. input[] 은 componentDidUpdate 라고 생각하자 상태변환이 될 state 를 넣어주자
 
 class는 함수 한 번 선언하면 다시 선언될 일이 없습니다.
 
 useEffect(() => {
-  // ajax 
+  // ajax
 }, [])
 
 const mounted = useRef(false)
 useEffect(()=>{
   if (!mounted.current) {
-    mounted.current = true 
+    mounted.current = true
   } else {
     // ajax
   }
@@ -473,4 +472,8 @@ useReducer 는 useState 가 많을때 state 를 하나로 묶어주는 역할
 useReducer 에서 state 를 바꿀때엔 action 을 통해 dispatch 해서 초기 state는 건들지 않으면서 새로만들어 바꾼다
 Reducer와 useReducer 차이점은 Reducer 는 state 가 동기적으로 바뀌는데 useReducer는 비동기적으로 바뀐다
 
+
+캐싱(Caching)은 캐시(Cache)라고 하는 좀 더 빠른 메모리 영역으로 데이터를 가져와서 접근하는 방식을 말한다. 예를 들어 속도가 느린 하드디스크의 데이터를 메모리로 가지고 와서 메모리 상에서 읽기 쓰기를 수행하는 것을 '데이터를 메모리에 캐싱한다'라고 한다
+
+reducer 는 action 발생시 state를 어떻게 바꿔줘야할지 정해주는 logic
 ```

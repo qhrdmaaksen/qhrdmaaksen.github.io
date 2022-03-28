@@ -2,13 +2,18 @@
 layout: single
 title: "The TCP socket Use The Server and Client Communication!"
 ---
-####출처 : 한양사이버대학교 민병석 교수님 자료
+#### 출처 : 한양사이버대학교 민병석 교수님 자료
+
 ### 1)자바와 네트워킹
+
 ### 2)URL 클래스와 URLConnection 클래스
+
 ### 3)TCP 소켓을 이용한 서버/클라이언트 통신
+
 ### 4)UDP 소켓을 이용한 서버/클라이언트 통신
 
-###1-1) TCP 통신 방식
+### 1-1) TCP 통신 방식
+
 <li>자바는 서버/클라이언트 응용 프로그램을 위한 ServerSocket 클래스와 Socket 클래스를 제공</li>
 <dl>
 TCP 소켓의 특징
@@ -24,7 +29,9 @@ TCP 소켓의 특징
 </ol>
 
 ![TCPsocketMovement.png](../img/TCPsocketMovement.png)
-####1-2) ServerSocket class 주요 메소드
+
+#### 1-2) ServerSocket class 주요 메소드
+
 ```java
 ServerSocket(int port)//생성자,port == 포트번호
 throws IOException
@@ -36,7 +43,8 @@ void close()//서버 소켓을 닫는다.
 throws IOException 
 ```
 ![socket_important_method.png](../img/socket_important_method.png)
-####3-1) TCP Socket 을 이용한 서버/클라이언트 간 통신 순서
+#### 3-1) TCP Socket 을 이용한 서버/클라이언트 간 통신 순서
+
 <p>서버</p>
 <ol>
   <li>ServerSocket class 로 부터 서버 소켓 오브젝트를 생성 후 클라이언트의 접속 요청을 기다림</li>
@@ -128,7 +136,8 @@ public class Client {
 }
 ```
 
-###2-1) UDP socket 의 특징
+### 2-1) UDP socket 의 특징
+
 <ol>
 <li>단순히 데이터 송신을 위한 소켓</li>
 <p>- UDP는 통신을 위해 데이터그램 소켓을 사용하지만, 서버에 연결 요청을 하지 않음</p>
@@ -138,16 +147,20 @@ public class Client {
 <p>- DatagramPacket 클래스는 응용 프로그램들이 주고받을 데이터와 관련이있다.</p>
 <p>- 실제 데이터의 전송은 DatagramSocket 클래스에서 이루어짐</p>
 
-#####DatagramPacket Important Method
+
+#### DatagramPacket Important Method
 
 ![DatagramPacket_Impo_method.png](../img/DatagramPacket_Impo_method.png)
 ![DatagramPacket_Impo_method02.png](../img/DatagramPacket_Impo_method02.png)
 
-#####DatagramSocket Important Method
+#### DatagramSocket Important Method
+
 ![DataSocket_Impo_method01.png](../img/DataSocket_Impo_method01.png)
 
-####서버/클라이언트 간 통신 순서
-####Server
+#### 서버/클라이언트 간 통신 순서
+
+#### Server
+
 <ol>
 <li>DatagramSocket class 로부터 socket object create</li>
 <li>목적지 주소 오브젝트를 생성</li>
@@ -156,7 +169,8 @@ public class Client {
 <li>close the socket</li>
 </ol>
 
-####Client
+#### Client
+
 <ol>
 <li>DatagramSocket class 로 부터 socket object create (port num 을 생성자의 인수로 전달) </li>
 <li>DatagramPacket 클래스로부터 packet object create(data buffer , data buffer size 를 생성자의 인수로 전달</li>
@@ -165,6 +179,7 @@ public class Client {
 </ol>
 
 #### mini program 
+
 <ol>
 <li>서버에서 클라이언트로 데이터 전송</li>
 <li>클라이언트에서는 수신한 데이터를 출력</li>
@@ -203,6 +218,7 @@ public class ServerUDP_CommunicationTest {
     }
 }
 ```
+
 ```java
 package com.company;
 

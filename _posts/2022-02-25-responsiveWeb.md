@@ -3,7 +3,7 @@ layout: single
 title: "반응형 웹 basic"
 ---
 
-# 반응형 웹
+## 반응형 웹
 
 ```js
 
@@ -46,14 +46,11 @@ title: "반응형 웹 basic"
         </dd>
         <dd>@media 규칙을 이용해서 내 css로 직접 포함 시킬수도있음</dd>
         <dd>
-          <pre>
         @media screen adn (max-device-width: 480px) {
           .colum {
             float: none;
           }
         }
-      </pre
-          >
         </dd>
         <dd>또는 @import 지시어의 일부로 사용 가능</dd>
         <dd>
@@ -116,7 +113,6 @@ title: "반응형 웹 basic"
       </div>
       <hr />
       <h3>CSS Code</h3>
-      <pre>
       body {
         background-color: rgb(214, 230, 240);
       }
@@ -199,8 +195,6 @@ title: "반응형 웹 basic"
       #footer {
         background-color: coral;
       }
-    </pre
-      >
     </div>
   </body>
 </html>

@@ -3,7 +3,7 @@ layout: single
 title: "자바스크립트 기초02!"
 ---
 
-# 기초에대해 필요한 것들을 정리해두자
+## 기초에대해 필요한 것들을 정리해두자
 
 ```js
 
@@ -52,7 +52,7 @@ title: "자바스크립트 기초02!"
     console.log(myCarEx02);
     myCarEx02.accel()
     console.log(myCarEx02);
-    myCarEx02.turbo = true //객체에 새로운 속성 추가 
+    myCarEx02.turbo = true //객체에 새로운 속성 추가
     console.log(myCarEx02);
     myCarEx02.showModel = function () { //객체에 새로운 메서드 추가
       document.write(`<hr>`)
@@ -109,7 +109,7 @@ title: "자바스크립트 기초02!"
     document.write(`<hr>`)
     document.write(`<br>`)
     document.write(nowDateTime)
-    //1-2 : Date(milliseconds) - 1999/01/01 이후의 밀리초 
+    //1-2 : Date(milliseconds) - 1999/01/01 이후의 밀리초
     //let DateTimeMilli = new Date(milliseconds)
     document.write(`<br>`)
     //document.write(DateTimeMilli)
@@ -143,7 +143,7 @@ title: "자바스크립트 기초02!"
     //Number 객체의 속성 중 일부 3가지
     //1) MAX VALUE - 표현 할 수 있는 가장큰값
     //2) MIN VALUE - 표현 할 수 있는 가장작은값
-    //3) NaN - Not a Number 
+    //3) NaN - Not a Number
     //Number 객체의 메서드 4가지
     //1) toExponential() - 지수형으로 반환 , 인수는 소수점 이하 숫자의 개수
     document.write(`<hr>`)
@@ -255,7 +255,7 @@ title: "자바스크립트 기초02!"
   <script>
     let str = `like game, Like dog`
     document.write(`3)match() 메서드 - 문자열 안에서 일치하는 콘텐츠를 탐색하는데 사용,정규식 사용이 가능하다.` + `<br>`)
-    document.write(str.match(/like/ig))// ig 의 i 는 insensitive, g는 globally 옵션 의미 
+    document.write(str.match(/like/ig))// ig 의 i 는 insensitive, g는 globally 옵션 의미
   </script>
   <hr>
   <!--4)replace() 메서드 - 문자열 안에서 주어진 값을 다른 값으로 대체, 정규식 사용가능-->

@@ -1,15 +1,17 @@
 ---
 layout: single
-title: "BufferedReder와 Scanner 차이점!"
+title: "BufferedReader와 Scanner 차이점!"
 ---
 
-### 문득 궁금해진 BufferedReder 클래스와 Scanner 클래스 차이점!  
+### 문득 궁금해진 BufferedReader 클래스와 Scanner 클래스 차이점!  
+
 우리가 공부를 하다보면 문득 같은 기능을 가졌지만 어떤 차이점이있을까?  
 라는 궁금증을 가져볼 수 있습니다.  
 그럴때 우리는 그 궁금증을 그냥 지나가지말고 한번 쯤 검색을 해서 궁금증을  
 해소하는 습관을 갖춘다면 조금씩 한발자국 발전해 나갈 수 있다고 생각합니다.  
 
 먼저 많이 사용해보셨을 Scanner scan = new Scanner (System.in);
+
 ```java
 package curious;
 
@@ -28,8 +30,9 @@ public class study {
 	}
 }
 ```
+
 <br>
-자바 수업을 듣거나 공부하다보면 BufferedReder 보다는 Scanner를 먼저
+자바 수업을 듣거나 공부하다보면 BufferedReader 보다는 Scanner를 먼저
 <br>   
 배우게되는 경우가 많으실거고 저또한 그랬었습니다.
 <br>  
@@ -50,7 +53,7 @@ l o 도 마찬가지로 키보드로 한번 입력할때마다 전달이되는 �
 <br>
 속도가 느리다는 단점이있습니다.(보통 버벅거린다고하죠??이렇게 얘기하면 이해하기쉬우실거에요!)<br>  
 <br>
-반면 BufferedReder 클래스는 어떻게 진행되는지 한번 볼까요 ?  
+반면 BufferedReader 클래스는 어떻게 진행되는지 한번 볼까요 ?  
 
 ```java
 package curious;
@@ -71,6 +74,7 @@ public class study {
 	}
 }
 ```
+
 <br> 
 BufferedReader 는 라인단위로 입력받기에 공백또한 String 으로 인식하며 입력받은 데이터 타입이
 <br>

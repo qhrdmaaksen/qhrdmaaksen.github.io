@@ -23,7 +23,7 @@ title: "css 레이아웃 기초"
   </dl>
 </article>
 
-<pre>
+```js
 display 속성
   none = 없는 것으로 간주
   block = 블록 요소 정의
@@ -166,4 +166,4 @@ ex) transition:width 5s ; <--width 가 변경되면
     100% {background-color: blue; left: 0px; top: 0px;}
     }
   )
-</pre>
+```

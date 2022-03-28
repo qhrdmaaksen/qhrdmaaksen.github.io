@@ -4,19 +4,27 @@ title: "(MYSQL활용)방명록 만들기 과정(part01) 및 에러 해결!"
 ---
 
 ### DB활용 방명록을 만들어보자!.
-####1-1 방명록을 위한 파일 및 빈 준비하기
-####1-2 방명록에 사용할 테이블 만들어보자
-####1-3 글 작성 form view 만들기
-####1-4 JDBC_CONNECTION 코드
-####1-5 QueryManager
-####1-3 방명록 글 작성 후 DB 입력 확인
-####1-4 방명록 내용 삭제
+
+#### 1-1 방명록을 위한 파일 및 빈 준비하기
+
+#### 1-2 방명록에 사용할 테이블 만들어보자
+
+#### 1-3 글 작성 form view 만들기
+
+#### 1-4 JDBC_CONNECTION 코드
+
+#### 1-5 QueryManager
+
+#### 1-3 방명록 글 작성 후 DB 입력 확인
+
+#### 1-4 방명록 내용 삭제
 
 <br>
 
 ![visitor_file_plan.png](../img/visitor_file_plan.png)
 
-####1-1. 1) 필요한 파일 준비
+#### 1-1. 1) 필요한 파일 준비
+
 <ol>
   <li>write.html 글 작성을 보여주는 파일</li>
   <li>write_end.jsp 글 작성 후 처리 파일</li>
@@ -29,7 +37,8 @@ title: "(MYSQL활용)방명록 만들기 과정(part01) 및 에러 해결!"
 ![visitor_jsp_file_create.png](../img/visitor_jsp_file_create.png)
 <br>
 
-####1-1. 2) 빈 준비를 위한 자바 소스
+#### 1-1. 2) 빈 준비를 위한 자바 소스
+
 <ol>
   <li>JDBCcon.java //자바와 데이터베이스 연결하여 데이터를 주고받을수있도록함</li>
   <li>QueryManager.java //데이터베이스 쿼리문 매니저 소스 생성</li>
@@ -41,71 +50,72 @@ title: "(MYSQL활용)방명록 만들기 과정(part01) 및 에러 해결!"
 
 ![visitor_java_file_create.png](../img/visitor_java_file_create.png)
 <br>
-####1-2 테이블 생성하기
+
+#### 1-2 테이블 생성하기
+
   <p>mysql create visit_board table</p>
 
 ![visit_table_query.png](../img/visit_table_query.png)
 <br>
 
-####1-3 글 작성 form view 만들기
+#### 1-3 글 작성 form view 만들기
+
 <p>write.html 에 폼을 만들어주자</p>
 <p>form 은 post 방식으로 값을 전송하게될 form이 될것이며 액션은 form data를 처리할 
 프로그램의 uri 이며 액션으로 넘어가기전에 onsubmit 이벤트가 발생</p>
 
-```java
+```html
 <body>
-	<FORM METHOD="POST" ACTION="write_end.jsp" name="write" onsubmit="return empty()">
-  <table align="center" width="800" border="0">
-    <tr>
-      <td align="right">
-        이름
-      </td>
-      <td>
-        <input type="text" name="visitor" size="20">
-      </td>
-    </tr>
-    <tr>
-      <td align="right">
-        E-mail
-      </td>
-      <td>
-        <input type="text" name="email" size="30">
-      </td>
-    </tr>
-    <tr>
-      <td align="right">
-        HomePage
-      </td>
-      <td>
-        <input type="text" name="homepage" size="40" value="http://">
-      </td>
-    </tr>
-    <tr>
-      <td align="right">
-        내용
-      </td>
-      <td>
-        <textarea name="contents" rows="10" cols="40" wrap="hard">
-        </textarea>
-      </td>
-    </tr>
-    <tr align="center">
+  <form
+    method="POST"
+    action="write_end.jsp"
+    name="write"
+    onsubmit="return empty()"
+  >
+    <table align="center" width="800" border="0">
+      <tr>
+        <td align="right">이름</td>
+        <td>
+          <input type="text" name="visitor" size="20" />
+        </td>
+      </tr>
+      <tr>
+        <td align="right">E-mail</td>
+        <td>
+          <input type="text" name="email" size="30" />
+        </td>
+      </tr>
+      <tr>
+        <td align="right">HomePage</td>
+        <td>
+          <input type="text" name="homepage" size="40" value="http://" />
+        </td>
+      </tr>
+      <tr>
+        <td align="right">내용</td>
+        <td>
+          <textarea name="contents" rows="10" cols="40" wrap="hard"> </textarea>
+        </td>
+      </tr>
+      <tr align="center">
         <table align="center" border="0">
           <tr>
             <td>
-              <input type="submit" value="저장">
+              <input type="submit" value="저장" />
             </td>
           </tr>
         </table>
       </tr>
     </table>
-  </FORM>
+  </form>
 </body>
 ```
 
-######html 실행 시 보이는 화면
+#### html 실행 시 보이는 화면
+
 ![write_html_form.png](../img/write_html_form.png)
 <br>
+
 <p>form 을 만들어줬으니 db와 연동될 수 있도록 JDBCcon.java 코드를 만들어보자</p>
 
 ```java
@@ -120,7 +130,7 @@ public class JDBCcon {
 	private String dbUrl = "jdbc:mysql://localhost:3306/jsp_db?serverTimezone=UTC&useSSL=false";
 	private String userName ="uname";
 	private String userPW = "패스워드";
-	
+
 public Connection getConnection() {
 	try {
 		Class.forName(jdbc_driver);
@@ -142,9 +152,11 @@ public Connection getConnection() {
 }
 }
 ```
+
 <br>
 
-######QueryManager.java 를 만들어주자
+#### QueryManager.java 를 만들어주자
+
 ```java
 package jspbook.ch11;
 
@@ -154,19 +166,19 @@ import java.sql.Statement;
 
 public class QueryManager {
 	private Connection con=null;
-	
+
 	public void setConnection(Connection c) {
 		this.con=c;
 	}
-	
+
 	public String update(String Query) {
-		if (con==null) return "You must set Connection in advance"; 
+		if (con==null) return "You must set Connection in advance";
         //con이 null이라면 문구 출력
 		try {
 			System.out.println("SQL:"+ Query);//정상실행된다면 SQL QUERY 내용 출력
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(Query);
-			
+
 			stmt.close();
 			con.close();
 			return "<li>Update Success!";
@@ -174,13 +186,16 @@ public class QueryManager {
 			System.out.println("SQLException:"+E);
 			return "<li>" + E.getMessage();
 		}
-		
+
 	}
 }
 
 ```
-######Element.java 에 java Bean 특정 형태의 클래스 만들기
+
+#### Element.java 에 java Bean 특정 형태의 클래스 만들기
+
 (private 구성,getter&setter를 통해서만 접근,전달인자가없는 생성자를 가지는 형태의 클래스)
+
 ```java
 package jspbook.ch11;
 
@@ -193,7 +208,7 @@ public class Element {
 	private String contents;
 	private String adminID;
 	private String adminPass;
-	
+
 	public void setNo(String no) {
 		this.no = no;
 	}
@@ -218,7 +233,7 @@ public class Element {
 	public void setAdminPass(String adminPass) {
 		this.adminPass = adminPass;
 	}
-	
+
 	public String getNo() {
 		return no;
 	}
@@ -248,7 +263,9 @@ public class Element {
 }
 
 ```
-######writeBean.java 실제 db에서 사용하는 역할을하는 빈 생성
+
+#### writeBean.java 실제 db에서 사용하는 역할을하는 빈 생성
+
 ```java
 package jspbook.ch11;
 
@@ -280,7 +297,9 @@ public class writeBean extends Element { //element 상속받아 사용
     }
 }
 ```
-######write_end.jsp 에 write.html 에 저장버튼을 눌렀을때 실행되는 jsp
+
+#### write_end.jsp 에 write.html 에 저장버튼을 눌렀을때 실행되는 jsp
+
 ```js
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>

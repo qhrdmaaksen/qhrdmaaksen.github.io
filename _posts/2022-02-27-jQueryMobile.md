@@ -3,7 +3,7 @@ layout: single
 title: "제이쿼리 모바일 basic"
 ---
 
-# 제이쿼리 모바일 html , css
+## 제이쿼리 모바일 html , css
 
 ```js
 <!DOCTYPE html>
@@ -56,11 +56,9 @@ title: "제이쿼리 모바일 basic"
           <li>개발자 자신만의 커스텀 스타일을 작성해 커스텀 레이아웃을 생성해도 됨</li>
         </ol>
         <p>제이쿼리 모바일을 사용하려면 아래와 같이 추가해주면된다.</p>
-        <pre>
       &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css"&gt;
       &lt;script src="http://code.jquery.com/jquery-1.9.1.min.js"&gt;&lt;/script&gt;
       &lt;script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"&gt;&lt;/script&gt;
-    </pre>
       </div>
       <div>
         <dl>
@@ -173,7 +171,7 @@ h4 {
   color: red;
 }
 
-legend  {
+legend {
   font-weight: bold;
 }
 
@@ -275,5 +273,4 @@ p {
 #footer {
   background-color: coral;
 }
-
 ```

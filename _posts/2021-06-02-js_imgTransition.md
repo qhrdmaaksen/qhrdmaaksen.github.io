@@ -4,6 +4,7 @@ title: "자바스크립트로 이미지 변환"
 ---
 
 ### 자바스크립트로 이미지 변환을 해보자!
+
 <br>
 자바스크립트라 하면 정적인 html 을 동적으로 활용할 수 있다. 자세한건 직접 실습해보고 확인해보자!
 <br>
@@ -14,6 +15,7 @@ title: "자바스크립트로 이미지 변환"
 <br>
 위 사이트를 보면 이미지가 애니메이션 효과로 다른 이미지로 변경될거야 그 코드를 살펴볼까?
 <br> 
+
 ```java
 <script>
         var imgArray = new Array();
@@ -47,6 +49,7 @@ title: "자바스크립트로 이미지 변환"
 <div id="intro">
 <img id="introImg" board="0" alt="coinImages">
 ```
+
 <br>
 살펴보면 배열 imgArray 에 이미지를 5개를 담아두었고,funciton showImage() 동작한대 showImage 메소드가!,
 어떻게 동작하냐면 imgNum변수에 랜덤한 수에 1을 곱한 값에 반올림한 정수의 순서로,
@@ -58,6 +61,7 @@ title: "자바스크립트로 이미지 변환"
 ```java
 <body onload="showImage()">
 ```
+
 사이트가 열리자마자 로드된데 showImage() 메소드!
 <br>
 <br>
@@ -68,6 +72,7 @@ title: "자바스크립트로 이미지 변환"
 <br>
 위와 같이 js를 활용하여 클릭 했을 시 내용이 변환되는 코드를 살펴볼꺼야!
 <br>
+
 ```java
 <script>
  function myintroduce() {
@@ -82,6 +87,7 @@ title: "자바스크립트로 이미지 변환"
 <button type="button" onclick="myintroduce()">이름이 궁금하시다면 클릭!</button>
 <br>
 ```
+
 위와 같이 button을 onclick했을 시 myintroduce메소드가 동작되며 동작되는 내용은 
 <br>
 문서에 id introduce를 가져와 innerHTML로 내용 "안녕하세요 김민우입니다."내용으로 넣어준다는 코드야!
@@ -92,6 +98,7 @@ title: "자바스크립트로 이미지 변환"
 <br>
 ![directjs.png](../img/directjs.png)
 위와 같이 .js메모장에 javascript 내용을 넣어주고 
+
 ```java
 <head>
     <meta charset="UTF-8">
@@ -106,9 +113,5 @@ title: "자바스크립트로 이미지 변환"
 <script src="jscode.js"></script>
 </head>
 ```
+
 위와 같이 head 부분에 script 경로 설정을 지정해 주면 끝!
-
-
-
-
-

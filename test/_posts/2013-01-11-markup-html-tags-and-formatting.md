@@ -21,9 +21,9 @@ A variety of common markup showing how the theme styles them.
 
 #### Header four
 
-##### Header five
+####  Header five
 
-###### Header six
+####  Header six
 
 ## Blockquotes
 

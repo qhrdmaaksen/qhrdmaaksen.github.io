@@ -3,19 +3,24 @@ layout: single
 title: "(MYSQL활용)방명록 만들기 과정(part03)!"
 ---
 
-###### deleteBean.java , delete.jsp , delete_end.jsp 글 삭제 및 db 삭제
+#### deleteBean.java , delete.jsp , delete_end.jsp 글 삭제 및 db 삭제
+
 ![delete_write_web.png](../img/delete_write_web.png)
 ![delete_write_db.png](../img/delete_write_db.png)
+
 <p>이 글을 삭제했을 때 화면과 db에서 삭제되는지 확인해보자!</p>
 <p>삭제를 누르면 아래와 같은 화면으로 넘어간다. 관리자 id와 password 입력창</p>
 
 ![delete_admin_insert.png](../img/delete_admin_insert.png)
+
 <p>관리자 아이디와 비밀번호 입력 후 글 삭제 시 alert 으로 글 삭제 성공이라 팝업되며 글 목록으로 이동된다.</p>
 
 ![delete_result_view.png](../img/delete_result_view.png)
+
 <p>총 게시물 등록건수 개수 줄어듬과 동시에 8번 게시물의 글이 삭제된것을 확인할수있다.</p>
 
 ![delete_result_db.png](../img/delete_result_db.png)
+
 <p>mysql db에서 table 조회 결과 8번 게시글이 삭제된것을 확인할수있었다.</p>
 
 ```java
@@ -35,7 +40,7 @@ public class deleteBean extends Element{
 	}
 	public boolean comparePass() {//id 와 password 일치한지 확인
 		if (getAdminID().equals("id")&&getAdminPass().equals("pass")) {
-			return true ; 
+			return true ;
 		} else {
 			return false;
 		}
@@ -43,6 +48,7 @@ public class deleteBean extends Element{
 }
 
 ```
+
 ```js
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -120,6 +126,7 @@ public class deleteBean extends Element{
 </body>
 </html>
 ```
+
 ```js
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -146,7 +153,7 @@ public class deleteBean extends Element{
 	}
 </script>
 </head>
-<% if(delete.comparePass()){ 
+<% if(delete.comparePass()){
 	SQL_Manager.setConnection(DB_con.getConnection());
 	SQL_Manager.update(delete.getDelete());
 %>

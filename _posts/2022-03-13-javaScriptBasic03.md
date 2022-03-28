@@ -1,10 +1,10 @@
-
 ---
 layout: single
 title: "배열 특정값 포함 여부 체크(사용할때 다시 공부하기좋다)js"
 ---
 
 ### 1. indexOf(), lastIndexOf()
+
 2. includes()
 3. findIndex()
 4. some()
@@ -17,18 +17,18 @@ title: "배열 특정값 포함 여부 체크(사용할때 다시 공부하기�
 
 - 모든 프로퍼티와 값을 배열로 반환함
 
-프로퍼티뿐 아니라 가지고 있는 값도 모두 배열 형태로 변환하여 반환하게 됩니다. 
+프로퍼티뿐 아니라 가지고 있는 값도 모두 배열 형태로 변환하여 반환하게 됩니다.
 
 ================================================================
 
 1. indexOf(), lastIndexOf()
 arr.indexOf(searchElement[, fromIndex])
 arr.lastIndexOf(searchElement[, fromIndex])
- indexOf() 함수는 
+ indexOf() 함수는
 
-배열 안에서 찾으려는 값(searchElement)과 정확하게 일치(===)하는'첫번째' element의 index를 리턴합니다. 
+배열 안에서 찾으려는 값(searchElement)과 정확하게 일치(===)하는'첫번째' element의 index를 리턴합니다.
 
- lastIndexOf() 함수는 
+ lastIndexOf() 함수는
 
 배열 안에서 찾으려는 값(searchElement)과 정확하게 일치(===)하는 '마지막' element의 index 를 리턴합니다.
 
@@ -42,7 +42,7 @@ arr.lastIndexOf(searchElement[, fromIndex])
 arr.includes(valueToFind[, fromIndex])
 includes() 함수는 배열이 특정값을 포함하고 있는지의 여부를 boolean 값으로 반환합니다.
 
- 파라미터 
+ 파라미터
 
 valueToFind
 
@@ -56,7 +56,7 @@ fromIndex
 
 음수가 입력되면 arr.length+fromIndex로 계산
 
- 리턴값 
+ 리턴값
 
 배열이 valueToFind 값을 포함하고 있는지의 여부(boolean)
 
@@ -64,7 +64,7 @@ fromIndex
 
 3. findIndex()
 arr.findIndex(callback(element[, index[, array]])[, thisArg])
- findIndex() 함수는 
+ findIndex() 함수는
 
 배열에서 값을 찾는 조건을 callback 함수로 전달하고,
 
@@ -76,7 +76,7 @@ arr.findIndex(callback(element[, index[, array]])[, thisArg])
 
 4. some()
 arr.some(callback(element[, index[, array]])[, thisArg])
- some() 함수는 
+ some() 함수는
 
 배열에서 값을 찾는 조건을 callback 함수로 전달하고,
 
@@ -84,7 +84,7 @@ arr.some(callback(element[, index[, array]])[, thisArg])
 
 조건에 맞는 값이 있으면 true, 조건에 맞는 값이 없으면 false를 리턴합니다.
 
- 파라미터 
+ 파라미터
 
 callback(element, index, array) 함수
 
@@ -105,16 +105,16 @@ thisArg (optional)
 
 callback을 실행할 때 this로 사용할 객체입니다.
 
- 리턴 값 
+ 리턴 값
 
 조건에 부합하는 값이 있으면 true, 없으면 false를 리턴합니다.
 
-5. includes() vs some() 
+5. includes() vs some()
 includes()와 some() 함수는 모두 특정 값이 배열에 포함되어 있는지를 체크할 수 있습니다.
 
 ================================================================
 
- 정리해 보면 
+ 정리해 보면
 
 includes() 함수는 primitive type을 체크하는 적절하고,
 
