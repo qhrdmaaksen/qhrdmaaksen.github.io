@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "깃 기초 사용법을 알아두자!!"
 ---
 

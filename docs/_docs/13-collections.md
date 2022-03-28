@@ -36,7 +36,7 @@ defaults:
       path: ""
       type: portfolio
     values:
-      layout: single
+      layout: post
       author_profile: false
       share: true
 ```

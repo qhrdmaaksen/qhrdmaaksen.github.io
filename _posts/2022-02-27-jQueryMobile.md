@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "제이쿼리 모바일 basic"
 ---
 

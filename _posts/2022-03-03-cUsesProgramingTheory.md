@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "C 이론01"
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "리눅스 이론01"
 ---
 

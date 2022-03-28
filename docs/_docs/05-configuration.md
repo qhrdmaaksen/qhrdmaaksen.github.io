@@ -975,7 +975,7 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
+      layout: post
       author_profile: true
       read_time: true
       comments: true
@@ -992,7 +992,7 @@ defaults:
       path: ""
       type: pages
     values:
-      layout: single
+      layout: post
 ```
 
 And collections like this:
@@ -1004,7 +1004,7 @@ defaults:
       path: ""
       type: foo
     values:
-      layout: single
+      layout: post
 ```
 
 And of course any default value can be overridden by settings in a post, page, or collection file. All you need to do is specify the settings in the YAML Front Matter. For more examples be sure to check out the demo site's [`_config.yml`](https://github.com/mmistakes/minimal-mistakes/blob/master/_config.yml).

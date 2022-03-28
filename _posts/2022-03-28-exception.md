@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "에러 모음집(설명 및 해결)"
 ---
 

@@ -70,7 +70,7 @@ Outputs:
 You can set custom Canonical URL for a page by specifying `canonical_url` option in pages YAML Front Matter. For example, if you have the following:
 
 ```yaml
-layout: single
+layout: post
 title: Title of Your Post
 canonical_url: "https://yoursite.com/custom-canonical-url"
 ```
@@ -105,7 +105,7 @@ The layout you'll likely use the most --- sidebar and main content combo.
 
 {% include gallery id="single_layout_gallery" caption="Image header and meta info examples for `single` layout" %}
 
-Assign with `layout: single` , or better yet apply as a [Front Matter default]({{ "/docs/configuration/#front-matter-defaults" | relative_url }}) in `_config.yml`.
+Assign with `layout: post` , or better yet apply as a [Front Matter default]({{ "/docs/configuration/#front-matter-defaults" | relative_url }}) in `_config.yml`.
 
 ### Wide page
 

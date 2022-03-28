@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "BufferedReader와 Scanner 차이점!"
 ---
 

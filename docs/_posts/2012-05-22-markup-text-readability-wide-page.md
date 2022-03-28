@@ -8,7 +8,7 @@ tags:
   - test
 ---
 
-When using `layout: single` add the following front matter to a page or post to widen the main content:
+When using `layout: post` add the following front matter to a page or post to widen the main content:
 
 ```yaml
 classes: wide

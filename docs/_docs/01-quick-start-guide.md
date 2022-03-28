@@ -159,8 +159,8 @@ Scaffolding out a site with the `jekyll new` command requires you to modify a fe
 Edit `_config.yml`. Then:
 
 - Replace `<site root>/index.md` with a modified [Minimal Mistakes `index.html`](https://github.com/mmistakes/minimal-mistakes/blob/master/index.html). Be sure to enable pagination if using the [`home` layout]({{ "/docs/layouts/#home-page" | relative_url }}) by adding the necessary lines to **_config.yml**.
-- Change `layout: post` in `_posts/0000-00-00-welcome-to-jekyll.markdown` to `layout: single`.
-- Remove `about.md`, or at the very least change `layout: page` to `layout: single` and remove references to `icon-github.html` (or [copy to your `_includes`](https://github.com/jekyll/minima/tree/master/_includes) if using it).
+- Change `layout: post` in `_posts/0000-00-00-welcome-to-jekyll.markdown` to `layout: post`.
+- Remove `about.md`, or at the very least change `layout: page` to `layout: post` and remove references to `icon-github.html` (or [copy to your `_includes`](https://github.com/jekyll/minima/tree/master/_includes) if using it).
 
 ### Migrating to Gem Version
 

@@ -38,6 +38,6 @@ defaults:
       path: ""
       type: pages
     values:
-      layout: single
+      layout: post
       author_profile: true
 ```

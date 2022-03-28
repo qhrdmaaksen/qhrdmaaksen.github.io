@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "(MYSQL활용)방명록 만들기 과정(part01) 및 에러 해결!"
 ---
 

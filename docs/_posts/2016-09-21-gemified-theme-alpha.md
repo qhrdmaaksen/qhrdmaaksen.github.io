@@ -82,8 +82,8 @@ If this is a new site be sure to add the following files to `_data/` and customi
 You'll also need to: 
 
 - Replace `<site root>/index.html` with a modified [Minimal Mistakes `index.html`](https://github.com/mmistakes/minimal-mistakes/blob/master/index.html).
-- Change `layout: post` in `_posts/0000-00-00-welcome-to-jekyll.markdown` to `layout: single`.
-- Remove `about.md`, or at the very least change `layout: page` to `layout: single` and remove references to `icon-github.html` (or [copy to your `_includes`](https://github.com/jekyll/minima/tree/master/_includes) if using).
+- Change `layout: post` in `_posts/0000-00-00-welcome-to-jekyll.markdown` to `layout: post`.
+- Remove `about.md`, or at the very least change `layout: page` to `layout: post` and remove references to `icon-github.html` (or [copy to your `_includes`](https://github.com/jekyll/minima/tree/master/_includes) if using).
 
 ---
 

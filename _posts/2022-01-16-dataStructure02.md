@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "c언어 자료구조 part02!"
 ---
 

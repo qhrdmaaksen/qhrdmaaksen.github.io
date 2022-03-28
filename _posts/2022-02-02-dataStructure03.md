@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "자료구조03_정렬"
 ---
 

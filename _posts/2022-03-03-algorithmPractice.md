@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "알고리즘 실무 이론01"
 ---
 

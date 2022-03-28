@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "제이쿼리 및 이벤트 활용 01"
 ---
 

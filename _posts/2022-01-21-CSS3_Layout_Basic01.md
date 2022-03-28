@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "css 레이아웃 기초"
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "반응형 웹 basic"
 ---
 

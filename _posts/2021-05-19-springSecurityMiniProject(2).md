@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "SpringSecurity(2)Controller, 각 페이지 View 출력!"
 ---
 

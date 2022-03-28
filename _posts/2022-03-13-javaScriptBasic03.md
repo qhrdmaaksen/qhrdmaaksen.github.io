@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "배열 특정값 포함 여부 체크(사용할때 다시 공부하기좋다)js"
 ---
 

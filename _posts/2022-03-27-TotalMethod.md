@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "Method 모음집"
 ---
 

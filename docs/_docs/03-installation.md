@@ -41,7 +41,7 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
+      layout: post
       read_time: true
       comments: true
       share: true

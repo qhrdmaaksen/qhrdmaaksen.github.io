@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 title: "The TCP socket Use The Server and Client Communication!"
 ---
 #### 출처 : 한양사이버대학교 민병석 교수님 자료
