@@ -58,7 +58,67 @@ text mode
 
 - 필수 패키지5개 = 명령어 yum -y install bind-utils ncftp wget unzip tar
 
-WinClient 설치
--
+terminal 에 # 프롬프트는 root 사용자, $ 프롬프트는 일반 사용자
+========================================
+명령어
+종료-
+shutdown -P now                = shutdown -P +10 (10분뒤 종료) shutdown -P -c (예약취소)
+halt -p
+init 0
+시스템 재부팅; shutdown -r now
+reboot
+init 6
+로그아웃;
+  logout
+    exit
+명령어모드에서 윈도우x 돌아가기; startx
+자동완성; 파일명의 일부만 입력 후 Tab key 를 눌러 자동완성
+명령어역사; history
+덮어씌기; -sf
+사용자모드에서 관리자모드; su-
+파일확인; ls
+파일자세히보기; ls -l
+X WINDOW 에서 텍스트 편집기 degit
+텍스트편집기; 
+현재디렉토리체크; pwd
+홈 디렉토리이동; cd
+폴더만들기; mkdir
+복사; cp
+iso 파일 만들기; mount -o loop  myfile.iso  /media/iso/
+
+
+vi 에디터
+  명령모드-> i or a -> input mode -> need save (esc) -> 명령모드
+  명령모드-> : -> ex mode(line 명령 모드) -> (저장w)(종료a)(취소i)등->esc or enter -> 명령모드
+  명령모드-> : (입력모드) -> q(vi빠져나와 터미널로)
+  저장안하고 나가기; :q!
+  파일삭제는 rm -f .(파일명)
+  현재커서 행삭제; dd(연속두번입력)
+  현재커서있는행복사; yy(연속두번입력)
+  복사한 내용을 현재 행 이후 붙여넣기; P
+  방향키; hjkl
+  페이지 이동; space bar
+
+
+========================
+cd가 자동으로 연결되었다면 umount /dev/cdrom 으로 끊어주자
+
+dvd/cd device ; /dev/cdrom
+연결되어있는 장치확인; mount
+장치연결하기; mount /dev/cdrom /(장치명?)
+장치연결끊기; unmount (장치명ex(/dev/cdrom))
+도움말; man ls
+
+가상콘솔-
+- 가상의 모니터, 페도라는 총 6개의 가상콘솔을 제공함
+- 각각의 가상콘솔로 이동하는 단축키 Ctrl + alt + F2~F6 ( F1 은 x 윈도우 모드 )
+
+런레벨-
+init 명령어 뒤에 붙은 숫자를 런레벨이라고 부름
+
+
+
+
+
 
 ```

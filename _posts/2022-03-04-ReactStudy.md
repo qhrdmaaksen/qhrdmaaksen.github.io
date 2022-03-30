@@ -13,6 +13,42 @@ title: "리액트를 배워보자(웹게임) 01"
 - 재사용 컴포넌트 (중복되는 요소들을 하나로 묶어주기에 유지보수하기 좋다)
 
 webPack 은 쪼개어진 자바스크립트 파일을 html 이 실행 할 수 있는 js 로 합쳐준다
+
+엘리먼트는 ract app 의 가장작은 단위다.
+  const element = <h1>Hello, world</h1>;
+
+브라우저 돔 엘리먼트와달리 리엑트 엘리먼트는 일반 객체다,
+쉽게 생성할수있으며 리엑트돔은 리엑트엘리먼트와 일치하도록 돔을 업데이트한다.
+
+엘리먼트는 컴포넌트의 구성요소이다.
+
+ex html file in <div> tag 이안에 들어가는 모든 엘리먼트를 리엑트 돔에서 관리하기에 
+이것을 root dom node 라고 한다    
+
+react element 를 root node 에 rendering 하려면
+const element = <h1>Hello, world</h1>;
+ReactDOM.render(element, document.getElementById('root'));
+과 같이 둘다 reactDom.render() 로 전달한다
+
+--------------------------------------------------
+react element 를 생성한 이후엔 해당 엘리먼트 자식이나 속성을 변경할 수 없다.
+렌더링된 엘리먼트를 업데이트하려면 유일한 방법은 새로운 엘리먼트를 생성하고 ,
+ReactDom.render() 로 전달해야한다.
+function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  ReactDOM.render(element, document.getElementById('root'));
+}
+
+setInterval(tick, 1000);
+---------------------------------------------
+실제로 대부분의 react 는 ReactDom.render() 를 한번만 호출한다.
+
+
 ----------------------------------------------------------------------------------------------------------------------------------
 <!--리액트를 사용하려면 필수 파일 두개-->
   <!--개발 단계이기때문에 development.js 로 사용하며 실제 배포할때엔 production.js 로 변환-->
@@ -76,7 +112,7 @@ npm i -D @babel/core //core 에는 바벨의 기본적인것이 들어있음
 npm i -D @babel/preset-env // 사용하고있는 브라우저에 맞게 최신문법을 옛날 문법을 지원하는것으로 바꿔줌
 npm i -- @babel/preset-react // jsx 도 지원해줌
 npm i -D babel-loader //바벨과 웹팩을 연결해줌
-npm i -D @babel/plugin-proposal-class-properties //필요하다면 설치
+npm i -D @babel/plugin-proposal-class-properties //class 사용할때 필요하다면 설치
 
   다음으로 폴더에 webpack.config.js 파일 생성후 아래와 같이 작성
 const path = require('path')
@@ -476,4 +512,7 @@ Reducer와 useReducer 차이점은 Reducer 는 state 가 동기적으로 바뀌�
 캐싱(Caching)은 캐시(Cache)라고 하는 좀 더 빠른 메모리 영역으로 데이터를 가져와서 접근하는 방식을 말한다. 예를 들어 속도가 느린 하드디스크의 데이터를 메모리로 가지고 와서 메모리 상에서 읽기 쓰기를 수행하는 것을 '데이터를 메모리에 캐싱한다'라고 한다
 
 reducer 는 action 발생시 state를 어떻게 바꿔줘야할지 정해주는 logic
+
+vscode 사용 시 항상 주기적으로 버전 체크를 해주자, 사용경로에서 npm outdated 로 버전 확인가능하며
+버전 업그레이드를 해야할 시 npm i 
 ```
