@@ -30,6 +30,7 @@ const element = <h1>Hello, world</h1>;
 ReactDOM.render(element, document.getElementById('root'));
 과 같이 둘다 reactDom.render() 로 전달한다
 
+
 --------------------------------------------------
 react element 를 생성한 이후엔 해당 엘리먼트 자식이나 속성을 변경할 수 없다.
 렌더링된 엘리먼트를 업데이트하려면 유일한 방법은 새로운 엘리먼트를 생성하고 ,

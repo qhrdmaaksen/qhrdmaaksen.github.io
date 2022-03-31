@@ -4,3 +4,62 @@ title: "첫 포스팅 테스트중입니다.!"
 ---
 
 ## 민우의 블로그 테스트중입니다
+
+```js
+===============install setting===========
+node 설치 후 
+node version check 
+  in terminal command : node -v
+
+npm 초기화 : npm init
+
+next 설치
+  npm i next@9     (@9는 version 을 의미)
+
+package.json 에서 대략적인거 설정하고, test 를 "dev": "next" 변경 
+
+react and react-dom 설치가안되어있다면 npm i react react-dom 으로 설치
+
+pages folder create (반드시 폴더명은 pages 여야한다. 넥스트가 인식한다)
+  pages folder 안에 file 들은 pages 가 파일들을 개별적인 page 로 만들어준다 (page component)
+    code splitting 으로 만들어준다 
+
+pages folder in create index.js file
+
+=========================================
+react-router 에서 했던 맵핑을 next 는 자동으로 해준다
+
+pages 하위 folder 를 생성할수있으며, 생성된 폴더(about)에 file 에 접근하려면
+  localhost:3000/about/vitamin777 
+
+prop-Types 사용 시 설치 :  npm i prop-types
+
+next.js 는 react 를 사용한 framework 다
+  갖춰진건 많지만 코딩의 자유도는 줄어든다
+    next 가 해주는 것중 제일 큰 장점은 server side rendering
+
+크게 3 개의 주체
+브라우저;
+프론트서버;
+백엔드서버;데이터베이스;
+
+전통적인 구동방식
+browser -> frontend server -> backend server -> data base -> 
+- backend server -> frontend server -> browser
+
+SPA 구동방식 ( 사용자가 빠르게 인터렉션을 원할때 ) 
+  (data 없이 화면만 받음)js, html, css, img 등을 browser에 뿌려주며, data는 다시 backend server
+  - 에서 db -> backend server -> browser 
+
+검색엔진을 위해 서버 사이드 렌더링
+  코드 스플릿팅
+    첫 방문은 전통적인 구동방식으로 하되, 그 다음 페이지 전환일땐 react 방식으로
+
+next를 사용 유무를 고려해야할것
+무 - 어드민 페이지 ( 코드 스플릿팅, 서버사이드 렌더링이 필요없는 경우)
+유 - 검색엔진이 필요하고 고객들이 접근하는 페이지
+
+return 안에 들어가는 모든 것들은 node 
+
+
+```
