@@ -108,8 +108,23 @@ iso 파일 만들기; mount -o loop  myfile.iso  /media/iso/
 more 와 용도가 비슷하지만 기능이 더 확장된 명령; less
 file이 어떤 종류의 파일인지 표시; file
 ls -a (숨긴파일보기) , ls -al (숨긴파일 상세보기)
+-------------------------
+사용자와 그룹 관련 명령어
+  사용자 생성시 옵션
+    (-u : id 지정, -g : 그룹 지정, -d : 홈 디렉터리 지정, -s : 셀 지정)
+useradd : 새로운 사용자를 추가 (ex: useradd newUser)
+passwd : 사용자의 비밀번호를 지정하거나 변경 (ex: passwd newUser)
+usermod : 사용자의 속성을 변경 (ex: usermod -g root newUser)
+userdel : 사용자를 삭제 (userdel newUser)
+chage : 사용자의 암호를 주기적으로 변경하도록 설정 (ex: chage -m 2 newUser)
+group : 현재 사용자가 속한 그룹을 보여줌 (ex: groups)
+groupadd : 새로운 그룹을 생성 (ex: groupadd newGroup)
+groupmode : 그룹의 속성을 변경 (ex: groupmod -n newgroup mygroup)
+groupdel : 그룹을 삭제 (ex: groupdel newgroup)
+gpasswd : 그룹의 암호를 설정하거나, 그룹의 관리를 수행 (ex: gpasswd newgroup)
 
-
+system-config-users (download)
+  yum -y install system-config-users
 ========================
 
 
@@ -129,8 +144,25 @@ dvd/cd device ; /dev/cdrom
 
 런레벨-
 init 명령어 뒤에 붙은 숫자를 런레벨이라고 부름
+================================================================
+사용자와 그룹:
+  리눅스는 다중 사용자 시스템
+  기본적으로 root 라는 이름을 가진 수퍼유저가있으며,
+    모든 작업을 할 수 있는 권한이있음
+  모든 사용자를 하나 이상의 그룹에 소속되어있음
+  사용자는 /etc/passwd 파일에 정의되어있음
+사용자 파일의 제일 윗줄:
+  root:X:0:0:root:/root:/bin/bash
+    (root 비밀번호는 따로 설정, 루트의 아이디 0 번, 사용자 그룹 아이디 0 번 
+      /root:/bin/bash 는 홈 디렉토리)
+사용자의 비밀번호는 /etc/shadow 파일에 정의되어있다.
+  그룹은 /etc/group 파일에 정의되어있따.
+리눅스에서는 기본적으로 루트라는 관리자 그룹을 만들어주고 0번을 할당한 후 
+  기본적으로 루트 관리자를 만들어줌
+그룹을 생략하게되면 리눅스가 기본적으로 사용자의 그룹을 알아서 만들어준다.
 
-
+/etc/skel 
+  사용자가 만들어질때 skel 에있는 내용물을 가지고 복제하여 만들어진다.
 
 
 

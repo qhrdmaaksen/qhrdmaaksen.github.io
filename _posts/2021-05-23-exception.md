@@ -86,6 +86,39 @@ class MyException {
     }
   }
 }
+==============================================
+Prop `className` did not match.
+  1/ npm i babel-plugin-styled-components
+    npm i babel-preset-next
+  2/ 프로젝트 루트 경로에 .babelrc 파일 생성 후 내용 작성하기
+  {
+   "presets": ["next/babel"],
+   "plugins": ["babel-plugin-styled-components"]
+}
+
+Server Error
+TypeError: Cannot read properties of undefined (reading 'user')
+  (user 에서 switch 문 default state return 을 안해줘서 발생)
+
+리덕스 데브툴이 안뜰때
+  (configureStore 에서 연결을 안해서 발생)
+
+TypeError: middleware is not a function
+  (미들웨어를 배열로 두면 찾지못한다. compose 에 ...middlewares)
+
+internal server error
+  (store.dispatch 로 해결, store 쪽 오타)
+
+가상머신 vmware 인터넷 연결 안될시
+  1 서비스에서 vmware nat, dhcp 활성화 되었는지 체크
+  2 (vmware edit -> vircual network editor 에서 게이트웨이 체크)
+      활성화되어있다면 가상머신 내부에서 시작-> ncpa.cpl 검색 후 
+        인터넷 프로토콜 버전 4 에서 ip 주소 수동 할당
+
+
+
+
+
+
+
 ```
-
-
