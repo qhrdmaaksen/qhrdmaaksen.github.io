@@ -115,7 +115,14 @@ internal server error
       활성화되어있다면 가상머신 내부에서 시작-> ncpa.cpl 검색 후 
         인터넷 프로토콜 버전 4 에서 ip 주소 수동 할당
 
-
+yum install error 발생 시
+ vi or gedit 으로 /etc/yum.repos.d/fedora.repo 파일을 열어 모든 내용 삭제 후 
+ 아래 내용 추가 
+[fedora]
+name=Fedora
+baseurl=http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/
+enabled=1
+gpgcheck=0
 
 
 

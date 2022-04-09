@@ -164,7 +164,21 @@ init 명령어 뒤에 붙은 숫자를 런레벨이라고 부름
 /etc/skel 
   사용자가 만들어질때 skel 에있는 내용물을 가지고 복제하여 만들어진다.
 
+RPM ( Redhat Package Manager)
+  확장명은 *.rpm, 이를 패키지라고 부름
+```
 
+![fileIsMeaning.png](../img/fileIsMeaning.png)
 
+```js
+RPM 명령어 옵션
+```
+
+![RPMinstallCommand.png](../img/RPMinstallCommand.png)
+
+```js
+RPM 단점 :
+의존성 문제가있다, 하지만 이를 해결하기위해 YUM 이 등장했다.
 
 ```
+
