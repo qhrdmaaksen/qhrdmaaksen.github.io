@@ -58,7 +58,9 @@ title: "구글 검색 팁 모음"
 URL 의 특정 검색어 검색
   inurl:mist
 
-
+특정 기간 설정
+  after:2020
+  before:2020
 
 
 ```

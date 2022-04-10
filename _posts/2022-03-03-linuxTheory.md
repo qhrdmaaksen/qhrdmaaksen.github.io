@@ -108,6 +108,10 @@ iso 파일 만들기; mount -o loop  myfile.iso  /media/iso/
 more 와 용도가 비슷하지만 기능이 더 확장된 명령; less
 file이 어떤 종류의 파일인지 표시; file
 ls -a (숨긴파일보기) , ls -al (숨긴파일 상세보기)
+파일 설치 ex: rpm -Uvh galculator-2.1.2-1.fc19.x86_64.rpm
+설치된 파일확인 : -qi
+파일 삭제: -e
+다른 모니터: chvt 숫자
 -------------------------
 사용자와 그룹 관련 명령어
   사용자 생성시 옵션
@@ -182,3 +186,12 @@ RPM 단점 :
 
 ```
 
+![yumPackageInstall.png](../img/yumPackageInstall.png)
+
+![yumAdvanced.png](../img/yumAdvanced.png)
+
+```js
+
+
+
+```
