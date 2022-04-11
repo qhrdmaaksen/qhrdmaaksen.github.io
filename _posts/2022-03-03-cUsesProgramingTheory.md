@@ -84,7 +84,11 @@ int num[2][2]={1,2,3,4}
   1 2
   3 4
 
-
+배열 요소의 개수 구하기
+  int a[] = {1,2,3,4};
+    int size;
+    size = sizeof(a) / sizeof(a[0]);
+  printf("%d", size);
 
 
 
