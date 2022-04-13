@@ -123,7 +123,9 @@ name=Fedora
 baseurl=http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/
 enabled=1
 gpgcheck=0
-
+--------------------------------------------------------------------------------
+[object Object]
+  글자를 쳤는데 위와같이떳다면 문자열이 객체로 변환되고있다는것
 
 
 
