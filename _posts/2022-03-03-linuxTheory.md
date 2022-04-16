@@ -190,8 +190,114 @@ RPM 단점 :
 
 ![yumAdvanced.png](../img/yumAdvanced.png)
 
+![compressionfile.png](../img/compressionfile.png)
+
+![bindFile.png](../img/bindFile.png)
+
+![fileLocationSearch.png](../img/fileLocationSearch.png)
+
+![systemSetting.png](../img/systemSetting.png)
+
+![CronConcept.png](../img/cronConcept.png)
+
+![AtConcept.png](../img/atConcept.png)
+
+![Cron-atUseTheBackup.png](../img/cron-atUseTheBackup.png)
+
+```js
+
+네트워크 관련 필수 개념
+
+```
+
+![networkRelevantEssentialConcept.png](../img/networkRelevantEssentialConcept.png)
+
+![broadCast-gateWay-netMask-DNS.png](../img/broadCast-gateway-netMask-DNS.png)
+
+```js
+
+리눅스에서의 네트워크 장치 이름
+  :fedora 19 는 lanCard ens32 or ens33 으로 할당
+  :이전 버전에서는 eth0,eth1 등으로 인식
+  :Vmware 에 fedora 를 설치할 경우 버전에따라 완전히 다른 이름으로 인식
+
+```
+
+```js
+
+중요한 네트워크 관련 명령어
+
+```
+
+![ImportantNetworkRelevantCommand.png](../img/ImportantNetworkRelevantCommand.png)
+
+![ImportantNetworkCommand.png](../img/ImportantNetworkCommand.png)
+
+![etcConfig.png](../img/etcConfig.png)
+
+```js
+
+네트워크 보안을 위한 SELinux
+
+```
+
+![SELinuxFornetworkSecurity.png](../img/SELinuxFornetworkSecurity.png)
+
+```js
+
+파이프, 필터, 리디렉션
+
+```
+
+![pipeFilterRedirection.png](../img/pipeFilterRedirection.png)
+
+```js
+
+프로세스, 데몬(1)
+
+```
+
+![processDemon.png](../img/processDemon.png)
+
+![processDemon02.png](../img/processDemon02.png)
+
+```js
+
+서비스와 소켓(1)
+
+```
+
+![service&socket.png](../img/service&socket.png)
+
+![service&socket02.png](../img/service&socket02.png)
+
 ```js
 
 
 
 ```
+
+```js
+
+
+
+```
+
+```js
+
+
+
+```
+
+```js
+
+
+
+```
+
+```js
+
+
+
+```
+
