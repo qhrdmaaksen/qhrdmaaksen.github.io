@@ -127,6 +127,38 @@ gpgcheck=0
 [object Object]
   글자를 쳤는데 위와같이떳다면 문자열이 객체로 변환되고있다는것
 
+Failed prop type: Invalid prop `postData` of type `function` supplied to `PostCardContent`, expected `string`.
+  :string 이 아닌 문장이 들어왔는데 split() 를 적용하면 발생하는 에러
+    {postData.split(/(#[^\s#]+)/g).map((v, i) => { 를
+    {postData.toString().split(/(#[^\s#]+)/g).map((v, i) => { 로 해결
+
+로그인하지않았는데 프로필로 가게됐을 경우 에러 발생 
+: 
+if (!me) {
+		Router.push('/');
+		return null;
+	}
+
+TypeError: Failed to execute 'fetch' on 'Window'
+  :fetch 사용법이 잘못되었을 때 발생하는 에러입니다. 코드 상의 문제
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

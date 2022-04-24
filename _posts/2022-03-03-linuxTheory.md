@@ -271,23 +271,34 @@ RPM 단점 :
 
 ![service&socket02.png](../img/service&socket02.png)
 
+================================================================
+
 ```js
 
-
+비밀번호 응급복구
+: 컴퓨터 재시작, 화살표 위아래 누르고 첫번째 줄 올려놓고 E ,
+  linux 커서 올려놓고 키보드 end 누르고 한칸 띄고 init=/bin/sh 적고 ctrl+x,
+  whoami 명령어 입력 사용자 확인,
 
 ```
 
 ```js
 
-
+GOUB 부트로더
 
 ```
+
+![GRUBbootloader.png](../img/GRUBbootloader.png)
+
+![GRUB2.png](../img/GRUB2.png)
 
 ```js
 
-
+모듈 :  필요할 때마다 호출하여 사용되는 코드
 
 ```
+
+![커널컴파일순서.png](../img/커널컴파일순서.png)
 
 ```js
 
