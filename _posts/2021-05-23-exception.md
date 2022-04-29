@@ -142,11 +142,79 @@ if (!me) {
 TypeError: Failed to execute 'fetch' on 'Window'
   :fetch 사용법이 잘못되었을 때 발생하는 에러입니다. 코드 상의 문제
 
+ throw new AssociationError(`${source.name}.belongsToMany(
+   ${target.name}) requires through option, pass either a 
+    string or a model`);
+: through 를 넣어줘야한다, belongsToMany 에는
 
+ConnectionRefusedError [SequelizeConnectionRefusedError]:connect ECONNREFUSED 127.0.0.1:3306
+: 서비스에서 mysql 시작
 
+can't set headers already sent 
+  : 요청과 응답은 한번씩만 교환이되는데 응답이 두번 들어가면 발생
 
+ERR_CONNECTION_REFUSED
+: SERVER 가 방화벽에 막히거나, 서버 접속이안됨, 서버가 꺼져있음 등
 
+'Property 'data' does not exist on type 'CallEffect<{data: string}>' 에러
+: email: string, password: string 으로 변경
 
+undefined saveUninitialized
+undefined resave
+undefined secret
+:app.use(session({
+			saveUninitialized: false,
+			resave: false,
+			secret: process.env.COOKIE_SECRET, // .env 에 password setting
+		}
+))
+
+<pre>cannot post /user/logout</pre>
+: back end 쪽 router.post 에 /logout 으로 해결
+prefix 로 /user 가 붙었기에 /user/user/logout 으로 적용되었던것같다
+
+status code 401 unauthorized ( 로그아웃에서 발생한 에러)
+: 쿠키 셋팅 해줘야함 
+
+origin: true, // * 대신 보낸 곳의 주소가 자동으로 들어가 편리하다, access allow control origin, 쿠기가 전달되면서 보안강화해줘야하기에 * 를 사용하면 에러발생
+
+TypeError: Cannot read properties of undefined (reading '0')
+: back 에 이미지 설정이 안들어가있어서 발생 아래 코드로 해결
+const fullPost = await Post.findOne({ // 게시글의 모든 정보
+			where: {id:post.id},
+			include:[{
+				model: Image, // 게시글에 달린 이미지
+			}, {
+				model: Comment, // 게시글에 달린 댓글
+			}, {
+				model: User, // 게시글 작성자
+			}]
+		})
+
+Cannot read properties of undefined (reading 'data')
+: sagas 의 posts 에 인수를 action 으로 잘못넣었음 data 로 넣어주니 해결
+
+Cannot read properties of undefined (reading 'nickname')
+: 댓글의 작성자가 누군지 모름 
+
+Failed prop type: Invalid prop `post.Comments[0]` of type `string` 
+supplied to `PostCard`, expected `object`.
+: propTypes 에 string 으로 들어오는걸 내가 object 로 설정해놔서 생김
+
+Error: Rendered fewer hooks than expected. This may be caused by an 
+accidental early return statement.
+:훅스 보단 아래에 코드 추가하지 않아서 발생된 문제,(useEffect 등 보단 아래)
+
+Encountered two children with the same key, `3`. Keys should be unique 
+so that components maintain their identity across updates.
+: loading 문제 해결하면 없어질 문제 당장 급한건아니고 후 처리 
+
+<pre>Cannot DELETE /user/1/unfollow</pre>
+: return axios.delete(`/user/${data}/unfollow`)  를
+ return axios.delete(`/user/${data}/follow`) 로
+
+Error where params server error 500 
+: back , params value typing error 
 
 
 
