@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Next.js nodeBird summary"
+title: "Next.js nodeBird Front summary"
 ---
 
 ## 민우의 블로그 테스트중입니다
