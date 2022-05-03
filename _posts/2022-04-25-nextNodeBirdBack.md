@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "첫 포스팅 테스트중입니다.!"
+title: "nodeBirdeProject back"
 ---
 
-## 민우의 블로그 테스트중입니다
+## 노드버드 백단 공부 모음
 
 ![nodeBirdERD.png](../img/nodeBirdERD.png)
 
@@ -92,6 +92,15 @@ npm i datenv (secret key hide 라이브러리)
 npm i morgan (요청과 응답 기록 라이브러리)
 npm i multer (back 에서 multipart/form-data 받으려면 필요한 라이브러리)
 npm cache clean --force (Cache 초기화)
+npm i swr (LOAD get 요청 간단하게해주는 next 에서 만든라이브러리,SSR 됨)
+npm i moment (날짜 관련 라이브러리)
+
+npm run build (next build 호출)
+"build": "next build",
+"start": "next start"
+
+npm i @next/bundle-analyzer (file 용량 체크)
+npm i cross-env (env 설정 window 에서도 가능하게 해주는 라이브러리)
 --------------------------------------------------------
 백엔드 서버 역할
   saga 에서 axios post 해서 보내는 경로가 백엔드 서버,
@@ -1185,6 +1194,344 @@ process.on('uncaughtexception') 이벤트를 달아야합니다
 경우가 많습니다. 다만 런타임에서는 다른 데이터가 와서 에러가 발생할 수 
 있습니다. 그래서 타이핑을 정확하게 얻기 위해 rest api 대신 sdk
 (라이브러리) 식으로 만드는 경우도 있습니다
+
+const hashtags = req.body.content.match(/#[^\s#]+/g)
+해쉬태그를 정규표현식으로 원하는 글만 추출 
+
+// slice(1) 은 해쉬태그(#)를 떼어내기위해 사용, toLowerCase 는 소문자로 만드는것(대소문자구분없이 db 에 저장하기 위해)
+			await Promise.all(hashtags.map((tag) => Hashtag.create({name: tag.slice(1).toLowerCase()})))
+무조건 등록하는게아니라 없으면 등록하는 방식으로 하려면 아래 코드로,
+(findOrCreate)없을땐 등록 있으면 가져오는걸로 
+await Promise.all(hashtags.map((tag) => Hashtag.findOrCreate({where: {name: tag.slice(1).toLowerCase()}})))
+ // 로그인이 안되어있다면 바로바로 막아주는게 좋다, server, front 둘다
+if (!id) {
+			alert('로그인이 필요합니다!')
+		}
+
+ex 1 번 게시글을 리트윗한게 8 번 게시글 
+
+// 자기 게시글을 리트윗하거나 자기 게시글을 리트윗한 다른게시글을 자기가 다시 리트윗하는것을 막을 것임
+		if (req.user.id === post.UserId || (post.Retweet && post.Retweet.UserId === req.user.id))
+
+  // content 는 사실 리트윗에 필요없지만, 비워두면 안되기에 설정
+await Post.create({
+			UserId: req.user.id,
+			RetweetId: retweetTargetId,
+			content: 'retweet', 
+
+include 가 복잡해지면 db 에서 가져오는 속도가 느려진다
+그래서 너무 복잡하다 싶으면 따로 router 를 만들어서 나눠주자
+
+rerendering 이 계속해서 발생된다면, 훅스들을 의심해보자
+
+lastId 방식은 게시글 최소 10개 이상있어야한다
+
+// 보통 get 방식은 데이터를 못 넣기때문에 쿼리스트링으로 넣어줘야한다 (주소), etc : limit=10&offset=10
+// 포스트 등은 데이터 캐싱이 안되지만, 겟은 데이터 캐싱을 같이 할 수 있다
+	return axios.get(`/posts?lastId=${lastId}`) // 4 데이터가 간다 ,
+
+if (parseInt(req.query.lastId, 10)) { // 초기 로딩이 아닐때
+			where.id = {[Op.lt]: parseInt(req.query.lastId, 10)} // id 가 
+      lastId 보다 작은([Op.lt]:) < 의미
+		}
+
+--------------------------------------------------------
+SSR 을 사용하지 않을 거라면 굳이 next 를 사용하지 않아도 된다
+--------------------------------------------------------
+CSR 방식
+새로고침을 하면 프론트서버로 요청을 가서 응답을 browser 로 줄때 
+사용자 정보는 담겨있지 않으며, 그 다음에 화면 렌더링 된 후 
+LOAD_USER_REQUEST 를 했을 때 백엔드에서 데이터를 가져와서 사용자를
+화면에 표시를 해준다
+
+원리
+index.js 메인 페이지에서 화면이 로딩된 후 useEffect 를 통해서 
+사용자 정보와 게시글 정보를 받아온다. 화면이 처음 로딩될때 사용자 정보
+게시글 정보가 없다가 나중에야 불러오기때문에 잠깐 동안에 데이터의 
+공백이 발생한다
+--------------------------------------------------------
+REDUX SSR 방식
+처음부터 Browser 에서 front 에서 back 에서 사용자 정보를 가지고 
+다시 front 을 거쳐 browser 로 응답을 해주는 것 
+
+처음부터 화면을 받아올때부터 먼저 데이터를 
+불러올 수 있다면 데이터가 채워진채로 화면이 그려진다, 그러면
+Home Component 보다 먼저 실행되는 것이 필요한데, 
+next 9 버전부터 새로운것 3개가 나왔는데 getStatic props, getStatic path
+getServerSideProps 세개, export default Home 위에다가 
+export const getServerSideProps = wrapper.getServerSideProps((context) => {})
+이렇게 넣어주면 됨 이러면 위에 부분이 Home 보다 먼저 실행이 된다
+그래야 데이터를 채운 다음에 화면이 렌더링이 된다. 화면이 렌더링될때는
+리덕스에 데이터가 채워진 상태로 존재하게된다
+
+원리
+init 에서는 초기 상태로 그대로있지만, getServerSideProps 가 실행되면 
+실행결과를 HYDRATE 로 보내준다 
+--------------------------------------------------------
+wrapper
+next-redux-wrapper 를 통해 만들어냄 
+SSR 을 위해 NEXT 에서 제공하는 4 가지 메서드가 있지만 REDUX 와 함께 사용하기엔 문제가있어서 next-redux-wrapper 가 제공하는 SSR 메서드와 
+같이 사용하는게 더 낫다 
+--------------------------------------------------------
+브라우저에서 백엔드로 데이터를 보낼때 브라우저에서 쿠키를 담아 보낸다
+axios 에서 데이터보낼때 헤더에 세팅안해도 알아서 보내줬음
+하지만 ssr 에서는 프론트에서 백엔드로 데이터를 보내고있기때문에
+서버에서 서버로 보낼땐 쿠키를 자동으로 보내는게아니라 직접 axios 에 
+넣어서 보내줘야한다 
+렌더링이 완료된 후 브라우저에 그려주기때문에 브라우저가 개입할 여지가없음
+
+터미널에 headers 에 cookie 
+back req.headers :::  {
+  accept: 'application/json, text/plain, */*',
+  cookie: 'Idea-2756c0d4=6763bcf5-fadd-4e19-ab62-97149fff33e8; 
+  connect.sid=s%3Ad8XVHkigXT81REMeMCr3tL7D8MHvA_kz.kOKX%2FT5FvjWh8wiIxe%2FGW2Jm
+8YaL6q1axMJLcEAa2Qg',
+  'user-agent': 'axios/0.26.1',
+  host: 'localhost:3065',
+  connection: 'close'
+}
+
+server 와 server 간 쿠키 ( 중요함 )
+//  Home 보다 먼저 실행이 된다 ( browser 가 아닌 front server 쪽에서 실행) (SSR)
+// context 는 요청/응답과 SSR에 관련된 정보가 들어있는 객체이고요
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+	// server 쪽에서 실행되면 context.req 가 존재함, 서버쪽 쿠키 전달
+	const cookie = context.req ? context.req.headers.cookie : '';
+	axios.defaults.headers.Cookie = ''; // 쿠키를 사용하지 않고 요청을 보낼때는 비워줌
+	// cookie 공유 문제를 해결 장치
+	if (context.req && cookie) { // 서버일때와 cookie 가 있을때
+		axios.defaults.headers.Cookie = cookie; // 쿠키를 써서 요청을 보낼땐 쿠키를 넣어줌
+	}
+ getServerSideProps는 프론트 서버에서 실행되는 코드입니다. 사용자들은 많은 수의 브라우저로 접근하지만 프론트 서버는 하나이므로 axios.defaults.headers.Cookie=쿠키 로 쿠키를 설정하게 되면 프론트 서버에 이 쿠키가 설정되어 버립니다. 모든 브라우저가 프론트 서버를 거쳐 백엔드 서버로 요청을 보낼 때 같은 쿠키가 적용되어버리는 것입니다.
+그래서 한 번 설정했다가 요청을 보낸 다음에는 axios.defaults.headers.Cookie = ''로 비워주는 것입니다.
+
+(브라우저) 쿠키 프론트서버로 전달 ->  (프론트서버) 전달받은 쿠키 저장해서 
+백엔드 서버로 요청 -> 백엔드서버 쿠키에 따른 데이터 응답 -> 프론트서버 
+데이터와 컴포넌트 조합 -> 브라우저
+
+console.dir(error) 해보면 정확한 구조를 알 수 있습니다.
+
+언제 접속해도 데이터가 바뀔일이없다면 getStaticProps 를 사용, (게시글 등)
+접속 할때마다 접속한 상황에따라 화면이 바뀌어야하면 getServerSideProps 사용
+
+다이나믹 라우팅
+게시글을 공유하고 싶다면 게시글에 대한 주소가 필요하며 해당 주소는
+pages 에 post 폴더 [id].js 로 지정하며 id 는 게시글에따라 1 번게시글
+2번 게시글 ... 100번 게시글 등으로 이뤄진다
+
+favicon 
+front 에 public 폴더 만들어서 이미지 넣어주고 이미지 이름은 favicon.ico
+주소/favicon.ico 접속했을 때 이미지가 뜬다면 크롬 브라우저에서 알아서 긁어갑니다. 만약 못 긁는다면 
+<link rel=”shortcut icon” href=”/favicon.ico”> 넣어주어야 합니다.
+
+{/*이미지가 없는 게시물을 공유하면 favicon 이 화면에 뜸, 이미지가 만약 있다면 첫번째 이미지를 공유화면에 띄우기*/}
+					<meta property="og:image" content={singlePost.Images[0] ? singlePost.Images[0].src : 'https://nodebirds.com/favicon.ico'} />
+
+app.js 가 document 로 감싸지면서 제일 위에있는 html 헤드 바디 등 수정가능
+// document 커스텀 기본 꼴
+export default class MyDocument extends Document {
+	// document 와 app.js 에서는 사용 getInitialProps (SSR Method)
+	static async getInitialProps(ctx) {
+		const initialProps = await Document.getInitialProps(ctx)
+		return {
+			...initialProps,
+		}
+	}
+	render() {
+    return (
+		<Html>
+			<Head>
+				<body>
+				<Main/>
+				<NextScript/>
+				</body>
+			</Head>
+		</Html>
+    )
+	}
+}
+
+// ServerStyleSheet 는 styled component 를 ssr 할 수있게 제공
+import {ServerStyleSheet} from 'styled-components' 
+
+// 한글or특수문자 들어가면 error, encode 로 감싸주자
+	return axios.get(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`)
+//front 에서 encode 로 요청이왔고 응답은 decode 로 설정
+where: {name: decodeURIComponent(req.params.hashtag)}, 
+
+getStaticPaths ( 컨텐츠의 제한을 두는 경우 사용 블로그 등등 )
+getStaticProps 와 같이 사용한다, 다이나믹 라우팅일때 사용한다
+getStaticPaths 가 없다면 에러 발생
+export async function getStaticPaths(){
+  const result = await axios.get('/post/list')
+  return {
+    paths: [
+      { params: { id: '1'}}, // 1번 게시글 미리 빌드 됨
+    ],
+    fallback: false,// false 는 params 에 적히지않은 경우 에러발생,
+    //true 로 하면 에러가 발생하지 않음 (대신 SSR 이 안됨)
+  }
+}
+다이나믹 라우팅이기때문에 아이디가 여러가지로 바뀔수있는데, 
+getStaticProps 는 미리 빌드해서 html 로 만든다
+fallback : true 로 설정 시 ssr 은 안되지만 
+CSR 을 할 수 있게 잠깐 기다려주는 역할을 하는 코드
+if (router.isFallback) {
+  return <div>로딩중 ...</div>
+}
+폴백이 true 인데 만약 현재 경로가 없다면, 거기에 해당하는 getStaticProps
+부분을 server 로 부터 불러온다, 예를들어 params 2 번 아이디라면 
+getStaticPaths 에서 2번 아이디가 있는지보고 있다면 html 을 가져오면되는데
+없다면 getStaticProps 을 그려준다 그동안에 로딩중 ... 위에 코드 실행됐다가
+나중에 데이터가 오면 로직 실행
+
+
+redux action 대신 swr 을 사용해보자 
+swr 준비
+// fetcher 는 공유해서 사용하거나, 특정 swr 은 개조해서 사용
+// fetcher 를 다른걸로 바꾸면 graphql 도 쓸수있다
+// data, error 가 둘다 있다면 성공했거나, 실패했거나, 둘다 없다면 로딩중
+	const fetcher = (url) = axios.get(url, {withCredentials: true}).then((result)=> result.data)
+//followers 불러오기
+	// data, error 가 둘다 있다면 성공했거나, 실패했거나, 둘다 없다면 로딩중
+	const {data: followersData, error: followerError} = useSWR(`http://localhost:3065/user/followers`, fetcher) //fetcher 가 url 를 어떻게 가져올지에 대한걸적어줌
+	//followings 불러오기
+	const {data: followingsData, error: followingError} = useSWR(`http://localhost:3065/user/followings`, fetcher) //fetcher 가 url 를 어떻게 가져올지에 대한걸적어줌
+
+훅스들이 실행되기전에 return 을 사용하면 훅스컴포넌트에서 에러 발생시킴
+return 이 hooks 보다 위에있을 수 없다
+
+router  도 middleware
+
+wildcard === params 는 제일 아래로 두는게 좋다 
+안그러면 /:userId 부분에서 다 걸린다
+router.get('/:userId', async (req, res, next) => { // GET /user/1
+
+limit: req.query.limit, //  limit 만큼 더 보여준다
+
+중복 데이터 관리
+useEffect 에 followersData 의 id 로 비교해 기존 state 에 concat 하면 됨
+
+프로그래밍 적으로 주소를 옮길때는 Router 를 사용, 링크는 Link 를 사용하고
+그 Link 로 가려면 Router 로
+
+예전에는 as 로 사용했어야했는데, next 9 버전되서 간단해졌다
+Router.push(`/hashtag/${searchInput}`) // searchInput 해쉬태그로 이동
+동적 라우팅 주소를 입력해주면 알아서 그 주소로가서 알아서 ssr 실행해서
+화면을 그려준다
+
+moment library 에서 data-fns 로 넘어가는 이유
+불변성때문이며, dayjs 로 넘어가는 이유는 데이터 용량때문이다
+moment 사용법 momentjs.com 에서 .format() 검색하면 다양하게 설정 가능
+npm i moment 로 설치 후, 
+moment.locale('ko') // 한글로 바꾼다
+// moment() 만 추가하면 현재날짜의미,
+<div style={{ float: 'right'}}>{moment(post.createdAt)}</div>
+//{moment(post.createdAt)} 포스트 생성일이 moment 객체로 바뀜
+<div style={{ float: 'right'}}>{moment(post.createdAt).format()}</div>
+
+배포
+실제 서버에 배포
+배고파기전에 빌드과정이 필요하다 
+빌드 과정은 개발과정을 거치면서 리덕스 데브툴도 연결되어있고 넥스트가 
+그때그때 코드 스플릿팅해놓은것들을 미리 준비해놓은 과정?
+빌드를하면 html css js 결과물이나오는데 결과물을 가지고 웹서버에 올려두면
+결과물들이 실제 브라우저,사용자들의 브라우저로 전달되는것임
+
+npm run build 
+build (code 가 바뀌었다)하면 git hub 에 push 를 한다, cicd 도구가있는데 
+코드에대한 테스트도해주고 build 도 해주며, 중간에 에러가있을시 알림으로
+배포 실패했다고 나옴, build 나 테스트해주는 cicd tool 을 깃헙이랑 연결을
+해놔서 깃헙에 푸쉬를하면 알아서 cicd 툴 돌아가고 빌드랑 테스트 다 통과하면
+아마존 웹서비스 서버로 배포를 해주는 중간역할을 해주는게 cicd tool 
+
+만약 파일이 1 mb 가 넘어가면 코드 스플릿팅을 진행해서 리액트.레이지
+또는 서스펜스라는 기능으로 용량을 쪼개는게 좋다 
+
+공용 파일
+ ├ chunks/framework.1daf1e.js                                 39.9 kB
+  ├ chunks/main.3b7e1b.js                                      6.9 kB
+  ├ chunks/pages/_app.e71ad1.js                                12.6 kB
+  ├ chunks/webpack.e06743.js                                   751 B
+  └ css/350a07c9110ed41fdc11.css                               72.9 kB
+
+람다 와 검은색 동그라미는 한번씩은 SSR 을 한다는 것
+대신 검은동그라미는 미리 HTML 로 만들어져있는것
+404 페이지는 처음부터 서버쪽과 상관없이 그냥 정적인 페이지라는 의미
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+
+NEXT 공식문서에서 404 PAGE 에대한 커스터마이징 설명이있다
+에러 내용은 사용자들에게 안보여주는게 좋으며, 차라리 커스터마이징해서
+해결방안 제시를 적어놓는게 좋다
+
+js, type, css 등 용량이 1mb 이상되면 gzip 으로 만들어줘야좋다
+브라우저가 gzip 을 압축 해제를 해주며, js,css 등 파일들은 gzip 으로 
+압축해주는게 좋다 
+
+compression webpack plugin 은 내장되서 더이상 설치할 피료가 없게됨
+compress: true, // compression webpack plugin 을 대체함
+
+webpack, next config 모두 커스터마이징 가능
+
+next config js 가 next build 할때 next 할때(npm run dev) next config 
+js 가 한번 쭉 읽힘 
+"build": "ANALYZE= true NODE_ENV=production next build", 하면
+process.env analyze 가 true 가 되며 process NODE_ENV 가 production 
+되며, 실행한 다음 next build 
+단점은 윈도우에서는 안되며, 리눅스 또는 맥에서는 됨
+그래서 npm i cross-env 설치
+"build": "cross-env ANALYZE= true NODE_ENV=production next build",
+npm run build 하면 analyze 가 true 가 되면서 
+enabled: process.env.ANALYZE === 'true', 가 true 가 됨
+그러면서 서버 구조에대해 인터넷창으로 보여준다
+만약 moment 의 다국어 지원으로 많은 언어가있다면 내가 원하는것만 남겨두고
+정리 할 수 있다, 정리 방법은 how to load only locales i want 검색하면
+new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ko$/),
+위와 같이 webpack config js 에 넣어주자 
+(노드버드 앱을 완성하고 나서 하자)
+
+게시글 수정 기능 작동해보자
+
+Model 의 init 을 호출해줘야 table 이 생성 됨
+
+//static 함수 사용으로 model 최신화 권장 이유: 타입스크립트 할때 나중에 도움이됨 타입추론이되기때문에
+/*sequelize.define{ 이 Model.init 으로 된다고 보면 됨*/
+module.exports = class Comment extends Model {
+	static init(sequelize) {
+		return super.init({ // 상속 받은상태에서 부모를 호출할땐 super 사용
+
+immer 가 기본적으론 익스플로러에서 지원이안되지만 동작하는 방법이 있음
+enableES5 를 켜줘야 produce 가 ie11 에서 동작가능하다, 원래는 
+프론트 소스코드 제일 위에 놓으면되지만, 넥스트는 다른게 리액트돔에랜더가
+없고 넥스트에서 알아서 처리하기때문에 처음 시작하는 코드에 넣을 수 없다
+권장하는 방법은 produce 를 직접 만드는것
+front 경로에 util 폴더에
+import produce, {enableES5} from "immer";
+export default (...args) => { // 프로듀스 함수 확장
+	enableES5()
+	return produce(...args)
+}
+위와 같은 코드 추가해주고 immer 사용 했던 file 들의 import 를
+import produce from '../util/produce' // ie11 지원하기위해 따로 produce 함수 만듬
+경로 수정해주면 됨
+
+// swr 사용시 ssr 코드  
+	return { props: {data:123}} //server 에서 받은 data 가 있으면 data 를 props 로 넣어주면 전달됨
+전달받은 데이터를 fetcher 다음에 initialdata 로 넣어주면 swr도 ssr이 됨
+
+css 도 ssr 적용 되었는지 확인하는 방법
+localhost3060 들어가서 js 를 꺼보는 방법 
+크롬 개발자모드에서 셋팅즈의 설정에 Debugger 에서 js disable 하고 
+새로고침하면 서버에서 주는대로 html 대로 받아서 확인하면된다
+
+
+
+
+
+
+
 
 
 

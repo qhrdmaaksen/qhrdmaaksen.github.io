@@ -16,7 +16,7 @@ title: "예외와 예외 처리의 개념!"
 **예외 처리**  
 예외가 발생할 것 같은 처리를 수행할 경우에 try 문 , catch 문, finally문 사용
 
-```java
+```js
 try {
     //예외가 일어날 것 같은 처리를 기술함
   }
@@ -31,7 +31,7 @@ try {
 예외 발생 예상 메소드는 **throw**를 사용, 메소드에서 생길수 있는 예외 클래스를 지정해 둠  
 but 메소드를 호출한 곳에 예외를 받아 줄 catch 문이 없으면 , 컴파일 에러 발생
 
-```java
+```js
 class Args {
     public static void main(String[] args){
       try {
@@ -53,7 +53,7 @@ class Args {
 1)기존 정의된 예외 클래스외에 필요에 따라 새로운 예외 클래스를 정의하여 사용할 수 있음  
 2)보통 exception 클래스로부터 상속받는 클래스를 만들지만,예외 클래스를 선택할수있음
 
-```java
+```js
 class MyException1 extends Exception{
   //noting
 }
@@ -215,6 +215,82 @@ so that components maintain their identity across updates.
 
 Error where params server error 500 
 : back , params value typing error 
+
+favicon.ico
+: 가장 좋은방법은 파비콘 아이콘을 넣어주는게 좋고, 아니라면 
+https://jm0121.tistory.com/4 이런식으로 처리
+html 문서의 head 안에 추가
+<link rel="icon" href="data:;base64,iVBORw0KGgo="> 
+
+rerendering 이 계속해서 발생된다면, 훅스들을 의심해보자
+
+TypeError: nextCallback is not a function (next-redux-wrapper 7.0)
+:해결 방법(변경사항)
+version 6.0.2 >
+const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  context.store.dispatch(~~~);
+  context.store.dispatch(END);
+  await store.sagaTask.toPromise();
+});
+version 7.0.0 >
+const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      store.dispatch(~~~);
+      store.dispatch(END);
+      await store.sagaTask.toPromise();
+    }
+);
+추가적으로 동적라우팅 (강의 : 다이나믹 라우팅) 할 때도 (req, res, ...etc) > (req, res, params, ...etc) 로 수정하시면 됩니다.
+next-redux-wrapper 참고 자료(getServerSideProps)
+(https://github.com/kirill-konshin/next-redux-wrapper#getserversideprops)
+변경사항
+(https://github.com/kirill-konshin/next-redux-wrapper#upgrade-from-6x-to-7x)
+
+Prop 'clssName' did not match
+: .babelrc 설정, npm i babel-styled-component 
+{
+	"presets": [
+		"next/babel"
+	],
+	"plugins": [
+		[
+			"babel-plugin-styled-components",
+			{
+				"ssr": true,
+				"displayName": true, // 개발모드에서 component 의 이름으로 나와서 보기 편해짐
+			}
+		]
+	]
+}
+
+TypeError: Router.use() requires a middleware function but got a Object
+: module.exports = router files 중 안붙인게있을것..찾아보자
+
+[ERR_UNESDCAPED_CHARACTERS]: Request path contains unescaped characters
+: uri 주소창에 한글or 특수문자 들어가서 발생한 에러,
+// 한글or특수문자 들어가면 error, encode 로 감싸주자
+	return axios.get(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}`)
+//front 에서 encode 로 요청이왔고 응답은 decode 로 설정
+where: {name: decodeURIComponent(req.params.hashtag)}, 
+
+404 error
+: 존재하지 않을때 발생하는 에러 
+
+ERR_NAME_NOT_RESOLVED DNS 오류
+:DNS 오류를 확인한다
+DNS가 진짜 문제일 수 있다.
+1. 윈도우 PC에서 커멘트 창을 연다.
+2. "nslookup 도메인명"을 하여 정상 IP를 표시하는지 확인한다.
+혹은 아래 웹사이트를 참고해 DNS를 점검하여 해당 도메인이 정상 DNS를 
+설정하였는지 확인한다.
+한국인터넷정보센터 DNS점검 사이트: https://krnic.or.kr
+
+
+
+
+
+
 
 
 

@@ -169,15 +169,18 @@ git pull origin 브런치명 --allow-unrelated-histories
     git reset --soft HEAD~1
   </dd>
   <dt>
-  <dt>
     한줄씩 깃 커밋 이력보기
   </dt>
   <dd>
     git log --oneline
   </dd>
+  <dt>
+    GIT Add - fatal: adding files failed
   </dt>
   <dd>
-
+    git 에서 add . 했는데 파일 추가되지않음
+    .ignore 에 의해 add <file>로 하나씩 올리라고 에러 발생
+    : 해결 git add --ignore-errors .
   </dd>
   <dt>
   
