@@ -25,7 +25,78 @@ aws 는 메모리를 늘리고 줄이고를 어느정도 더 쉽게 할 수 있�
 
 회원가입할때 신용카드 결제 1 달러가되는데 다시 돌려주니까 걱정말자
 
+우분투 무료 및 보안 추가로 http, https 추가해주고 ssh 는 내 ip 
+키는 react-nodebird 폴더에 넣어놨음
+.gitignore file 에 
+react-nodebird.pem
+node_modules
+.env
+.next
+적어주자 여기서 react-nodebird.pem 은 아까 aws 에서 생성한 key
+.env 는 db id&password 
+
+aws 와 연결하려면 aws 에 인스턴스에서 연결 누르고 ssh 클라이언트에서
+//예: <내용> 을 복사해주자
+그리고 key 가 있는 프로젝트 폴더 경로에서 git bash 통해 해당 프로젝트의 
+바로 윗 줄 내용 복사한거 붙여주고 yes 입력 후 git clone 으로 github
+프로젝트 주소를 입력 
+
+ubuntu node 설치
+sudo apt-get update
+sudo apt-get install -y build-essential (bcrypt, image resizing 할때 error 안남)
+sudo apt-get install curl
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash --
+sudo apt-get install -y nodejs
+
+위의 5개 설치 후 
+node -v
+npm -v 
+로 버전 뜨면 정상
+npm -v 에서 안뜨면 
+sudo apt install npm 설치
+그 후 npm i 설치
+
+back end 쪽도 똑같이 터미널 하나 더 켜서 진행해주자
+mySQL 은 따로 서버를 둬야하지만, aws 에 front back mysql 까지하면 요금이
+많이 나올 수 있기에 back 에서 같이 설치 
+
+back 에 mySQL 설치
+(5버전 설치) sudo apt-get install -y mysql-server 
+8 버전 설치는 
+wget -c https://repo.mysql.com//mysql-apt-config_0.8.13-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
+sudo apt update
+sudo apt-get install mysql-server
+sudo su
+sudo mysql_secure_installation (비번 강도는 normal 로 하자;)
+
+
+sudo systemctl status mysql
+sudo systemctl enable mysql
+sudo apt-get update
+sudo apt-get install mysql-workbench-community libmysqlclient18
+sudo mysql -u root -p
+
+
+.next 폴더까지 git에 올린 후 서버에서 받으면 서버에서는 빌드하지 않아도 
+됩니다.
+
+
+정리
+코딩하고 깃 푸쉬 오리진 마스터해서 커밋 후에 깃 푸시 마스터해서 깃허브로
+보내고 원격 접속해서 설치를 받아 깃 풀 해서 원격 프론트 받고 npm i 도 한번
+돌려주고 (디펜던시들 패키지 설치했을수있으니) npm run build 하고 
+npm start 이렇게 매번 치기 귀찮기때문에 cicd tool 이라고 명령어 대신해주는
+툴이있다, 그리고 위에 sudo 라던지 계속 설치하기 귀찮으면
+docker  라고있는데 서버 하나띄우면 docker 에 명령어 넣어두고 실행하면
+명령어가 실행되면서 기존서버와 똑같은 서버를 만들어 낸다,
 --------------------------------------------------------
+
+
+
+
+
+
 
 
 ```
