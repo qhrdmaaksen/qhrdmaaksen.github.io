@@ -6,6 +6,11 @@ title: "nodeBird AWS 배포"
 ## 배포 정리 글
 
 ```js
+
+------------------------------------------------
+라이브러리
+npm i pm2 (backGroundProcess (터미널 종료되어도 서버 종료 X ))
+------------------------------------------------
 EC2 생성 파트
 패키지마다 최적화가 되있는게 있고 자동으로 되있는게있고 수동으로 줘야하는게 
 있다
@@ -91,6 +96,27 @@ npm start 이렇게 매번 치기 귀찮기때문에 cicd tool 이라고 명령�
 docker  라고있는데 서버 하나띄우면 docker 에 명령어 넣어두고 실행하면
 명령어가 실행되면서 기존서버와 똑같은 서버를 만들어 낸다,
 --------------------------------------------------------
+back 에서 package json 의 nodemon app 은 개발할때만 사용하며, 배포할땐
+node app 을 사용한다 
+npm start 해주면 
+.env file 을 .gitignore 에 설정했기때문에 db 연결이 불가, 
+vim .env 해서 생성 후 .env 파일의 내용 추가
+(앞에 . 이 붙으면 숨긴파일이다, 숨길파일 보려면 ls -a 로 확인가능)
+
+npx sequelize db:create (해주면 react-nodebird 생김)
+
+aws 인스턴스 생성 시 port 번호를 80 으로 설정했기에
+vim app.js 에서 port 번호를 80 으로 바꿔주자 
+
+npm start or sudo npm start 
+
+foreground process
+  터미널 끄면 같이 꺼짐 (node app)
+background process (npm i pm2)
+  터미널 꺼도 안꺼짐
+pm2 사용 시 - pm2 start app.js 로 js 를 꼭 붙여야함
+
+
 
 
 

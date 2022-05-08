@@ -183,10 +183,11 @@ git pull origin 브런치명 --allow-unrelated-histories
     : 해결 git add --ignore-errors .
   </dd>
   <dt>
-  
+    git pull 가 안먹을때
+    (Please specify which branch you want to merge with.)
   </dt>
   <dd>
-
+    git branch --set-upstream-to=origin/master master
   </dd>
   <dt>
   

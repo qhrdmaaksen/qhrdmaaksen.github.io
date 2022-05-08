@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "첫 포스팅 테스트중입니다.!"
+title: "reactRouter 개념 및 정리"
 ---
 
-## 민우의 블로그 테스트중입니다
+## 개념 및 참고 코드 정리
 
 react-router 설치 (설치원하는 경로 설정 후)
   npm i react-router

@@ -286,9 +286,24 @@ DNS가 진짜 문제일 수 있다.
 설정하였는지 확인한다.
 한국인터넷정보센터 DNS점검 사이트: https://krnic.or.kr
 
+return process.dlopen(module, path.toNamespacedPath(filename));
+:$ rm -rf node_modules/
+$ npm update
 
+Error: listen EACCES: permission denied 0.0.0.0:80
+: sudo npm start
 
-
+ERROR 1064 (42000): You have an error in your SQL syntax; check the
+ manual that corresponds to your MySQL server version for the right 
+ syntax to use near 'mysql> UPDATE user set password=password("1234") 
+ where user = 'root'' at line 1
+:UPDATE mysql.user SET authentication_string=null WHERE User='root';
+ FLUSH PRIVILEGES;
+exit
+ mysql -u root
+ALTER USER 'nodeBird'@'localhost' IDENTIFIED WITH aching_sha2_password BY 'voTmdnjem1!';
+ flush privileges;
+exit
 
 
 
