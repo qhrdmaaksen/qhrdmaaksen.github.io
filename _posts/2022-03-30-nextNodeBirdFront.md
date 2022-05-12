@@ -41,6 +41,8 @@ npm i redux
 npm i react-redux           (리액트랑 리덕스를 연결시켜줌)
 
 npm i redux-devtools-extension      (브라우저 개발자 도구와 연동이됨)
+
+npm i pm2 (server state check)
 ------------------
 npm i react-slick         (이미지를 넘겨서 볼 수 있게 지원해주는 컴포넌트)
 npm i redux-thunk

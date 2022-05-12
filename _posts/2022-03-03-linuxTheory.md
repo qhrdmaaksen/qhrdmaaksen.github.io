@@ -302,6 +302,18 @@ GOUB 부트로더
 
 ```js
 
+윈도우 X Theme change
+terminal 에서 root 계정으로 
+yum -y install light-theme-gnome gnome-tweak-tool 
+설치가 모두 완료된 후 
+gnome-tweak-tool 
+
+LibreOffice 활용 법
+엑셀,워드,파워포인트 등 ms office 와 비슷
+
+KDE 데스크톱 환경
+
+
 
 
 ```

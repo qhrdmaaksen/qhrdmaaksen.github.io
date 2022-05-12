@@ -305,6 +305,17 @@ ALTER USER 'nodeBird'@'localhost' IDENTIFIED WITH aching_sha2_password BY 'voTmd
  flush privileges;
 exit
 
+이미지 업로드 시 발생한 에러
+CredentialsError: Missing credentials in config, if using 
+:깃에 .env 가 올라가지않기때문에 server back 에서 .env 접근하여
+s3 엑세스 키를 넣어주자, 이렇게해도 에러 발생한다면 AWS.upload 쪽 코드 보자
+
+uid error
+: pm2 start 를 제대로 했는지 체크
+
+
+
+
 
 
 

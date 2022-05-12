@@ -101,6 +101,7 @@ npm run build (next build 호출)
 
 npm i @next/bundle-analyzer (file 용량 체크)
 npm i cross-env (env 설정 window 에서도 가능하게 해주는 라이브러리)
+npm i pm2 (server state check)
 --------------------------------------------------------
 백엔드 서버 역할
   saga 에서 axios post 해서 보내는 경로가 백엔드 서버,
@@ -1526,7 +1527,7 @@ localhost3060 들어가서 js 를 꺼보는 방법
 크롬 개발자모드에서 셋팅즈의 설정에 Debugger 에서 js disable 하고 
 새로고침하면 서버에서 주는대로 html 대로 받아서 확인하면된다
 
-
+draft.imagePaths = draft.imagePaths.concat(action.data)//기존이미지가있으면 기존이미지에 추가된 이미지 같이 업로드되게
 
 
 
