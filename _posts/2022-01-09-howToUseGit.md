@@ -190,10 +190,10 @@ git pull origin 브런치명 --allow-unrelated-histories
     git branch --set-upstream-to=origin/master master
   </dd>
   <dt>
-  
-  </dt>
+    git pull 을 할때 만약 Aborting 이 뜬다면 
+  </dt>git 
   <dd>
-
+  git reset --hard 후 다시 git pull 
   </dd>
   <dt>
   
