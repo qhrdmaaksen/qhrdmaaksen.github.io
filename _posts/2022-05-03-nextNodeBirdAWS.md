@@ -389,6 +389,80 @@ npm i aws-sdk
 npm i sharp (이미지 리사이징할때 사용, image magic 보다 효율이 좋음)
 package.json,package-lock.json 깃 add 
 lambda 폴더에 인덱스 파일 생성 후 코딩
+우분투에서 lambda folder 경로에서 sudo npm i 
+만약 권한 에러가뜨면 sudo su 로 가서 root 에서 sudo npm i 
+권한 문제가 발생할때마다 한단계씩 권한을 올려주고, 권한 해결된다면 낮춰주자
+zip -r aws-upload.zip ./* 
+*/으로 파일을 묶어주자 
+만약 zip 명령어가 없다면 sudo apt install zip  설치 후 다시 위 명령어 입력
+ls 로 업로드 집 생성 확인 후 아래와 같이 명령어 입력
+sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+ls로 awscliv2.zip 확인 후 sudo unzip awscliv2.zip 으로 해제 후
+sudo ./aws/install 
+Default region name 나오면 aws 에서 연결된  region 입력
+Default output format 은 json 
+이후 명령창에 aws s3 cp "aws-upload.zip" s3://vitamin777-s3
+이후로 aws 에서 lambda 로 가서 함수 생성을 해주자, 함수 작업은 s3 링크
+https://vitamin777-s3.s3.(DefaultRegion입력).amaznonaws.com/aws-upload.zip
+해주면 함수코드 정보에 함수를 호출할수있습니다가 뜨면 됌
+기본설정에서 제한시간은 30초로 변경, 핸들러 정보에는 index.handler 야함
+(만약 다른파일이고 다른 exports 라면 그에해당하는 파일명과 exports 명입력)
+저장하기전에 역할은 aws 정책 템플릿에서 새 역할 생성 - s3 객체 읽기 전용 권한 선택 하자
+이후 트리거 추가에서 s3 추가, 접두사에는 original/ 
+(original folder 안에 들어가면 람다 실행함) 접두사를 꼭 적어줘야한다
+왜냐면 오리지날에서 이미지 들어가서 리사이징하면 thumb  폴더에 
+파일이들어가는데 접두사를 안붙이면 thumb 폴더에 파일 들어간것도 람다를 다시
+트리거해서 무한 반복을 한다, 그래서 꼭 접두사를 넣어주자
+버킷에 내 버킷 넣어주고 재귀호출 체크해주고 트리거 추가 완료를 해주자 
+
+s3 흐름
+멀터로 s3 업로드하면 s3 가 람다를 트리거해서 내가만든 람다 함수 호출시켜서
+s3 풋 오브젝트 thumb 폴더에 넣어준다, 프론트에서 다시 thumb 폴더를 받으면됨
+
+백엔드서버 재시작했을때 로그인 유지되게하고싶다면 레디스?를 사용
+
+awscliv2.zip 의 용량이 너무 커서 sudo rm awscliv2.zip 으로 삭제해줌
+su rm -rf aws 로 aws 도 지움, 다시 sudo zip -r aws-upload.zip ./* 
+*/ 해줌
+
+카톡 공유가 잘 되면 head 에 ssr 도 잘 되는것 ? 검색엔진 최적화도 잘되는것
+
+nginx + https 적용하기
+엔진엑스는 캐싱, 리다이렉션, https, 정적파일제공 등을 맡김
+node 관련 로직은 next 서버에 맡길것임
+
+우분투 front 경로에서 nginx install 
+  sudo apt-get install nginx
+    sudo su 로 루트 전환 후 vim /etc/nginx.conf 가면 설정 파일에서 
+      http 서버역할,tcp,header,ssl,https 등 설정을 볼 수 있음
+        server_name vitamin777 ; 만 확인해주면됌
+  https 는 인증서가 필요하며, 공개키 방식이다,서버 공개키,브라우저 공개키로
+    암호화해서 비밀키로 암호를 풀면 공개키와 비밀키가 서로 다르기때문에 
+      브라우저에서 암호화된 내용을 해커들이 알 수 없으며, 서버쪽에서는 
+        비밀키로 해독할수있기때문에 프론트에서 보낸내용이 비밀키로 
+          해독된다면 믿고 그 내용을 그대로 받아들일 수 있음
+  wget https://dl.eff.org/certbot-auto 설치
+    certbot 은 권한이 필요하며, chmod a+x certbot-auto 로 권한 부여
+port number 80 이 사용되고있는지 체크
+  sudo lsof -i tcp:80 
+pid 확인 후 sudo kill -9 pid number
+노드 서버 잠시 종료 후 https 적용
+sudo systemctl start nginx
+sudo lsof -i tcp:80 로 nginx 가 80 port 를 잡았는지 체크
+./certbot-auto 명령어로 실행, blank to select all options 는 1
+
+더이상 넥스트 서버를 사용안하려면 
+  vim package.json 에서 port 번호 80 으로 변경
+
+인증서 발급받으면 3 개월 안에 certbot renew 하면됌
+  명령어 crontab certbot-auto 로 확인
+  
+
+
+
+
+
+
 
 
 
