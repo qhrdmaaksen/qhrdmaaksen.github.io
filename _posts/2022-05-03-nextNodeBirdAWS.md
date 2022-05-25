@@ -457,6 +457,94 @@ sudo lsof -i tcp:80 로 nginx 가 80 port 를 잡았는지 체크
 인증서 발급받으면 3 개월 안에 certbot renew 하면됌
   명령어 crontab certbot-auto 로 확인
   
+NGINX + HTTPS
+sudo su
+sudo lsof -i tcp:80
+(나오는 값이 없어야 함, 나온다면 sudo kill -9 프로세스아이디(PID))
+sudo apt-get install -y nginx
+vim /etc/nginx/nginx.conf
+(여기서 http 안에 server에 여러분 도메인(server_name)과 프록시 포트(3060같은 것)로 작성)
+:wq!로 저장
+sudo systemctl start nginx (정상 실행이면 바로 아무 말 없이 실행)
+sudo lsof -i tcp:80 (nginx가 보여야 함)
+wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+./certbot-auto
+여러분의 도메인이 보이면 1번 누르면 됨
+나중에 갱신하려면 certbot-auto renew (자동화하려면 crontab 명령어 알아보기)
+
+back 에서도 프론트와 동일하게 nginx 설치 후 
+wget https://dl.eff.org/certbot-auto 설치
+chmod a+x certbot-auto 명령어
+vim /etc/nginx/nginx.conf 에서 
+server {
+  server_name api.vitamin777.com;
+  listen 80;
+  location / {
+    proxy_set_header HOST $host;
+    proxy_pass https://127.0.0.1:3065
+    proxy_redirect off;
+  }
+}
+설정해주고 sudo lsof -i tcp:80 으로 80 번포트 사용확인 후
+사용되고있따면 sudo npx pm2 kill 로 종료 후
+sudo lsof -i tcp:80 체크, 만약 안꺼졌다면 root로했는지 ubuntu 로했는지확인
+sudo systemctl start nginx 명령어 입력 후 아무것도안뜨면 성공
+sudo lsof -i tcp:80 다시 체크해서 nginx 확인 후 ./certbot-auto 명령어입력
+
+한컴퓨터에서 두개의 서버를 돌릴때와 두대의 컴퓨터에서 각각 서버를 돌릴때 
+  인증서 방법이 다르다.
+한컴퓨터에서 백엔드서버까지 같이있다고하면 위에는 노드버드닷컴과 api노드버드 
+닷컴 한컴퓨터에서 인증서를 둘다 받으려면 whiled card 도메인을 받는데
+nginx 가 80 포트번호를 물고있게하는 이유가 원래라면 certbot 가 80 번 
+포트를 통해서 인증서를 받는데, 와일드카드 도메인을할때엔 http 로 못받고 dns 
+로 받아야한다, 그래서 와일드카드할땐 좀 다르다는것만 이해하자
+한컴퓨터로 하나의 서버, 하나의 도메인만 할때엔 편하다
+인증서는 route53 에서 txt 레코드 설정이 필요함
+
+*.vitamin777.com 로 와일드카드 인증서를 받으면 접두사 www, post 등
+  인증서를 다 받을 수 있지만 좀더 복잡해진다 dns 를 사용해야하기때문,
+
+ubuntu 에서 front, back url https 로 바꾸자
+
+우분투 백에서 vim app.js 에서 secure true 로 바꿔주자
+
+우분투 back vim app.js 에서 port 넘버 80 이아니라 3065 로 변경 후 저장
+  sudo npm start 로 3065 서버 시작
+만약 BadGateway 가 뜬다면 nginx 쪽에서 뭔가 문제가 발생한것임
+  이럴때 tail /var/log/nginx/error.log 로 error 로그 확인
+root로 가서 vim /etc/nginx/nginx.conf 에서 로컬은 https 가없음 http 수정
+수정 후 sudo systemctl restart nginx 명령어 입력한 후 api.vitamin777.com
+들어가보자 hello express 뜨면 정상
+
+
+https 에서 http 로 요청을 보내면 mixed error 가 뜸
+  우분투 front 에서 vim config/config.js 에서 https 로 되어있는지 확인
+mixed content 는 front 에서 back 에 요청
+cors 는 back error 
+
+nginx 와 콘솔 에러 해결하기
+  크롬 개발자 모드에서 정보 노출되지않게하기
+    프론트에서 devtoll 을 hidden-source-map 으로 안바꾸는 실수하지말자
+      (웹팩 소스코드가 다 노출될 위험이있따)
+  
+  Link static 요청 에러가 난다면 Link 에 속성 prefetch={false} 추가
+    사용자가 너무많거나 게시글이 너무 많다면 prefetch 를 안쓰는게 좋다
+      (prefetch 를 사용해야할때 안할때를 체크하는게 좋다)
+        (prefetch={false} 는 미리 build 를 안하게해줌)
+  
+  로그인 상태에서 프로필을 들어가면 
+  로그인이 풀리는게 쿠키에서 secure 가 적용이안되고있다,  true 가 되어야 
+    백엔드서버로 넘어가는데, http only 는 되는데 https 는 안되고있다
+     공식문서를 확인하면 app.js 에 if (process.env.NODE_ENV === 'production') 안에 app.set('trust proxy', 1) 추가
+        세션쪽에 proxy: true, 도 추가,
+          nginx config 에서 location 에 header 에 X-Forwarded-Proto    $scheme; 추가 
+  
+게시글 수정하기
+  게시글 수정누르면 textarea 로 바뀌면서 수정모드로 바꿀것임
+    수정을했다 치면 saga 로 넘어가서 백엔드로 넘어갔다가 프론트로넘어와서
+      성공했는지 실패했는지 보여줄것임
+  
 
 
 

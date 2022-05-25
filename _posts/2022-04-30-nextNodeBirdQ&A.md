@@ -1127,10 +1127,74 @@ s3에 보통이미지를 저장할때 보통 한 폴더에 모든 이미지를 �
 original 폴더에는 올라가는데 thumb 폴더에는 안올라가네요
 :람다쪽 문제로 보입니다. 람다 모니터링에 에러 메시지 있을 겁니다.
 
+어제부터 DNS문제가 발생하는것 같네요.
+저는 
+Error [ERR_TLS_CERT_ALTNAME_INVALID]: Hostname/IP does not match certificate's altnames: Host: api.-----.com. is not in the cert's altnames: DNS:raa.----.com, DNS:www.raa.----.com
+이라는 문제를 접하고 있는데요
+: nginx 를 백/프론트 둘다 껐다 켜니까 정상 동작 되네요
 
+certbot을 설치 할 때 404에러가 나옵니다
+:https://www.zerocho.com/category/NodeJS/post/5ef450a5701d8a001f84baeb
 
+domain.com의 https는 적용이 되었는데 www.domain.com은 적용이 되지 
+않습니다.
+:인증서 발급받을 때 domain.com과 www.domain.com 같이 받으시면 됩니다. 
+이미 domain.com 받으셨으면 같은 과정으로 www.domain.com 발급받으세요.
 
+다른페이지들은 정상적으로 나오는데 dynamic routes로 만든 페이지들만 
+502 Bad Gateway nginx/1.18.0 (Ubuntu) 이렇게 나오고 연결이 되지 
+않습니다. 
+:nginx에서 주소/[postid]는 차단하는 것 같습니다. nginx 설정문제로 
+보입니다.
 
+기본적으로 mysql에 배열을 저장할 수는 없습니다. 배열을 문자열로 미리 
+바꿔서 저장할 수는 있고요. 저장할 때 JSON.stringify해서 저장하시면 
+됩니다. mysql8부터 json 타입을 지원해서 json타입을 쓴다면 가능할수도 
+있겠습니다.
+
+state 속성 중 하나라도 바뀌었을 때 리렌더링 됩니다.
+예를 들어 state === { object, object2, object3} 일 때 저 컴포넌트에서는 
+object만 쓰더라도, object2, object3이 바뀌는 경우에도 리렌더링되는 
+겁니다. 그래서 처음부터 object만 받아오게 만들어야 합니다.
+그래서 제가 context api를 좋아하지 않습니다. 최적화하는데 상당한 노력이 
+많이 들어갑니다.
+
+ssl은 nginx에 설정하는 순간 바로 적용됩니다.
+
+A,B가 동시에 켜진 상황에서 A서버가 죽었을 때 B로 보내는 것은 
+로드밸런싱이고,
+A서버가 있다가 업데이트가 나왔을 때 B를 켜고 트래픽을 옮기고, 다시 A를
+ 끄는 게 무중단 배포입니다.
+
+cors에러
+ nginx에러로그 보니까  client intended to send too large body....
+ request: "POST /post/images HTTP/1.1",....이런식으로 떠서
+client_max_body_size 200m;  추가해서 사이즈 주니까 에러가 해결됐어요.
+
+api.도메인.co.kr할 때 nginx화면이 나오면 nginx 세팅이 제대로 안 된 
+겁니다. nginx가 노드 서버를 가리켜야 합니다. 강좌에서 나온 리버스 
+프록시로요.
+
+모바일에서는 CNAME으로 설정한 주소 링크로 이동 시 "연결된 네트워크가 
+비공개가 아님"  라는 페이지가 뜨더라구요. 에러로그에는 잡히는건 없어서요!
+:와일드카드 인증서 쓰셨나요? 그 때는 dns 설정을 해주셔야 합니다.
+그게 아니라면 단순 cname 설정 문제일 것 같습니다
+
+too many certificates already issued for exact set of domain
+계속 에러가 나서 여러번 재발급을 받았는데 그래서 횟수 초과가 된 것 
+같습니다 이 경우 그냥 기다려야 하나요..?
+:네 몇십 분 정도 기다리셔야 합니다.
+
+세션쿠키가 공유가 안되어 질문을 드리는데 세션쿠키가 공유될려면 프론트/ 
+백엔드 둘다 https가 적용이 되어야 하나요?
+:네 둘 다 https가 적용되어 있거나 둘 다 http여야 합니다. https를 쓰시려면 
+도메인이 필요할 것이고요. nginx를 쓰신다면 nginx쪽 설정이 필요할 수도 
+있습니다.
+
+Response Cookies가 뜨지 않습니다.
+
+히든소스맵은 리액트 소스가 노출되지 않는다는 것입니다. 리덕스 구조는 
+데브툴즈를 disable해야하는 것이고요.
 
 
 
@@ -1144,22 +1208,3 @@ original 폴더에는 올라가는데 thumb 폴더에는 안올라가네요
 
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
