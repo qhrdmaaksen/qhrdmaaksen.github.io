@@ -544,8 +544,16 @@ nginx 와 콘솔 에러 해결하기
   게시글 수정누르면 textarea 로 바뀌면서 수정모드로 바꿀것임
     수정을했다 치면 saga 로 넘어가서 백엔드로 넘어갔다가 프론트로넘어와서
       성공했는지 실패했는지 보여줄것임
-  
+  1. reducer 에서 action 을 생성 해주자
+  2. saga 에서 api 를 생성 해주자 
+  3. route 에서 비즈니스 로직을 만들어주자 
+  routes 에서 자신의 게시글 수정을 해주고 json 으로 보내주면
+    saga 에서 data 가 들어가고 reducer 에서는 json 으로 받았던 
+      PostId 와 content 로 업데이트가 된다 
 
+  수정 누르면 textarea 로 바뀌게 해보자
+  (editMode 는 true 면 textarea 를 보여주고 false 면 기존 게시글 보여줌)
+    component post 에서 onClick 함수를 만들어주고 
 
 
 
