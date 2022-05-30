@@ -553,8 +553,14 @@ nginx 와 콘솔 에러 해결하기
 
   수정 누르면 textarea 로 바뀌게 해보자
   (editMode 는 true 면 textarea 를 보여주고 false 면 기존 게시글 보여줌)
-    component post 에서 onClick 함수를 만들어주고 
-
+    component post 에서 onClick 함수를 만들어주고 클릭하면 editMode true
+      TextArea 안에 postData 가 들어가게 만들어주고 평소엔 false 로 
+        useState 로 관리해주자, 게시글 수정 취소할때 editMode 를 false 로
+          하려면 부모(PostCard.js)에서 설정을 해줘야한다
+  propTypes isRequired 일때는 모든 사용처에 다 넣어줘야한다, 
+  PostCardContent 의 editText 가 onChangePost 로 전달이되서, PostCard 에
+  고차함수로들어가 dispatch 할때 사용 할 수있다
+  
 
 
 
