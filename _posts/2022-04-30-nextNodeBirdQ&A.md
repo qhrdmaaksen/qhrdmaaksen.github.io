@@ -1196,6 +1196,12 @@ Response Cookies가 뜨지 않습니다.
 히든소스맵은 리액트 소스가 노출되지 않는다는 것입니다. 리덕스 구조는 
 데브툴즈를 disable해야하는 것이고요.
 
+setHashtag
+:association을 하면 association한 모델명 따라서 get, set, remove, add 
+메서드가 추가됩니다. Hashtag는 저희가 정한 모델명이니 setHashtag를 찾으면 
+당연히 공식문서에는 안 나옵니다.
+setImages를 쓰시면 기존것들이 다 제거되고, 새로운 것들이 설정됩니다.
+
 
 
 

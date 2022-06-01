@@ -560,8 +560,6 @@ nginx 와 콘솔 에러 해결하기
   propTypes isRequired 일때는 모든 사용처에 다 넣어줘야한다, 
   PostCardContent 의 editText 가 onChangePost 로 전달이되서, PostCard 에
   고차함수로들어가 dispatch 할때 사용 할 수있다
-  
-
 
 
 
