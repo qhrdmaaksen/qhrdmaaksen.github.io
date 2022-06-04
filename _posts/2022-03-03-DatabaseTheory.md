@@ -810,13 +810,29 @@ INSERT INTO~
   대응하는 속성과 데이터는 개수와 데이터 타입이 일치해야한다
   기본 테이블의 모든 속성을 사용할때 속성명을 생략할수있다
   SELECT 문을 사용해 다른 테이블의 검색 결과를 삽입할수있다
-DELETE
-
+DELETE (행삭제)
+  ex:DELETE FROM 사원 WHERE 이름="민우";
+DROP (테이블 삭제)
+GRANT
+  데이터베이스 사용자에게 사용권한을 부여
+  EX:GRANT SELECT ON 학생 TO KIM; (SELECT 권한 부여)
+REVOKE
+  DB 사용자의 권한을 취소
+  EX:REVOKE SELECT ON 학생 FROM KIM[CASCADE] (SELECT 권한 취소)
+COMMIT
+  DB 조작 작업을 영구적으로 반영하여 완료
+ROLLBACK
+  DB 조작 작업이 비정상적으로 종료되었을때 원래의 상태로 복구
 UPDATE
 
 내장 SQL
-
+  응용 프로그램 내에 DB 에서 사용되는 DATA 를 정의하거나 질의하는 SQL
+    문장을 내포하여 프로그램이 실행될때 함께 실행되도록 호스트 프로그램 언어
+      로 만든 프로그램에 삽입된 SQL 문
 DML-JOIN
+  2 개의 테이블에 대한 연관된 튜플들을 결합해 하나의 새로운 릴레이션 반환
+  크게 INNER JOIN , OUTER JOIN 으로 구분
+  일반적으로 FROM 절에 기술, 릴레이션이 사용되는 어느 곳에서나 사용가능
 
 
 
