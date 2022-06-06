@@ -540,26 +540,7 @@ nginx 와 콘솔 에러 해결하기
         세션쪽에 proxy: true, 도 추가,
           nginx config 에서 location 에 header 에 X-Forwarded-Proto    $scheme; 추가 
   
-게시글 수정하기
-  게시글 수정누르면 textarea 로 바뀌면서 수정모드로 바꿀것임
-    수정을했다 치면 saga 로 넘어가서 백엔드로 넘어갔다가 프론트로넘어와서
-      성공했는지 실패했는지 보여줄것임
-  1. reducer 에서 action 을 생성 해주자
-  2. saga 에서 api 를 생성 해주자 
-  3. route 에서 비즈니스 로직을 만들어주자 
-  routes 에서 자신의 게시글 수정을 해주고 json 으로 보내주면
-    saga 에서 data 가 들어가고 reducer 에서는 json 으로 받았던 
-      PostId 와 content 로 업데이트가 된다 
 
-  수정 누르면 textarea 로 바뀌게 해보자
-  (editMode 는 true 면 textarea 를 보여주고 false 면 기존 게시글 보여줌)
-    component post 에서 onClick 함수를 만들어주고 클릭하면 editMode true
-      TextArea 안에 postData 가 들어가게 만들어주고 평소엔 false 로 
-        useState 로 관리해주자, 게시글 수정 취소할때 editMode 를 false 로
-          하려면 부모(PostCard.js)에서 설정을 해줘야한다
-  propTypes isRequired 일때는 모든 사용처에 다 넣어줘야한다, 
-  PostCardContent 의 editText 가 onChangePost 로 전달이되서, PostCard 에
-  고차함수로들어가 dispatch 할때 사용 할 수있다
 
 
 
