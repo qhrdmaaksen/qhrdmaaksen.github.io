@@ -1,0 +1,64 @@
+---
+layout: post
+title: "리액트-리덕스-넥스트-타입스크립트"
+---
+
+```js
+
+리액트
+  리액트는 js 라이브러리로 사용자 인터페이스를 만드는데 사용됨
+
+전통적인 웹사이트
+  링크를 클릭하면 서버로 요청이진행되며, 새로운 html 페이지가 브라우저로
+    보내져서 화면에 보여준다. 
+
+리액트는 응용프로그램을 작은 빌딩 블록과 작은 컴포넌트들로 분할하는 것에
+  관한 것으로 모든 빌딩 블록, 모든 컴포넌트들은 명확한 task 들을 갖고있으며
+    코드는 유지 보수와 관리가 용이하도록 유지된다 
+  리액트에서 라이브러리는 코드를 조합해 화면에 무언가를 렌더링하는 중요한
+    작업을 하게된다
+
+앵귤러는 완벽하게 컴포넌트 기반의 UI 프레임워크, 컴포넌트에 집중됨
+  처음부터 타입스크립트 적용됐음
+
+뷰 역시 컴포넌트 기반의 UI 프레임워크
+
+var 와 let 과 const 의 차이
+  es6 이전에는 변수 선언 var 만 사용가능
+    let 은 값을 수정할 수 있는 변수를 선언할 때 사용
+  이후에는 let 과 const 사용
+    const 는 한번 지정하면 절대 변하지 않은 값인 상수 선언
+      만약 const 로 변수 선언했음에도 불구하고 새로운 값을 대입하면 error
+  
+화살표 함수
+  기존 js function
+    function myName(){    }
+  화살표 함수
+    const myName = () => {}
+  차이점: 기존 함수보다 짧아졌으며, 키워드 this 로 인해 생겼던 문제들을 해결
+
+  인수가 딱 한개인 경우 사용할 수 있는 방법
+  const myName = name => {}
+
+모듈
+  person.js 와 utility.js 파일의 내용을 가지고 오고싶을때
+    app.js 에서 import 문으로 가져올 수 있으며 person.js 에서 export 
+      default person 이라면 import person from 'person.js file 경로'
+      (export default person 지정했을때만 import person from 가져옴)
+        utility.js 에서는 export const clean = () => {} 함수를 가져오고
+          싶다면 import {clean} from 'utility.js file 경로'
+            만약 utility.js 에 export const name = () => {} 함수가있다면
+              import {name} from 'utility.js file 경로' 로 가져올 수있다
+                 import {clean, name} from 'utility.js file 경로' 가능
+  별칭을 줘서 사용도 가능하다 ex) import * as bundle from 'utility 경로'
+    이렇게 하면 bundle.clean bundle.name 으로 utility.js 의 clean 과
+      name 의 함수에 접근 할 수 있다. 일반적으론 import {name} from '경로'
+
+클래스
+  프로퍼티는 클래스와 객체에 추가되는 변수와 같은 것
+  메소드는 클래스와 객체에 추가되는 함수 같은 것
+
+  
+
+
+```
