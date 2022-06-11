@@ -196,13 +196,73 @@ git pull origin 브런치명 --allow-unrelated-histories
   git reset --hard 후 다시 git pull 
   </dd>
   <dt>
-  
+    git remote 삭제
+  </dt>
+  <dd>
+    git remote rm (저장소)
+  </dd>
+  <dt>
+    git remote 변경  
+  </dt>
+  <dd>
+    git remote rename (저장소) (변경할 저장소)
+  </dd>
+  <dt>
+    
   </dt>
   <dd>
 
   </dd>
   <dt>
-  
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
+  </dt>
+  <dd>
+
+  </dd>
+  <dt>
+    
   </dt>
   <dd>
 
