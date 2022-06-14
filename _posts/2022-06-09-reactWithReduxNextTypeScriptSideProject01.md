@@ -17,6 +17,9 @@ title: "reactSideProject_CostTracker"
 React CSS Html
 
 Components
-  ExpenseItem : 비용 데이터
+  ExpenseItem : 비용 데이터 출력
+  ExpenseDate : 비용 기록 날짜 출력
+  Expenses : 비용 목록 및 비용, 날짜 출력
+  Card : 래퍼 컴포넌트로 셸 역할
 
 ```

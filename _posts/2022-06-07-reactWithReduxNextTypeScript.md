@@ -296,8 +296,89 @@ props
   요소처럼 속성을 가질 수 있는데 리액트로도 우리만의 사용자 지정 컴포넌트도 
     속성을 가질 수 있습니다 리액트에서 이 개념은 속성 대신 props라고불립니다
   
+매개변수 한 개를 사용합니다 리액트는 사용하는 모든 컴포넌트에서 한 개의 
+  매개변수만을 사용할 것
+그 한 개의 매개변수는 프로퍼티로서 모든 속성을 받는 객체가 될 것임 그래서   
+  전체적인 개념에 대해 props라는 이름이 붙었습니다
+props객체에서 키와 밸류로 이루어진 파일 포맷을 얻는데 그것은 리액트에 의해 
+  자동으로 전달
+props객체에서 접근하는 키는 선택한 속성 이름이어야 합니다
+props는 아주 중요한 개념,왜냐하면 재사용 가능한 컴포넌트를 만들 수 있게 
+  해주고 다른 컴포넌트에서 이 컴포넌트로 데이터를 전달할 수 있게 해주기 때문
+=========================================
+고정 코드화된 값을 가질 수도 있다 props는 동적으로 설정된 값에만 국한되지 
+  않습니다
+=========================================
+toLocaleString()
+number.toLocaleString([locales[, options]])
+매개 변수
+Stringlocales선택
+생략하면 웹브라우저의 기본 Locale 값을 사용하지만 직접 지정할 수도 있다. Locale Codes를 참조한다.
 
-  
+Objectoptions선택
+다음의 속성들을 전부 또는 일부 포함한 객체로 지정할 수 있다.(실험적인 API 제외)
+
+localeMatcher
+지역화 일치 알고리즘을 'lookup' 또는 'best fit'로 지정한다. 기본 값은 'best fit'이다.
+style
+사용할 서식 스타일이며 기본 값은 'decimal'이다.
+다음 아래의 값으로 지정
+'deciam': 일반 숫자
+'currency': 통화 형식
+'percent': 백분율 형식
+currency
+통화 형식에 사용할 통화이며 가능한 값은 미국 달러 'USD', 유로화 'EUR', 중국 위안화 'CNY' 등과 같은 ISO 4217 통화 코드이다. 기본 값은 없으며 style 속성에서 'currency'를 설정해야 한다.
+currencyDisplay
+통화를 통화 형식으로 표시하는 방법이며 가능한 값은 €와 같이 현지 통화 기호를 사용하는 'symbol', ISO 통화 코드를 사용하는 'code', dollar와 같이 현지 통화 이름을 사용하는 'name'이 있다. 기본 값은 'symbol'이다.
+useGrouping
+천 단위 또는 lakh, crore 구분 기호를 사용할지 여부를 boolean 값으로 지정한다. 기본 값은 true이다.
+minimumIntegerDigits
+사용할 최소 정수 자릿수이며 가능한 값은 1~21사이의 값이다. 기본 값은 1이다.
+minimumFractionDigits
+사용할 최소 소수 자릿수이며 가능한 값은 0~20사이의 값이다. 일반 숫자와 퍼센트 형식의 기본 값은 0이다. 통화 형식의 기본 값은 ISO 4217 통화 코드 목록에서 참고한다.
+maximumFractionDigits
+사용할 최대 소수 자릿수이며 가능한 값은 0~20사이의 값이다. 일반 숫자 형식의 기본 값은 minimumFractionDigits와 3보다 크다. 통화 형식의 기본 값은 minimumFractionDigits 보다 크고 ISO 4217 통화 코드 목록에서 제공하는 부 단위의 숫자의 수이다.
+minimumSignificantDigits
+사용할 유효 숫자의 최소 수이며 가능한 값은 1~21이다. 기본 값은 1이다.
+maximumSignificantDigits
+사용할 최대 유효 자릿수이며 가능한 값은 1~21이다. 기본 값은 21이다.
+반환
+Stringstr
+숫자의 사용 언어에 따른 표현을 포함한 문자열을 반환
+const n1 = 12345.6789;
+const n2 = -12345.6789;
+const option = {
+  maximumFractionDigits: 4
+};
+const cn1 = 
+      n1.toLocaleString('ko-KR', option);
+const cn2 = 
+      n2.toLocaleString('ko-KR', option);
+document.writeln(cn1);
+document.writeln('<br>');
+document.writeln(cn2);
+12,345.6789
+-12,345.6789
+=========================================
+<ExpenseItem title={props.expenses[0].title}
+										 amount={props.expenses[0].amount.toLocaleString('ko-KR', option)}
+										 date={props.expenses[0].date}/>
+                     컴포넌트 분할 시 item 활용
+<ExpenseItem title={props.item[0].title}
+										 amount={props.item[0].amount.toLocaleString('ko-KR', option)}
+										 date={props.item[0].date}/>
+====================================
+박스 밖에 있는 모든 디폴드 Html 컴포넌트들은 렌더링된 html 요소들에게 
+  CSS클래스를 추가하는 className을 지원합니다
+
+합성에서 특히 중요한 부분은 props.children인데 래퍼 컴포넌트를 생성하게 
+  하며 특별한 컴포넌트라고 할 수 있다
+
+박스 밖에 있는 모든 디폴드 Html 컴포넌트들은 렌더링된 html 요소들에게 
+  CSS클래스를 추가하는 className을 지원함
+
+사용자 정의 컴포넌트들은 내가 지원하라고 지시한 것만 지원함
+
 
 
 
