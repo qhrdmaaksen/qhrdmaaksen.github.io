@@ -378,6 +378,112 @@ document.writeln(cn2);
   CSS클래스를 추가하는 className을 지원함
 
 사용자 정의 컴포넌트들은 내가 지원하라고 지시한 것만 지원함
+================================================================
+props
+0. props가 없을 때
+//App.js
+import React from 'react';
+import First from './First';
+					
+function App() {
+  return <First />;
+}
+// First.js
+import React from 'react';
+
+function First() {
+  return <div>첫 째입니다</div>;
+}
+export default First;
+결과 = 첫 째 입니다
+-----------------------------
+. props (properties)의 역할
+//App.js
+import React from 'react';
+import Second from './Second';
+					
+function App() {
+  return <Second name="동2" />;
+}
+// Second.js
+import React from 'react';
+
+function Second({ name }) {
+  return <div> 둘 째 {name} 입니다</div>;
+}
+export default Second;
+'0. props가 없을 때'와의 차이점을 아시겠나요?
+props는 부모(App.js)가 자식(Secnond.js)에게 전달해주는 값, 파라미터입니다. <Second name= "동2" />는 Second에서 name을 '동2'라고 지정는 것이죠.
+
+참고로 props는 javascript 객체 형태로 전달됩니다. 자바스크립트의 Destructing 문법이 적용된 이유입니다. 참고로 return <div> 둘 째 {name} 입니다</div>;에서 name을 중괄호({})로 감싼 이유는 html 태그에서 자바스크립트를 사용하기 위함입니다.
+--------------------------------------------------------
+2. children
+First.js, Second.js를 모두 포함하는 컴포넌트(House.js)가 필요한 상황이라고 가정하겠습니다. 아래처럼 , 를 감싸는 <House/> 컴포넌트가 있습니다.
+// App.js
+import React from 'react';
+import First from './First';
+import Second from './Second';
+import House from './House';
+
+function App() {
+  return (
+    <House>
+      <First />
+      <Second name="동2" color="blue" />
+    </House>
+  );
+}
+export default App;
+// House.js
+import React from 'react';
+function House() {
+  const style = {
+    border: '4px solid green',
+    padding: '16px',
+  };
+  return <div style={style}></div>;
+}
+export default House;
+서버를 켜보면 House는 정상적으로 초록색 박스가 그려지는데, 내부의 컴포넌트인 First, Second는 작동하지 않는 것을 볼 수 있습니다.
+컴포넌트 태그(House) 사이의 컴포넌트(First, Second)의 값을 조회하고 싶을 때 props.children을 사용해야 합니다.
+// House.js
+import React from 'react';
+
+function House({ children }) {
+  const style = {
+    border: '4px solid green',
+    padding: '16px',
+  };
+  return <div style={style}>{children}</div>;
+}
+export default House;
+3. props, children 정리
+props: 어떤 컴포넌트를 import해와서 사용하는 부모(상위) 컴포넌트 (ex. App.js)에서 정하는 값입니다. 부모 컴포넌트에서 설정해서 자식 컴포넌트로 전달하여, 자식 컴포넌트에서 쓰입니다.
+children: A 컴포넌트 사이에 B 컴포넌트가 있을 때, A 컴포넌트에서 B 컴포넌트 내용을 보여주려고 사용하는 props입니다.
+================================================================
+임포트된 리액트 객체에는 호출할 수 있는 createElement 메소드가 있기 
+  때문인데요JSX를 사용할 때, 그것은 호출되는 이 메소드에 가깝습니다
+    createElement메소드는 세 개의 인자를 취합니다
+  첫 번째 인자는 생성해야 하는 요소인데요 예를 들면, div 같은 것이죠
+    만약 이것이 내장된 html요소라면 ‘div’처럼 요소의 이름으로 문자열을 
+      전달합니다 
+  두 번째 인자는 이런 요소를 설정하는 객체입니다
+    요소의 모든 속성을 설정하는 객체를 말하는데 이 div는 속성을 갖지 않기 
+      때문에 여기서는 빈 객체를 전달할 수 있습니다
+    세 번째 인자는 이 여닫는 <div>태그 사이에 있는 컨텐츠입니다 사실 이것은 
+      단지 세 번째 인자가 아니라 여닫는 태그 사이에 있는 다양한 컨텐츠 
+        조각들인 무한대의 긴 목록의 인자를 가질 수도 있습니다 그래서 여기 
+         2개의 요소가 있고 2개의 추가적인인수를 갖게 됩니다
+================================================================
+import React from 'react';를 모두 적어주자 
+  JSX코드를 사용할 때 리액트가 사실은 내부에서 사용되고 있다는 것을
+    강조하기 위해
+
+React.js 를 사용할땐 선언적 js code 사용
+  
+JSX 
+  React project 에서 사용하는 비표준 구문
+  뒤에서 표준 js code 로 컴파일됨
 
 
 
