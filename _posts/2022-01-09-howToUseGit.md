@@ -208,10 +208,12 @@ git pull origin 브런치명 --allow-unrelated-histories
     git remote rename (저장소) (변경할 저장소)
   </dd>
   <dt>
-    
+    --error- message
+    fatal: Unable to create 'repository/.git/index.lock': File exists. 
+Another git process seems to be running in this repository, e.g.an editor opened by 'git commit'.
   </dt>
   <dd>
-
+    ide 가 아닌 terminal 에서 폴더 경로 설정 뒤 rm -f ./.git/index.lock 입력 해주고 commit , push 작업 해주면 해결됨
   </dd>
   <dt>
     
