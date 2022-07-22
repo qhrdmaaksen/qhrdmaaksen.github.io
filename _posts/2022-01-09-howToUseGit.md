@@ -3,6 +3,10 @@ layout: post
 title: "깃 기초 사용법을 알아두자!!"
 ---
 
+### 깃 사용 및 에러 해결
+
+```js
+
 <h2>자주 쓰고있더라도 혹시 모를 미래의 당황할 나에게 깃에 대해 아예 기록해두자!</h2>
 
 <h3>chapter 1</h2>
@@ -216,16 +220,17 @@ Another git process seems to be running in this repository, e.g.an editor opened
     ide 가 아닌 terminal 에서 폴더 경로 설정 뒤 rm -f ./.git/index.lock 입력 해주고 commit , push 작업 해주면 해결됨
   </dd>
   <dt>
-    
+    error rejected failed to push some refs to 
   </dt>
-  <dd>
-
+  <dd> 
+    깃허브에 현재 내 local 에 없는 파일이 존재하며 내 local 에서 푸쉬할때 나타남 (업데이트 해주면됨)
+      git pull origin (ex:master) 후에 git push origin (ex:master) 로 해결
   </dd>
   <dt>
-    
+    error Your local changes to the following files would be overwritten by merge
   </dt>
   <dd>
-
+    원인 : pull 로 가져오는 소스와 현재 저장된 코드가 제대로 처리되지 않아서 발생, git stash 명령어 입력 후 git pull origin (브렌치명)
   </dd>
   <dt>
     
@@ -270,3 +275,5 @@ Another git process seems to be running in this repository, e.g.an editor opened
 
   </dd>
 </dl>
+
+```
