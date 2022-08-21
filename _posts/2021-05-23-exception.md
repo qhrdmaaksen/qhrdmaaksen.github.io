@@ -313,6 +313,106 @@ s3 엑세스 키를 넣어주자, 이렇게해도 에러 발생한다면 AWS.upl
 uid error
 : pm2 start 를 제대로 했는지 체크
 
+getFullYear error
+: Form 에서 가져온 date 가 포함된 data 를 따로 저장해주지않았다
+  (비용 추적기 프로젝트에서 onSaveExpenseData 에 인수로 저장해주지않았었음)
+
+styled Components 에서 & 기호
+  생성한 styled 컴포넌트에 대해 이 경우에 특별한 가상선택자를 사용하겠다고 
+    패키지에게 선언하는 것입니다 그래서 이 경우에는 “이 버튼에 focus가 
+      있으면 스타일을 적용해 줘”라고 선언하는것
+  ex)
+  styledComponents 활용 내부 css 
+    import styled from 'styled-components';
+
+    const Button = styled.button`
+        font: inherit;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #8b005d;
+        color: white;
+        background: #8b005d;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+        cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+  기존 css file
+.button {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #8b005d;
+  color: white;
+  background: #8b005d;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:hover,
+.button:active {
+  background: #ac0e77;
+  border-color: #ac0e77;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+}
+
+npm install error (errno -4058)
+-cd 디렉토리로 이동해서 package.json 으로 지정하고 다시 npm start 
+
+this.state is not a function
+-1)상태 정의를 this.setState({}) 를 입력해야하지만 this.state 로 명시하여 발생하였음
+-2)this.state=({}) 를 this.state({}) 로 문법 오류 
+
+
+Failed context type: UserFinder: context type `$$typeof` is invalid; it must be a function, 
+usually from the `prop-types` package, but received `symbol`.
+This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func
+-contextType 을 contextTypes 로 잘못 명시하여 발생한 오류 contextType 으로 코드 변경후 기능 작동 정상 확인 완료
+
+ReferenceError: process is not defined
+-this.setState({filteredUsers: DUMMY_USERS.filter((user) => user.name.includes(this.state.searchTerm))}) 로 지정해놨고
+this.setState({filteredUsers: this.context.users.filter((user) => user.name.includes(this.state.searchTerm))}) 로 
+변경하여 에러 해결, filteredUsers 를 contextType 으로 따로 users-context 로 연결 해놨었지만 이전 더미 데이터로 설정해놓고 사용하지 않아 발생한 에러
+
+Cannot read properties of null (reading 'message')
+-const [error, setError] = useState(null)
+{!isLoading && !error && <p>{error.message}</p>} 를 
+{!isLoading && error && <p>{error.message}</p>} 로 변경 후 해결
+
+
+Uncaught ReferenceError: Cannot access 'fetchMoviesHandler' before initialization
+-const fetchMoviesHandler = useCallback(async() =>{ 상수가 전체 코드를 파싱하기 전에 
+함수를 호출하기때문에 발생한 문제
+--useEffect(() => {
+  fetchMoviesHandler()
+}, [fetchMoviesHandler])
+를 const fetchMoviesHandler 뒤에 위치하여 파싱 후 함수 호출로 문제 해결
+
+Failed to load plugin 'jsx-a11y' declared in 'package.json >> eslint-config-react-app': cannot find module
+-"eslint.workingDirectories": [
+    { "mode": "auto" }
+],
+구글 검색하여 위와같이 package.json 에 넣어주니 해결됨
+또는 eslint 를 찾을 수 없어서 발생한 에러니 다시 npm 설치해보자
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

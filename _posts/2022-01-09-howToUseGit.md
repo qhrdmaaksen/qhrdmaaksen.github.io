@@ -68,6 +68,23 @@ title: "깃 기초 사용법을 알아두자!!"
     내가 연결한 주소 확인해주기
   </dd>
   <dt>
+  git pull origin master
+  </dt>
+  <dd>
+  먼저 깃 저장소에서 pull 받아준다 그렇지않으면 충돌일어남
+  </dd>
+  <dt>
+  git status 로 체크 후 add 및 commit 해주자
+  </dt>
+  <dd>
+  </dd>
+  <dt>
+  git pull origin master
+  </dt>
+  <dd>
+  먼저 깃 저장소에서 pull 받아준다 그렇지않으면 충돌일어남
+  </dd>
+  <dt>
     git push origin master 
   </dt>
   <dd>
@@ -128,9 +145,9 @@ title: "깃 기초 사용법을 알아두자!!"
     git push origin newEmployee
   </dt>
   <dd>
-    gitHub 회사 newEmployee 브랜치에 작업물 push<br>
-    compare & pull request 눌러서 간단한 코멘트 남기고 create pull request<br>
-    위에 code issues pull request(1) << pull request에 요청떠있나 한번확인 
+    gitHub 회사 newEmployee 브랜치에 작업물 push 
+    compare & pull request 눌러서 간단한 코멘트 남기고 create pull request
+    위에 code issues pull request(1)  pull request에 요청떠있나 한번확인 
   </dd>
   <dt>
     git pull origin master
@@ -152,7 +169,7 @@ title: "깃 기초 사용법을 알아두자!!"
 
 pull 명령 실행시 이런 문구와 함께 진행되지 않는다면, 다음의 명령으로 실행한다.
 
-git pull origin 브런치명 --allow-unrelated-histories
+git pull origin ex:master --allow-unrelated-histories
 
 --allow-unrelated-histories 이 명령 옵션은 이미 존재하는 두 프로젝트의 기록(history)을 저장하는 드문 상황에 사용된다고 한다. 즉, git에서는 서로 관련 기록이 없는 이질적인 두 프로젝트를 병합할 때 기본적으로 거부하는데, 이것을 허용해 주는 것이다.
 
@@ -233,22 +250,27 @@ Another git process seems to be running in this repository, e.g.an editor opened
     원인 : pull 로 가져오는 소스와 현재 저장된 코드가 제대로 처리되지 않아서 발생, git stash 명령어 입력 후 git pull origin (브렌치명)
   </dd>
   <dt>
-    
+    원격저장소의 node_modules 삭제하기
   </dt>
   <dd>
-
+    git rm --cached -r node_modules
   </dd>
   <dt>
-    
+    branch master -> FETCH_HEAD
+    The following untracked working tree files would be overwritten by checkout
   </dt>
   <dd>
-
+    untracked file들을 모두 제거하는 명령어를 실행한다.
+    git clean -fd --dry-run
+    git clean : git이 추적하고 있지 않는 파일을 제거
+    -fd : f(파일) d(디렉토리)
+    --dry-run : 어떤 파일을 제거하는지 미리 확인
   </dd>
   <dt>
-    
+    node module ignore setting
   </dt>
   <dd>
-
+    최상위 폴더에 .gitignore 파일 생성 후 node_modules/ 입력 끝
   </dd>
   <dt>
     
