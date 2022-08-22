@@ -1514,8 +1514,31 @@ HTTP 요청이 보내진다면 결국 페이지가 새로고침될텐데 이 경
 -오늘날 대부분의 자바스크립트 프로그램은 제이쿼리, 리액트, 앵귤러 등 다양한  프레임워크 및 라이브러리에 의해 구현된 기능을 사용하고 있는데, 사실 이러한 라이브러리의 기능들은 모두 자바스크립트 언어를 기반으로 구현이 되어 있기에, 바닐라 자바스크립트 만으로도 구현이 가능한 것들임
 
 
+blur
+-input 요소가 포커스를 잃었다는 의미
 
+
+&& 논리 연산자 잘 생각해보기
+const [enteredName, setEnteredName] = useState('')
+/*enteredName 이 빈 문자열이아니라면 true*/
+/*.trim()을 이용해 입력 값의 처음부터 끝 사이에 있는 공백문자를 없앨 수 있음*/
+const enteredNameIsValid = enteredName.trim() !== ''
+/*바로 위에 코드 에서 빈 문자열이라면 enteredNmaIsValid 에는 false,
+!enteredNameIsValid 는 true 로되고 enteredNameTouched 도 true 라면 nameInputIsInValid 는 true 가되며 nameInputIsInvalid 는 true*/
+const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched
  
+
+-입력이 많을때는 전체 양식이 유효하도록하면 좋다
+--ex 10 개중 1 개라도 유효하지않다면 전체가 유효하지않도록
+/*formIsValid state 를 지우고 아래와 같이 하면 useEffect 가 필요없어지며 코드 간결화, enteredNameIsValid 가 true 일경우 form 전체 유효성을 true 설정*/
+let formIsValid = false;
+if (enteredNameIsValid) {
+    formIsValid = true
+}
+
+
+-jsx 에서 false, undefined, null 은 tag 없음을 의미함
+
 
 
 

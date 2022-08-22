@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "예외와 예외 처리의 개념!"
+title: "에러 발생 및 해결, 예외 처리의 개념!"
 ---
 
 ### 예외 : 프로그램을 실행했을 때 발생하는 에러  
@@ -391,12 +391,19 @@ Uncaught ReferenceError: Cannot access 'fetchMoviesHandler' before initializatio
 }, [fetchMoviesHandler])
 를 const fetchMoviesHandler 뒤에 위치하여 파싱 후 함수 호출로 문제 해결
 
+
 Failed to load plugin 'jsx-a11y' declared in 'package.json >> eslint-config-react-app': cannot find module
 -"eslint.workingDirectories": [
     { "mode": "auto" }
 ],
 구글 검색하여 위와같이 package.json 에 넣어주니 해결됨
 또는 eslint 를 찾을 수 없어서 발생한 에러니 다시 npm 설치해보자
+
+
+import' and 'export' may only appear at the top level. 
+-함수 또는 클래스를 선언할 때 닫는 중괄호를 잊어버리거나 기본 및 명명된 
+내보내기 및 가져오기를 혼합할 때 발생하며 함수에서 빠진 중괄호 추가하여 해결
+
 
 
 

@@ -53,7 +53,7 @@ App.js
 ![AddSchedule&List01.png](../img/AddSchedule&List01.png)
 
 일정 추가 및 목록 02
-![AddSchedule&List02.png](../img/AddSchedule&List02.png)
+![addSchedule&List02.png](../img/addSchedule&List02.png)
 
 Firebase 에 추가된 일정 정보
 ![fireBasePostData02.png](../img/fireBasePostData01.png)
