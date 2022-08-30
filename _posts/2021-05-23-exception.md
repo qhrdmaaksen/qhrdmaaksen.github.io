@@ -405,8 +405,23 @@ import' and 'export' may only appear at the top level.
 내보내기 및 가져오기를 혼합할 때 발생하며 함수에서 빠진 중괄호 추가하여 해결
 
 
+Error: Cannot find module 'D:\intellijProjects\react-etcStudyPJ\react-scripts\bin\react-scripts.js'
+-폴더명에 & 가 들어가있어서 발생한 에러였으며 폴더이름 수정후 해결함
 
 
+Error: could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+-index.js 에 root.render(<Provider store={store}><App /></Provider>);
+수정 후 해결됨
+
+
+Error: Actions must be plain objects. Use custom middleware for async actions.
+-dispatch(showCartActions.toggleCartButton)
+dispatch(showCartActions.toggleCartButton()) 수정 후 해결
+
+
+price.toFixed is not a function
+-price 를 숫자형으로 설정해야했지만 문자열로 설정해서 발생한 에러,
+숫자로 바꾼뒤 해결함
 
 
 

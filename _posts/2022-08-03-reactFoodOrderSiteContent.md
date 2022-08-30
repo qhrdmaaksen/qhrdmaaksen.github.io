@@ -34,3 +34,33 @@ Components
 
 Function
 ```
+
+Firebase dummy data
+![foodSiteFirebaseDummy.png](../img/foodSiteFirebaseDummy.png)
+
+Firebase dummyData fetch
+![foodSiteDummyFetch.png](../img/foodSiteDummyFetch.png)
+
+내 장바구니 비어있을 시
+![foodSiteEmptyMenu.png](../img/foodSiteEmptyMenu.png)
+
+내 장바구니
+![foodSiteMyCart.png](../img/foodSiteMyCart.png)
+
+내 장바구니 주문 입력
+![foodSiteInputInfo.png](../img/foodSiteInputInfo.png)
+
+내 장바구니 주문 입력02
+![foodSiteInputInfo03.png](../img/foodSiteInputInfo03.png)
+
+내 장바구니에서 Firebase 에 추가
+![foodSiteAddInfo02.png](../img/foodSiteAddInfo02.png)
+
+주문 성공 시
+![foodSiteOrderSuccess.png](../img/foodSiteOrderSuccess.png)
+
+주문 가능 메뉴 불러오기 로딩 메세지
+![foodSiteLoading.png](../img/foodSiteLoading.png)
+
+불러오기 실패 에러 메시지 출력
+![mainErrorFoodsite.png](../img/mainErrorFoodsite.png)

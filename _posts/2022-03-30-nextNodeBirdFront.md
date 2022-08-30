@@ -3,7 +3,7 @@ layout: post
 title: "Next.js nodeBird Front summary"
 ---
 
-## 민우의 블로그 테스트중입니다
+## 리액트 프론트 공부 모음
 
 ```js
 ===============install 설정===========

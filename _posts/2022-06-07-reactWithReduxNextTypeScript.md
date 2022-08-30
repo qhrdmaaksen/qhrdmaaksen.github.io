@@ -191,38 +191,7 @@ const array3 = array1.concat(array2);
 console.log(array3);
 // expected output: Array ["a", "b", "c", "d", "e", "f"]
 =======================================================
-slice()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
-  (slice()메서드는 배열의 일부에 대한 얕은 복사본 을 에서 선택한 새 배열 개체로 반환 start합니다 end ( end포함되지 않음). 여기서 start및 end해당 배열의 항목 인덱스를 나타냅니다. 원래 배열은 수정되지 않습니다.)
 
-ex)
-const animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
-console.log(animals.slice(2));
-// expected output: Array ["camel", "duck", "elephant"]
-console.log(animals.slice(2, 4));
-// expected output: Array ["camel", "duck"]
-console.log(animals.slice(1, 5));
-// expected output: Array ["bison", "camel", "duck", "elephant"]
-console.log(animals.slice(-2));
-// expected output: Array ["duck", "elephant"]
-console.log(animals.slice(2, -1));
-// expected output: Array ["camel", "duck"]
-console.log(animals.slice());
-// expected output: Array ["ant", "bison", "camel", "duck", "elephant"]
-=======================================================
-splice()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
-  (splice()메서드는 기존 요소를 제거하거나 교체하고 새 요소 를 제자리에 추가하여 배열의 내용을 변경합니다 . 배열을 수정하지 않고 배열의 일부에 액세스하려면 을 참조하십시오 slice())
-
-ex)
-const months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb');
-// inserts at index 1
-console.log(months);
-// expected output: Array ["Jan", "Feb", "March", "April", "June"]
-months.splice(4, 1, 'May');
-// replaces 1 element at index 4
-console.log(months);
-// expected output: Array ["Jan", "Feb", "March", "April", "May"]
-=======================================================
 컴포넌트
   사용자 인터페이스에서 재사용 할 수 있는 빌딩 블록
   스타일을 만드는 html 코드와 css 코드 자바스크립트의 결합
@@ -546,6 +515,9 @@ ref
   값을 빠르게 읽고 싶거나 값만 읽거나 아무것도 바꿀계획이 없을때 사용
 
 useEffect 이펙트
+-useEffect 에 입력한 함수는 promise 를 반환하면안됨
+--useEffect 에서는 async 를 사용하면 안됨
+---사용하고 싶다면 useEffect 함수 내부에 중첩 함수로 새 함수를 만들어사용
   예를 들면 http 리퀘스트를 보내는 것 또는 브라우저 저장소에 무언가를
     장하는 것입니다 예를 들어 로컬 저장소에요 또한 코드에서 타이머나 간격을
       설정할 수도 있습니다
@@ -637,7 +609,9 @@ useEffect(()=>{
       예를 들어 로그인하고 컴포넌트가 DOM에서 제거되면 "이펙트 클린업"이 
         표시됩니다
 
+
 브라우저 저장소 일반적인 저장소 : 쿠키 또는 로컬 저장소
+
 
 useReducer 리듀서
 -내장된 훅임 state 관리를 도와줌 그래서 useState와 약간 비슷함 하지만 더 
@@ -652,7 +626,29 @@ useReducer 리듀서
 더 복잡하기 때문에 조금 더 설정이 필요함 따라서 대부분의 경우에는 seState를 
 사용하는 것이 좋음 그러나 useReducer 가 작동하도록 추가 작업을 할 만한 
 가치가 있는 경우가 있음
-
+/*초기 입력 상태*/
+const initialInputState = {
+value: '',
+isTouched: false,
+}
+/*reducer 에는 2 개의 인자 필요, 이전 state 와 리액트에 의해 전달되는 action
+* -action 은 code 에 전달되어 최종적으로 새로운 state 반환*/
+const inputStateReducer = (state, action) => {
+if (action.type === 'INPUT') {
+  return {value: action.value, isTouched: state.isTouched}
+}
+/*focus 를 잃은 경우 사용자가 입력칸을 건드렸단 의미로 true 로 새로운 객체 설정*/
+if (action.type === 'BLUR') {
+  return {isTouched: true, value: state.value}
+}
+if (action.type === 'RESET') {
+  return {isTouched: false, value: ''}
+}
+return {
+  value: '',
+  isTouched: false,
+}
+}
 -(공식문서)
 다수의 하윗값을 포함하는 복잡한 정적 로직을 만드는 경우나 다음 state가 이전 
 state에 의존적인 경우에 보통 useState보다 useReducer를 선호
@@ -1538,6 +1534,235 @@ if (enteredNameIsValid) {
 
 
 -jsx 에서 false, undefined, null 은 tag 없음을 의미함
+
+-async 함수에서는 항상 promise를 반환하며 promise 대신 오류를 가져오는 
+경우 그 오류로 인해 해당 promise가 거부하게되기에 따라서 try/catch를 
+사용해서 그것을 래핑 할 수 없음 단, await를 적용하여 useEffect 함수를
+async 함수로 전환하면 가능하지만 effect 함수 내에서 promise 를 반환해야
+해서 사용할수 없을땐 catch() 메소드를 사용하여 promise 를 반환하게할수있음
+
+
+
+리덕스
+-크로스 컴포넌트 또는 앱 와이드 상태를 위한 상태 관리 시스템
+
+-로컬 상태:데이터가 변경되어서 하나의 컴포넌트에 속하는 UI에 영향을 미치는 상태
+
+-앱 와이드: 다수의 컴포넌트가 아니라 애플리케이션의 모든 컴포넌트에 영향을 미치는 상태도 있는데
+그런 경우를 우리는 앱 와이드 상태라고 부를 수 있음,예를 하나 들자면 사용자 인증
+
+-크로스컴포넌트:모달안에 버튼을 통해 뭔가 표시하고 감추면 다수의 컴포넌트가 협력하는것이며 
+useState or useReducer 를 이용하는데 이럴땐 props 를 주변에 넣어 props 체인을 구축한상태
+
+-리액트 컨텍스트:리액트의 내장 기능이며, 크로스 컴포넌트 상태나 앱 와이드 상태를
+쉽게 관리하도록 해줌, 그렇게 크로스 컴포넌트와 앱 와이드 상태 관리를 단순화 할수있음
+--단점:컨텍스트를 사용하면 설정이 아주 복잡해질 수 있고 리액트 컨텍스트를 이용한 상태 관리가
+상당히 복잡해질 수 있다는 점 (복잡한 경우 여러개의 컨텍스트프로바이더를 중첩사용)
+---단점02:성능에대한 문제(데이터가 자주 변경되면 성능에 좋지않음)
+
+-리덕스는 컨텍스트와같이 크로스 컴포넌트 상태나 앱 와이드 상태를 관리하도록 도와줌,리덕스는 컨텍스트의 대안
+
+-리덕스로 작업할때는 절대 기존의 state 를 변형해서는 안되며 대신 새로운
+state 객체를 반환하여 재정의 하면된다
+
+-식별자는 절대적으로 오타를 내면 안되기때문에 보통 
+export const 상수명 = 'type 명' 으로 보내고 사용하는쪽에 import 하여사용
+
+-리덕스는 중앙 저장소를 갖게되며 데이터를 저장해서 컴포넌트 안에서 사용가능
+--컴포넌트는 중앙저장소를 구독하게되며 데이터가 변경될때마다 저장소가 
+컴포넌트에 알려주게됨
+
+-컴포넌트는 저장소에 있는 데이터를 직접 조작하지 않음,대신 리듀서 개념을 이용(리듀서는 변형을 담당하여,useReducer hook 과는 다름)
+--리듀서 함수는 입력을 받아 입력을 변환하고 줄이는 함수임
+---예를 들면 숫자로 된 리스트를 그 숫자들의 합으로 줄일 수 있음
+----리듀서 함수는 입력을 변환해서 새로운 출력, 새로운 결과를 뱉어냄
+-----useReducer는 훅이 사용하고 리듀서 함수는 리덕스도 사용함,리듀서 함수가 있고 그게 저장소 데이터의 업데이트를 담당함, 그리고 그 데이터를 
+구독하는 컴포넌트가 있음
+
+컴포넌트와 리듀서 함수 연결
+-액션이 있고 컴포넌트가 액션을 발송하면 컴포넌트가 어떤 액션을 트리거한다고 말할 수도 있으며 액션은 사실 단순한 자바스크립트 객체이고
+그게 리듀서가 수행해야 할 작업을 설명하게 됨,그래서 리덕스는 그 액션을 리듀서로 전달하고 원하는 작업에 대한 설명을 읽게 되며 리덕스가 그걸 직접 하지는 않지만 액션들을 리듀서로 전달해서 그 액션이 원하는 걸 리듀서가 하게 
+됨, 그리고 나서 리듀서는 새로운 상태를 뱉어내고 그게 실제로 그 중앙 데이터 저장소의 기존 상태를 대체하게 됨,데이터 저장소의 상태가 업데이트되면
+구독 중인 컴포넌트가 알림을 받게 되고 컴포넌트는 UI를 업데이트할 수 있게 되는 작동방식임
+
+-redux 사용시 npm install redux, npm install redux react-redux
+
+-임포트한 리덕스 객체를 이용해서 그 저장소를 만들 수 있음,그리고 그 객체에 
+createStore()를 호출할 수 있음
+const redux = require('redux')
+
+-저장소는 데이터를 관리해야 하며 관리하는 데이터는 결국 리듀서 함수에 의해 
+결정됨, 리듀서 함수가 새로운 상태 스냅샷을 생성할 것이며 리듀서는 액션이 
+도착할 때마다 새로운 상태 스냅샷을 뱉어내야 함
+
+-리듀서 함수는 표준 자바스크립트 함수지만 리덕스 라이브러리에 의해 호출될 
+것이며, 항상 2개의 입력, 즉 2개의 파라미터를 받을 것임 바로 기존의 상태와
+발송된 액션임,리듀서 함수는 어떤 출력을 리턴해야만 함,항상 새로운 상태 
+객체를 리턴해야하며 리듀서 함수는 순수한 함수가 되어야 함, 그건 동일한 
+입력, 즉 동일한 입력 값을 넣으면 항상 정확히 같은 출력이 산출되어야
+한다는 것,그 함수 안에서는 어떠한 부수적인 효과도 없어야 함,예를 들면 HTTP 
+요청을 전송한다거나 뭔가를 로컬 저장소에 기록한다거나 로컬 저장소에서 
+뭔가를 가져오지 말아야 함,리듀서는 리덕스가 제공하는 입력을 취하고 예상된 
+출력물인 새로운 상태 객체를 생성하는 순수한 함수가 되어야 함
+
+-리덕스 개념 정리 code
+const redux = require('redux')
+/*현재의 state 와 action 을 받게될 리듀서 함수*/
+const counterReducer = (state = {counter: 0}, action) => {
+if (action.type === 'increment') {
+  return {
+    counter: state.counter + 1,
+  };
+}
+if (action.type === 'decrement'){
+  return {
+    counter: state.counter - 1,
+  }
+}
+return state;/*다른 action 이라면 변하지 않은 state return*/
+}
+/*리덕스 라이브러리에서 온것이며 저장소 생성함
+* -counterReducer 가 store 의 저장소를 변경할 것임을 명시*/
+const store = redux.createStore(counterReducer)
+console.log(store.getState())
+/*reducer 가 저장소 구독*/
+const counterSubscriber = () => {
+/*getState 는 createStore 로 생성된 저장소에서 사용할 수 있는 method
+* -getState 는 업데이트 된 후 최신 상태 스냅샷을 제공할 것임
+* -구독 함수는 state 가 update 될때마다 trigger 되면 getState 를 통해 최신 상태 스냅샷을 얻음*/
+const latestStore = store.getState()
+console.log(latestStore)
+}
+/*subscribe 를 호출해서 리덕스가 구독함수를 인식하고 state 가 update 될때마다 함수를 실행하도록함함
+* -subscribe 메소드는 counterSubscriber 함수를 취함
+* -리덕스는 데이터와 저장소가 변경될때마다 counterSubscriber 함수를 실행하게해줌*/
+store.subscribe(counterSubscriber)
+/*증가 action 발송*/
+store.dispatch({
+type: 'increment', /*type 은 고유한 문자열이여야함*/
+})
+/*감소 action 발송*/
+store.dispatch({
+type: 'decrement',
+})
+
+-리덕스 스토어를 리액트 앱에 제공하기위해선 index.js 에서 Provider import
+import {Provider} from  'react-redux'
+import './index.css';
+import App from './App';
+import store from './store/index'
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Provider store={store}><App /></Provider>);
+-리액트 리덕스 제공자에 리덕스 스토어의 값 store 설정, 그럼 제공자의 
+자식 컴포넌트는 제공자의 스토어에 데이터를 가져올 수 있다
+
+-useSelector : 자동으로 state 의 일부를 선택하게해줌, class component 
+에서는 connect 를 사용
+--useSelector 를 사용하면 자동으로 subscription 을 컴포넌트를 위해서 
+리덕스 스토어에 설정함, 따라서 컴포넌트가 업데이트되며 자동으로 가장 
+리덕스 스토어에서 데이터가 바뀔 때마다 최신의 카운터를 받음, 자동으로 
+리덕스 스토어가 바뀐다면 컴포넌트 함수가 다시 실행됨, 항상 최신의 카운터를 
+가지게 됨
+
+-node.js 를 사용하면 브라우저 밖에서 js 를 실행 할 수 있따
+(npm install 로 이미 설치되어있다고보면됨)
+
+
+-eslint : $ npm i -D eslint-plugin-import eslint-plugin-react
+-prettier : $ npm install --save-dev --save-exact prettier 
+
+
+리덕스 툴킷
+-리덕스 툴킷 사용 : npm install @reduxjs/toolkit
+(리덕스가 만약 설치되어있다면 리덕스 툴킷안에 모든기능있기에 기존리덕스삭제)
+
+-Redux toolkit 과 createSlice 같은 함수를 사용하면 기존 상태를 바꿀 수 
+없음, 왜냐하면 Redux toolkit 은 내부적으로 immer 라는 다른 패키지를 
+사용하는데 이런 코드를 감지하고 자동으로 원래 있는 상태를 복제함, 그리고 
+새로운 상태 객체를 생성하고 모든 상태를 변경할 수 없게 유지하고, 변경한 
+상태는 변하지 않도록 오버라이드함,직접 코드를 복사할 필요도 없고 더 이상 
+불변성을 신경 쓸 필요도 없어짐
+
+-configureStore : createStore처럼 store를 만들며 다른 점은 여러 개의 
+리듀서를 하나의 리듀서로 쉽게 합칠 수 있다
+
+-createSlice 는 서로 다른 리듀서에 해당하는 고유 액션 식별자를 자동으로 
+생성하며 액션 식별자 값을 얻으려면 counterSlice.actions를 사용하면 됨
+
+-slice 가 여러개더라도 리덕스 스토어는 하나밖에 없으며 한번만
+configureStore 를 호출해야한다, 스토어 또한 루트 리듀서 하나만가지고있음
+
+
+const store = configureStore({
+  /*reducers 가 아닌 reducer, 이유는 createStore 와 configureStore 둘 중에서 무엇을 사용하든,
+  리덕스에는 전역 상태를 담당하는 단 하나의주요 리듀서 함수만 있어야 해서
+  * -모든 리듀서 메서드를 갖추고있는 counterSlice.reducer 는 전역 state 를 담당하는 주요 리듀서로 사용가능
+  * --만약 규모가 큰 앱에 slice 가 여러개라면 리듀서 key value 대신 객체를 설정해서 그 객체 안에 원하는 대로 속성 이름을 정하며
+  * ---key value 를 설정해서 프로퍼티들의 값이 또다른 리듀서 함수가 됨, 결국 리듀서 맵을 생성하는 것이며 맵은 주요 리듀서의 값이되고
+  * ----보이진 않지만 configureStore 의 모든 리듀서를 하나의 큰 리듀서로 병합함
+  */
+  reducer: counterSlice.reducer,
+});
+/*createSlice 함수의 리듀서 영역에 있는 메서드 이름과 매칭
+* -actions 의 객체에서 이런 key 에 접근할 수 있으며 그러면 리듀서 메서드에 접근할 필요가 없어짐, 대신에 Redux toolkit 에 의해
+* --자동으로 생성된 메서드가 생기고 그 메서드가 호출되면 액션 객체가 생성될 것이며 이런 메스드는 액션 생성자라고 불림
+* ---액션 객체를 생성해주며 이런 객체는 이미 액션마다 다른 고유 식별자와 함께 type 프로퍼티를 가지고 있음, 안 보이게 뒤에서 자동으로 생성됨
+그래서 액션 식별자에 대해 신경 쓸 필요 없어짐 직접 액션 객체를 생성할 필요가 없음 단지 createSlice 의 actions key 및 객체를 사용하면 됨
+* 액션 생성자 매서드를 실행해서 리듀서 메서드와 이름이 같으면 액션을 전달하며 그러면 최종적으로 서로 다른 매서드를 작동키는 원리*/
+export const counterActions = counterSlice.actions
+export default store;
+
+
+ /* -state.counter.counter 의 앞 counter 는 리액트 리덕스에게 slice 에 접근한다는 걸 알려주기 위함이고
+   * --slice 의 리듀서가 만든 state 를 말함, 그리고 그 상태 slice 에서 가지고 있는 프로퍼티 이름이 counter
+   * --- 만약에 counter 가 아닌 다른 이름이었다면, 가령 value 라면, Counter 컴포넌트에서 state.counter.value 가 됨*/
+  const counter = useSelector(state => state.counter.counter);
+
+
+동기 비동기 차이
+-비동기는 동시에 일어나지 않는다를 의미합니다. 요청과 결과가 동시에 
+일어나지 않을거라는 약속입니다. 
+-동기는 말 그대로 동시에 일어난다는 뜻입니다. 요청과 그 결과가 동시에 일어난다는 약속인데요. 바로 요청을 하면 시간이 얼마가 걸리던지 요청한 자리에서 결과가 주어져야 합니다.
+요청과 결과가 한 자리에서 동시에 일어남
+A노드와 B노드 사이의 작업 처리 단위(transaction)를 동시에 맞추겠다
+요청한 그 자리에서 결과가 주어지지 않음
+노드 사이의 작업 처리 단위를 동시에 맞추지 않아도 된다.
+-동기와 비동기는 상황에 따라서 각각의 장단점이 있습니다. 
+ 동기방식은 설계가 매우 간단하고 직관적이지만 결과가 주어질 때까지 
+아무것도 못하고 대기해야 하는 단점이 있고, 
+ 비동기방식은 동기보다 복잡하지만 결과가 주어지는데 시간이 걸리더라도 그 
+시간 동안 다른 작업을 할 수 있으므로 자원을 효율적으로 사용할 수 있는 
+장점이 있습니다.
+-동기는 추구하는 같은 행위(목적)가 동시에 이루어지며, 비동기는 추구하는 
+행위(목적)가 다를 수도 있고, 동시에 이루어지지도 않습니다
+비동기 방식 예제를 통해서 블록과 논블록의 차이를 간략하게 설명하자면, 
+학생이 시험지를 선생에게 건넨 후 가만히 앉아 채점이 끝나서 시험지를 
+돌려받기만을 기다린다면 학생은 블록 상태입니다. 하지만 학생이 시험지를 
+건넨 후 선생에게 채점이 완료되었다는 전송을 받기 전까지 다른 과목을 
+공부한다거나 게임을 한다거나 다른 일을 하게 되면 학생의 상태는 논블록 
+상태라고 합니다.
+출처: https://private.tistory.com/24 [오토봇팩토리:티스토리]
+
+
+-/*스토어 제공하여 컴포넌트 내에서 리덕스 활용 가능케 함*/
+root.render(<Provider store={store}><App /></Provider>);
+
+-/*기존 배열에 들어있지 않은 item 일 경우
+       * -redux toolkit 이아닌 redux 만 사용할 경우 push 는 기존 state 의 기존 배열을 조작하기에 사용하면안됨
+       * --redux toolkit 에는 내부적으로 immer 가 기존 state 를 조작하지 않도록 불변성 유지되기에 문제되지않음*/
+
+
+리덕스의 부수효과 및 비동식 코드
+
+-리듀서는 순수함수이며 부수효과도 없으며 동기식이어야한다
+
+-리듀서에서 fetch 를 사용해서 백엔드로 요청을 보낼수 없다
+
+-리듀서에서 부수효과 및 동기 or 비동기는 수행면안된다
+
+
+
+
 
 
 
