@@ -44,18 +44,6 @@ title: "깃 기초 사용법을 알아두자!!"
     git initialize ( 깃 초기화 해주기)  
   </dd>
   <dt>
-    git add . 
-  </dt>
-  <dd>
-    git add 추가된 내용 추가해주기!
-  </dd>
-  <dt>
-    git commit -m "history"
-  </dt>
-  <dd>
-    기록 중간중간 저장해주기
-  </dd>
-  <dt>
     git remote add origin git@github.com:company/projectname.git
   </dt>
   <dd>
@@ -72,6 +60,18 @@ title: "깃 기초 사용법을 알아두자!!"
   </dt>
   <dd>
   먼저 깃 저장소에서 pull 받아준다 그렇지않으면 충돌일어남
+  </dd>
+  <dt>
+    git add . 
+  </dt>
+  <dd>
+    git add 추가된 내용 추가해주기!
+  </dd>
+  <dt>
+    git commit -m "history"
+  </dt>
+  <dd>
+    기록 중간중간 저장해주기
   </dd>
   <dt>
   git status 로 체크 후 add 및 commit 해주자

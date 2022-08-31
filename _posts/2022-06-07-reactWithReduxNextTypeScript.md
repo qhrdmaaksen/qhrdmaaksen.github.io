@@ -1513,7 +1513,7 @@ HTTP 요청이 보내진다면 결국 페이지가 새로고침될텐데 이 경
 blur
 -input 요소가 포커스를 잃었다는 의미
 
-
+================================================================
 && 논리 연산자 잘 생각해보기
 const [enteredName, setEnteredName] = useState('')
 /*enteredName 이 빈 문자열이아니라면 true*/
@@ -1542,7 +1542,7 @@ async 함수로 전환하면 가능하지만 effect 함수 내에서 promise 를
 해서 사용할수 없을땐 catch() 메소드를 사용하여 promise 를 반환하게할수있음
 
 
-
+================================================================
 리덕스
 -크로스 컴포넌트 또는 앱 와이드 상태를 위한 상태 관리 시스템
 
@@ -1671,7 +1671,7 @@ root.render(<Provider store={store}><App /></Provider>);
 -eslint : $ npm i -D eslint-plugin-import eslint-plugin-react
 -prettier : $ npm install --save-dev --save-exact prettier 
 
-
+================================================================
 리덕스 툴킷
 -리덕스 툴킷 사용 : npm install @reduxjs/toolkit
 (리덕스가 만약 설치되어있다면 리덕스 툴킷안에 모든기능있기에 기존리덕스삭제)
@@ -1718,7 +1718,7 @@ export default store;
    * --- 만약에 counter 가 아닌 다른 이름이었다면, 가령 value 라면, Counter 컴포넌트에서 state.counter.value 가 됨*/
   const counter = useSelector(state => state.counter.counter);
 
-
+================================================================
 동기 비동기 차이
 -비동기는 동시에 일어나지 않는다를 의미합니다. 요청과 결과가 동시에 
 일어나지 않을거라는 약속입니다. 
@@ -1742,7 +1742,7 @@ A노드와 B노드 사이의 작업 처리 단위(transaction)를 동시에 맞�
 공부한다거나 게임을 한다거나 다른 일을 하게 되면 학생의 상태는 논블록 
 상태라고 합니다.
 출처: https://private.tistory.com/24 [오토봇팩토리:티스토리]
-
+================================================================
 
 -/*스토어 제공하여 컴포넌트 내에서 리덕스 활용 가능케 함*/
 root.render(<Provider store={store}><App /></Provider>);
@@ -1760,15 +1760,97 @@ root.render(<Provider store={store}><App /></Provider>);
 
 -리듀서에서 부수효과 및 동기 or 비동기는 수행면안된다
 
+put 과 post 의 차이 
+
+-새 데이터가 데이터 목록에 추가되지 않고 기존의 데이터를 오버라이드 함
+-put 요청을 보낼때 장바구니를 수신 데이터로 오버라이드함
+
+================================================================
+멱등성
+-동일한 요청을 한 번 보내는 것과 여러 번 연속으로 보내는 것이 같은 효과를 지니고, 서버의 상태도 동일하게 남을 때, 해당 HTTP 메서드가 멱등성을 가졌다고 말합니다. 다른 말로는, 멱등성 메서드에는 통계 기록 등을 제외하면 어떠한 부수 효과(side effect)도 존재해서는 안됩니다. 올바르게 구현한 경우 GET, HEAD, PUT, DELETE 메서드는 멱등성을 가지며, POST 메서드는 그렇지 않습니다. 모든 안전한 메서드는 멱등성도 가집니다.
+
+-멱등성을 따질 땐 실제 서버의 백엔드 상태만 보면 되며, 각 요청에서 반환하는 응답 코드는 다를 수 있습니다. 첫 번째 DELETE 요청이 200을 반환한다면, 그 이후는 아마 404를 반환할 것입니다. DELETE가 멱등성을 가진다는 것은, REST API에서 개발자는 DELETE 메서드를 사용해 "목록의 마지막 항목 제거" 기능을 구현해서는 안된다는 것입니다.
+다만, 서버는 멱등성을 보장하지 않으며, 일부 애플리케이션은 잘못된 구현으로 멱등성 제약을 어길 수도 있습니다.
+
+-GET /pageX HTTP/1.1는 멱등성을 가집니다. 여러 번 연속해서 호출해도 클라이언트가 받는 응답은 동일합니다.
+
+    GET /pageX HTTP/1.1
+    GET /pageX HTTP/1.1
+    GET /pageX HTTP/1.1
+    GET /pageX HTTP/1.1
+-POST /add_row HTTP/1.1는 멱등성을 갖지 않습니다. 여러 번 호출할 경우, 여러 열을 추가합니다.
+
+    POST /add_row HTTP/1.1
+    POST /add_row HTTP/1.1   -> Adds a 2nd row
+    POST /add_row HTTP/1.1   -> Adds a 3rd row
+-DELETE /idX/delete HTTP/1.1의 상태 코드는 응답마다 달라질 수 있지만, 그럼에도 멱등성을 가집니다.
+
+    DELETE /idX/delete HTTP/1.1   -> Returns 200 if idX exists
+    DELETE /idX/delete HTTP/1.1   -> Returns 404 as it just got deleted
+    DELETE /idX/delete HTTP/1.1   -> Returns 404
+
+-PUT
+HTTP PUT 메서드는 요청 페이로드를 사용해 새로운 리소스를 생성하거나, 대상 리소스를 나타내는 데이터를 대체합니다.
+PUT과 POST의 차이는 멱등성으로, PUT은 멱등성을 가집니다. PUT은 한 번을 보내도, 여러 번을 연속으로 보내도 같은 효과를 보입니다. 즉, 부수 효과가 없습니다.
+EX)
+
+요청
+PUT /new.html HTTP/1.1
+Host: example.com
+Content-type: text/html
+Content-length: 16
+
+<p>New File</p>
+
+응답
+대상 리소스를 나타내는 데이터가 없고, PUT 요청이 성공적으로 하나를 새로 생성한 경우, 출처 서버는 반드시 사용자 에이전트에게 201 (Created) 응답을 보내 해당 사항을 알려줘야 합니다.
+
+HTTP/1.1 201 Created
+Content-Location: /new.html
+대상 리소스를 나타내는 데이터가 있고, 이를 요청에 포함된 자료에 준하여 성공적으로 수정했다면, 출처 서버는 반드시 200 (OK) 또는 204 (No Content) 응답을 보내 성공을 알려줘야 합니다.
+
+HTTP/1.1 204 No Content
+Content-Location: /existing.html
+
+RESTful API
+GET:조회할떄, POST:생성할때, PUT: 전체를 수정하려할때, 
+PATCH: 일부를 수정하려할때, DELETE: 삭제하려할때
+================================================================
+
+썽크 thunks
+-다른 작업이 완료될때까지 지연 시키기 위한 함수
+-작업 객체를 즉시 반환하지 않는 작업 크리에이터를 작성하기 위해
+--썽크로 작업 크리에이터를 작성할 수 있음
 
 
+================================================================
+RESTful API 와 REST API
+RESTful API:RESTful은 REST의 설계 규칙을 잘 지켜서 설계된 API를 
+RESTful한 API라고 합니다.
+즉, REST의 원리를 잘 따르는 시스템을 RESTful이란 용어로 지칭됩니다.
+ 
+REST API:"REpresentational State Transfer" 의 약자로, 
+자원을 이름(자원의 표현)으로 구분해 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미합니다.
+즉, 자원(resource)의 표현(representation)에 의한 상태 전달을 뜻합니다.
 
+자원 : 해당 소프트웨어가 관리하는 모든 것 ( 문서, 그림, 데이터, 해당 소프트웨어 자체 등 )
+표현 : 그 자원을 표현하기 위한 이름 ( DB의 학생 정보가 자원이면, 'students'를 자원의 표현으로 정함 )
+상태 전달 : 데이터가 요청되는 시점에 자원의 상태를 전달한다. ( JSON 혹은 XML을 통해 데이터를 주고 받는 것이 일반적 )
 
+REST는 기본적으로 웹의 기존 기술과 HTTP 프로토콜을 그대로 활용하기 때문에,
+웹의 장점을 최대한 활용할 수 있는 아키텍처 스타일입니다.
+REST는 네트워크 상에서 Client와 Server 사이의 통신 방식 중 하나입니다.
+RESTful하게 만든 API는 요청을 보내는 주소만으로도 어떤 것을 요청 하는지 파악이 가능합니다.
+REST API를 간단히 요약하면
+URI는 정보의 자원만 표현해야 하며, 자원의 행위는 HTTP Method에 명시한다는 것입니다.
+출처: https://dev-coco.tistory.com/97 [슬기로운 개발생활:티스토리]
 
-
-
-
-
+================================================================
+URI 와 URL 차이
+URI는 식별하고, URL은 위치를 가르킨다. 실세계에 빗대어 예시를 들어보자면 다음과 같다. “Charles” 는 내 이름이며 식별자(Identifier)다. 이는 URI와 비슷하지만 내 위치나 연락처에 대한 정보가 없으므로 URL은 될 수 없다
+======================================================================
+side effect는 React 컴포넌트가 화면에 렌더링된 이후에 비동기로 처리되어야 하는 부수적인 효과들을 흔히 Side Effect라고 말함
+======================================================================
 
 
 

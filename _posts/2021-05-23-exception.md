@@ -424,7 +424,14 @@ price.toFixed is not a function
 숫자로 바꾼뒤 해결함
 
 
+Parsing error: 'import' and 'export' may only appear at the top level.
+-eslint error 로 package.json eslint 에 아래 코드 추가 하여 재실행 해결
+"rules": {
+      "global-require": 0
+    }
 
+cannot find symbol
+-import 가 제대로 안돼서 발생한 에러, import 넣어주니 해결됨
 
 
 
