@@ -10,7 +10,7 @@ prettier setting (.prettierrc.json)
 -prettier : $ npm install --save-dev --save-exact prettier 
 module.exports =  {
 	//한 줄이 이 글자수를 넘게 되면 들여쓰기되어 코드가 세로로 정리된다. (default: 80)
-	"printWidth": 120,
+	"printWidth": 100,
 	//탭 너비 (default: 2)
 	"tabWidth": 2,
 	//탭 사용 여부. 참이면 탭이있는 줄을 들여 쓰기 한다. (default: false)
@@ -46,8 +46,8 @@ module.exports =  {
 -리덕스 툴킷 사용 : npm install @reduxjs/toolkit
 (리덕스가 만약 설치되어있다면 리덕스 툴킷안에 모든기능있기에 기존리덕스삭제)
 -redux 사용시 npm install redux, npm install redux react-redux
-
-
+===============================
+라우터 설치 npm install react-router-dom@5 (5버전 download)
 
 
 
