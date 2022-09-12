@@ -1919,7 +1919,8 @@ exact prop 를 추가하면 리액트 라우터에 정확히 일치하는 경우
   <Route path="/" exact> {/*사이트 방문 시 */}
     <Redirect to="/welcome"/>
   </Route>
-</Switch>  
+</Switch>
+--Switch 는 v6 이후로 Routes 로 대체되었음
 
 -중첩 라우트
 다른 컴포넌트에서 라우트를 정의할 수 있으므로 다른 라우트에서도 정의할 수 
@@ -1929,6 +1930,7 @@ exact prop 를 추가하면 리액트 라우터에 정확히 일치하는 경우
 애플리케이션에서는 도움이 됨
 
 리다이렉트 Redirect
+--v6 이후 더이상 Redirect component 는 사용되지않음 Navigate 로 대체되었음
 -react-router-dom 에 Redirect component
 <Switch>
   <Route path="/" exact> {/*사이트 방문 시 redirect 로 to props 로 
@@ -1938,6 +1940,90 @@ exact prop 를 추가하면 리액트 라우터에 정확히 일치하는 경우
 </Switch>  
 exact 가 매우 중요, 그게 없다면 모든 라우트가 여기에서 일치하게 되고
 항상 리디렉션을 하게 되며 여기 무한한 루프를 생성하게 됨
+
+-useHistory 불러오기를 할 수 있는 react-router-dom hook
+--v6 부턴 더이상 useHistory 는 사용되지않으며 useNavigate 로 대체되었음
+--브라우저 기록을 변경 할 수 있다
+--기록 페이지를 변경하는 것은 예를 들어 새 페이지를 추가하거나 새 페이지로 
+이동하면 페이지 스택에 새 페이지를 푸시하는 push 메소드를 사용하여 탐색이 
+가능하므로, 페이지 기록에 새 페이지가 표시되며, 현재 페이지를 대체하는 
+replace 메소드로 탐색할 수도 있음, 차이점은 푸시를 사용하면 백(back) 
+버튼을 사용하여 원래 페이지로 돌아갈 수 있고 replace 버튼을 사용하면
+그럴 수 없다는 점임, replace는 발생한 페이지를 변경하는 리디렉션과 같고 
+push는 새 페이지를 추가하는 것이라 볼 수 있다,사용자가 돌아가기를 원한다면 
+스택에서 푸시를 사용하여 사용자가 뒤로 돌아갈 수 있게 한 다음 
+history.push('/quotes') 이처럼 로 이동할 수 있다
+-useHistory는 history 객체에 접속하게 하고, history 객체는 URL을 바꿀 수 
+있게 해 줌
+-페이지를 push 할때 현재 보고있는 페이지라도 페이지 컴포넌트는 재평가됨
+(react router 가 history 를 변경했다고 보고 리렌더링함)
+
+-Prompt Component (react-router-dom)
+--when={state} message={(location)=> 'message'} 어떤 조건에 메시지 출력할지 설정
+
+쿼리 매개 변수
+-물음표가 route 매칭을 바꾸지 않으며 route 매칭에 미치는 영향이 없지만,
+어떤 route가 연결되든 쿼리 매개 변수 데이터에 접속해서 로드된 페이지의 '행동'을 바꾼다 
+
+useLocation
+-location 객체에 접속하게 하고, location 객체엔 최근 로드된 페이지와
+URL 의 정보가 있으며 useLocation 을 호출해서 location 객체를 받을수있음
+-const queryParams = new URLSearchParams(location.search) 로 
+queryParams 에 search 에있는 쿼리 매개변수 key,value 를 추출할 수 있음
+
+useRouteMatch
+-URL Pattern Match 을 통한 처리를 하고자 하는 경우에 사용할 수 있다
+-useRouteMatch 는 match 객체의 값에 접근할 수 있게 해주는 hook
+-방법 1)Route 컴포넌트의 프로퍼티들(path, strict, sensitive, exact)을 
+가진 객체를 인자로 받는 방법으로, 만약 path 프로퍼티와 현재 페이지 URL이 
+일치할 경우 해당 path의 match객체를 반환하고 일치 하지 않으면 null을 반환
+-방법 2)아무 인자도 넘겨주지 않고 hook을 호출하는 방법이다. 이는 
+withRouter HoC로 match객체에 접근했을 때처럼 제일 가까운 부모 Route 
+컴포넌트의 match 값을 리턴
+-Context API를 사용하기 때문에 <Route> 의 하위에서만 값을 받을 수 있다
+
+ReactRouterVersion6
+-6 버전에선 더이상 Switch Component 를 사용하지 않으며 Routes Component
+로 대체되어 사용된다.
+<Routes>
+  <Route path='/welcome' element={<Welcome />}></Route>
+  <Route path='/products' exact element={<Products />}></Route>
+  <Route path='/products/:productId' element={<ProductDetail />}></Route>
+</Routes>
+--Route 에서 element attr 이 생겼으며 이안에 구성요소를 설정해야함
+-더이상 exact 를 사용하지 않으며 v6 에선 알아서 exact 가 적용되어있음
+--이전 버전처럼 사용하고 싶다면 path='/products/*' 로 url 이 /products 로
+시작하는 경로일때만 활성화됨
+-더이상 동적 세그먼트가 먼저 정의되어야할 필요가 없어졌음(라우팅이 특정
+경로에 대해 가장 적합한지 판단함)
+-더이상 activeClassName 를 v6 에선 사용하지 않음
+{/*className, style 속성을 사용하면된다*/}
+{/*<NavLink activeClassName={classes.active} to='/welcome'>*/}
+<NavLink 
+  className={(navData)= navData.isActive ? classes.active : ''} 
+  to='/welcome'
+>
+  Welcome
+</NavLink>
+-더이상 Redirect component 는 사용되지않음 Navigate 로 대체되었음
+만약 지정하길 원한다면 replace attr 을 추가해주면됨
+-더이상 중첩 라우트를 사용할때 단 하나뿐이더라도 Routes 로 랩핑해줘야함
+-더이상 중첩 라우팅시 path 의 경로를 상위 라우팅의 경로를
+<Route path='/welcome/*' element={<Welcome />}></Route>로 지정시
+웰컴 컴포넌트의 중첩 라우팅시
+<Route path='/new-user' element={<Welcome />}></Route>로 사용하면됨
+웰컴 컴포넌트안이라면 Link 도 new-user 로만 path 지정하면됨
+기존에는 <Route path='/welcome/new-user' element={<Welcome />}></Route>
+--이젠 중첩 라우팅을 상위에 지정할수 있으며 welcome compo 에는 <Outlet/>표현
+<Route path='/welcome/*' element={<Welcome />}>
+  <Route path='/new-user' element={<Welcome />}></Route>
+</Route>
+-더이상 useHistory 는 사용되지않으며 useNavigate 로 대체되었음
+const navigate = useNavigate()
+navigate('/welcome') 지정하거나 navigate('/welcome',{replace: true})
+와 같이 stack 지정 가능하며 navigate(-1) 과 같이 숫자넣으면 이전 페이지로
+돌아가는것을 뜻하며 -2 는 이전 페이지보다 전의 페이지로 1은 다시 앞으로간다는뜻
+-더이상 Prompt 는 사용되지 않으며 아직 대체 컴포넌트가 생기지 않았음
 ================================================================
 Layout
 -nav 같은 경우 Layout compo 를 따로 만들어 Navigation compo 를 import
@@ -1949,14 +2035,86 @@ const Layout = props => {
       <MainNavigation />
       <main className={classes.main}>{props.children}</main>
     </Fragment>
+=======================================================================
+사용자가 지원되지 않는 경로 입력 할 경우
+-루트 라우트로 이동해서 들어오는 모든 요청과 일치 여부를 확인해야함, 모든 
+URL과 일치되는 경우를 확인해야하며 그리고 * 에 경로를 설정함으로써 이 
+작업을 할 수 있음,와일드카드 문자는 리액트 라우터에 모든 경로, 모든 URL이
+라우트와 일치해야 한다는 신호를 보내며 경로는 실제 라우트 중 하나에 대한 
+요청을 소비하지 않도록 마지막에 위치해야 함, 제일 마지막 지점점까지 
+일치하는 항목이 없으면 모든 URL과 이 라우트가 일치되며 Not Found 페이지를 
+렌더링 하도록함
+================================================================
+배포
+1)test code
+-deploy 할땐 코드를 쓰고 테스트하는걸로 시작
 
+2)Optimize code
 
+--최적화에 대해 살펴본다 (레이지 로딩 등)
+---최적화되었고 잘 작동된다면 프로덕션용 앱을 빌드한다
 
+3)빌드 App for Production
+--스크립트를 실행하며 스크립트가 프로덕션 준비가된 코드를 출력할것이며 
+코드들은 최대한 작게 축소되고 자동으로 최적화되면서 출력 값을 얻어 서버로 
+옮길수 있게되면 자동적으로 사용자에게 최적화된 코드 패키지를 제공하게됨
 
+4)Upload Production code to server
+-디플로이할 준비가 된 최적화된 코드가 생성되면 그 패키지를 디플로이할건데
+작성한 코드를 바탕으로 생성된 코드를 서버로 업로드하며 이때 옵션이 다양한 
+호스팅 프로바이더가 있다
 
+5)Configure Server
+-서버 또는 호스팅 프로바이더의 제품을 설정
 
+레이지 로딩
+-해당 코드가 필요할 때만 그 특정 코드를 로딩하는 것
+--예를 들어 쿼트 추가와 관련된 코드 등 특정한 코드는 진짜로 해당 페이지에 
+들어올 때만 다운로드되도록 해야 함, low close free thousand 에 들어와서
+초기 화면만 보고 새 쿼트를 추가하지 않을 수도 있기 때문, 그렇다면 쿼트 
+추가 기능과 관련된 모든 코드를 다운로드할 필요가 없다, 초기 다운로드가 
+불필요하게 커질 뿐이기때문에 해당 코드가 필요하지 않으니까요.이것이 바로 
+레이지 로딩의 개념
+-코드를 여러 덩어리로, 여러 번들로 나누고 각각 필요할 때만 다운로드하는 것
+-라우팅을 사용하는 경우 레이지 로딩을 구현하기 쉽다,라우트별로 코드를 
+분할해서 특정 라우트에 대한 코드가 해당 라우트를 방문할 때만 다운로드되도록 
+할 수 있기 때문
 
+페이지 url 입력 시 출력까지 과정
+-페이지를 방문하면, local host free thousand를 여기 입력해서 페이지에 
+들어오면, React가 이 모든 유저 인터페이스를 화면에 띄우고 이 애플케이션이 
+반응하게 하기 위해 다운로드되어야 하는 모든 React 코드 말입니다. 즉, 
+여기에서 볼 수 있는 모든 것과 여기에서 사용하는 모든 것은 모든 코드가 
+다운로드된 후에만 작동합니다. 사용자가,화면에 뭐가 보이고 웹 애플리케이션을 
+사용할 수 있을 때까지 우리 웹사이트 방문자가 코드가 다운로드될 때까지 
+기다려야 한다
+-초기 코드 번들,다운로드되는 이 최초의 첫 번째 코드 번들을 가능한 한 
+작게 만들어야 함
 
+================================================================
+React.lazy()
+-코드 분할에 도움이 되는 기본 메서드
+ex)
+/*React.lazy 에 전달하는 이 함수는 이 새 쿼트 컴포넌트가 필요할 때 React 에 의해 실행됨
+이것이 일반적으로 import 할때와의 핵심적인 차이점임 코드를 미리 다운로드하기 위해 미리 실행하지 않고 필요할 때만 실행*/
+const NewQuote = React.lazy(()=> import('./pages/NewQuote'))
 
-
+대체 UI 를 정의 해야하는 이유
+-코드를 필요할 때만 다운로드한다는 것이 레이지 로딩의 개념인데 문제는, 이 
+다운로드가 몇 밀리초 또는 몇 초가 걸릴 수 있다는 것이며 코드를 다운로드하는 
+동안 React는 당연히 중단되고, 다운로드가 완료될 때까지 이 컴포넌트를 로드할 
+수 없게되기에 대체 UI를 정의해야 한다
+--이때 필요한게 React 의 Suspense component 이며 React.lazy를 사용하는 
+코드에 래핑한다 
+ex)
+function App() {
+  return (
+    <Layout>
+      <Suspense
+        fallback={
+          <div className="centered">
+            <LoadingSpinner />
+          </div>
+        }>
+fallback attr 을 넣어줘서 다운로드되는 동안 로딩스피너가 보이도록함
 ```

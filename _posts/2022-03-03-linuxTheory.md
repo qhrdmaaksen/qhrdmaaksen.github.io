@@ -130,7 +130,8 @@ gpasswd : 그룹의 암호를 설정하거나, 그룹의 관리를 수행 (ex: g
 system-config-users (download)
   yum -y install system-config-users
 ========================
-
+플래쉬 다운로드
+-다운로드 folder 경로에 rpm -Uvh flash*
 
 파일 상세보기에서; - 은 file, d가붙으면 디렉토리, l은 링크
 
