@@ -6,7 +6,7 @@ title: "기타 등등"
 ## 필요한 기타 등등
 
 ```js
-prettier setting (.prettierrc.json)
+prettier setting (.prettierrc.js)
 -prettier : $ npm install --save-dev --save-exact prettier 
 module.exports =  {
 	//한 줄이 이 글자수를 넘게 되면 들여쓰기되어 코드가 세로로 정리된다. (default: 80)
@@ -27,9 +27,9 @@ module.exports =  {
 	//객체 리터럴 사용시 괄호에 공백 삽입 여부 (default: true)
 	"bracketSpacing": true,
 	// JSX 의 마지막 `>`를 다음 줄로 내릴지 여부
-	"jsxBracketSameLine": true,
+	"jsxBracketSameLine": false,
 	//단독 화살표 함수의 매개 변수 주위에 괄호를 자동으로 붙힘 (default: 'avoid')
-	"arrowParens": "avoid",
+	"arrowParens": "always",
 	//vue 파일의 script와 style태그 들여쓰기 여부
 	"vueIndentScriptAndStyle": false,
 	//맨마지막 줄 넣는지 여부
@@ -48,9 +48,16 @@ module.exports =  {
 -redux 사용시 npm install redux, npm install redux react-redux
 ===============================
 라우터 설치 npm install react-router-dom@5 (5버전 download)
-
-
-
+============================
+파이어 베이스 도구 설치
+npm install -g firebase-tools
+================================================================
+NextJS
+nodejs.org 접속 후 최신 버전 받은 후 터미널에서 해당 프로젝트 경로에서 
+cpx create-next-app
+================================================================
+mongodb package install
+-npm install mongodb
 
 
 

@@ -51,7 +51,55 @@ Components
 
 ```
 
-게시글 목록
+
+
+이메일 회원 가입
+![reactAuthSignUp.png](../img/reactAuthSignUp.png)
+
+firebase user info
+![reactAuthFBuserInfo.png](../img/reactAuthFBuserInfo.png)
+
+가입시 토큰과 로그인 토큰, 유효한 자격 증명 제공
+![reactAuthIdToken.png](../img/reactAuthIdToken.png)
+
+use Prompt react-router-dom
+![reactBoardLeaveInput.png](../img/reactBoardLeaveInput.png)
+
+게시글 등록
+![reactBoardFireBaseWrite.png](../img/reactBoardFireBaseWrite.png)
+
+FireBase 등록
+![reactBoardFireBaseWrite02.png](../img/reactBoardFireBaseWrite02.png)
+
+게시글 목록 불러오기
+![reactBoardLoadToData.png](../img/reactBoardLoadToData.png)
+
+게시글 존재 하지 않을 시
+![reactBoardListNotFound.png](../img/reactBoardListNotFound.png)
+
+댓글 작성시
+![reactBoardComments.png](../img/reactBoardComments.png)
+
+댓글 FireBase 등록
+![reactBoardFireBaseCommnet.png](../img/reactBoardFireBaseCommnet.png)
+
+댓글 목록
+![reactBoardCommentsList.png](../img/reactBoardCommentsList.png)
+
+로딩시 스피너
+![reactBoardLoadingSpinner.png](../img/reactBoardLoadingSpinner.png)
+
+Firebase deploy
+![reactBoardDeploy.png](../img/reactBoardDeploy.png)
+
+
+
+
+
+
+
+
+
 ![reactBoardList.png](../img/reactBoardList.png)
 
 게시글 상세보기

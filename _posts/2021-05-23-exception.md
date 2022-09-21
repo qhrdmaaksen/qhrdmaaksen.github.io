@@ -434,19 +434,37 @@ cannot find symbol
 -import 가 제대로 안돼서 발생한 에러, import 넣어주니 해결됨
 
 
+not recognized as an internal or external command
+-firebase 인스톨할때 발생한 에러, npm config get prefix 로 현재 기본 경로
+확인하고 npm config set prefix "노드 모듈있는 npm 폴더 경로설정" 후 
+npm install -g firebase-tools 파이어베이스 설치 성공
 
 
+INVALID_REQ_TYPE : Unsupported request parameters.
+-로그인이 되지 않은 상태에서 패스 워드를 변경하려고 할때 발생하였음
+습관적으로 새로고침을 누른 상태에서 패스워드 변경 페이지에서 변경하려고했을때
+발생했으며 로그인 후 비밀번호 변경 잘 되었음
 
 
+Package subpath './lib/parser' is not defined by "exports"
+-호환성 문제로 node 를 다운 그레이드하여 문제 해결 
 
 
+node_module 을 설치했는데도 불구하고 node -v 로 버전이 나오지만 npm -v 로
+npm 을 찾을 수 없는 경우
+-인텔리제이 종료 후 재시작으로 버전 확인 및 실행 가능하도록함
 
 
+the fallback key must be returned from getStaticPaths in
+-fallback:false 와 같이 폴백 키 설정 해줘서 해결
 
 
+MongoServerError: user is not allowed to do action [insert]
+-mongodb database access 에서 역할 설정 admin 으로 바꿔주니 해결됨
 
 
-
+Route did not complete loading
+-next version downgrade 10.0.0 으로 한 후 해결 10.0.2 부터 발생하는듯함
 
 
 

@@ -78,13 +78,7 @@ title: "깃 기초 사용법을 알아두자!!"
   </dt>
   <dd>
   </dd>
-  <dt>
-  git pull origin master
-  </dt>
-  <dd>
-  먼저 깃 저장소에서 pull 받아준다 그렇지않으면 충돌일어남
-  </dd>
-  <dt>
+    <dt>
     git push origin master 
   </dt>
   <dd>
