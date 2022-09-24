@@ -1,12 +1,13 @@
 ---
 layout: post
-title: "리액트 게시판 공부"
+title: "reactSocietyMeetSiteBigPJ 정리"
 ---
 
 ## 코드는 재산이다, 나중에 도움된다, 정리잘하자
 
 ```js
-project name : reactSPA-board-PJ
+project name : reactSocietyMeetSiteBigPJ
+site url : https://react-society-meet-site-big-pj-1ful.vercel.app/
 1. 네비게이션 출력
 2. 게시판의 모든 글 목록 출력
 3. 게시글 상세보기 기능
@@ -51,20 +52,20 @@ Components
 
 ```
 
-게시글 목록
-![reactBoardList.png](../img/reactBoardList.png)
+Vercel deploy
+![reactBigVercelDiploying.png](../img/reactBigVercelDiploying.png)
 
-게시글 상세보기
-![reactBoardDetail.png](../img/reactBoardDetail.png)
+Vercel deploy success
+![reactBigDeploySuccess.png](../img/reactBigDeploySuccess.png)
 
 새 게시글 추가
-![reactBoardAdd.png](../img/reactBoardAdd.png)
+![reactBigtest03.png](../img/reactBigtest03.png)
 
-use Prompt react-router-dom
-![reactBoardLeaveInput.png](../img/reactBoardLeaveInput.png)
+첫 번째 게시글 목록 출력
+![reactBigFirstBoardWrite.png](../img/reactBigFirstBoardWrite.png)
 
-게시글 등록
-![reactBoardFireBaseWrite.png](../img/reactBoardFireBaseWrite.png)
+게시글 등록 후 리스트 확인
+![reactBigtest03List.png](../img/reactBigtest03List.png)
 
 FireBase 등록
 ![reactBoardFireBaseWrite02.png](../img/reactBoardFireBaseWrite02.png)

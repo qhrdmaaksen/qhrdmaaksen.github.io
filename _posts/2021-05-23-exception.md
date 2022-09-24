@@ -467,7 +467,9 @@ Route did not complete loading
 -next version downgrade 10.0.0 으로 한 후 해결 10.0.2 부터 발생하는듯함
 
 
-
+Error serializing `.meetups[0]._id` returned from `getStaticProps` in "/".
+Reason: `object` ("[object Object]") cannot be serialized as JSON. Please only return JSON serializable data types.
+-meetups 를 map 으로 뿌려주며 해결
 
 
 
