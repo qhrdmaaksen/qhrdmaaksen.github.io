@@ -472,6 +472,27 @@ Reason: `object` ("[object Object]") cannot be serialized as JSON. Please only r
 -meetups 를 map 으로 뿌려주며 해결
 
 
+Failed prop type: Invalid prop `children` supplied to `Transition`, expected one of type [function].
+-'react-transition-group/Transition'; 으로 해결 뒤에 Transition 빼먹음
+
+
+Uncaught Error: React.Children.only expected to receive a single React element child.
+-jsx 에 {' '} 빈 중괄호를 삭제해서 해결
+
+
+Warning: Unknown event handler property `onExited`. It will be ignored.
+Warning: Received `true` for a non-boolean attribute `in`.
+-알 수 없는 이벤트 핸들러 ‘onExited’ 경고와 불리언 속성이 아닌 ‘in’에 대해 
+’true’ 값을 입력받았다는 경고임 이런 경고가 뜨는 이유는 지금 상태의 
+TransitionGroup 으로는 여전히 ListItem 의 리스트를 감싸고 있기 때문임, 
+TransitionGroup 은 리스트에 애니메이션을 적용할 때 사용할 수 있지만, 반드시
+Transition 또는 CSSTransition 컴포넌트와 함께 사용해야한다
+
+
+
+
+
+
 
 
 
