@@ -489,6 +489,15 @@ TransitionGroup 은 리스트에 애니메이션을 적용할 때 사용할 수 
 Transition 또는 CSSTransition 컴포넌트와 함께 사용해야한다
 
 
+ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will b
+ehave as if it's running React 17
+-react testing library의 버전 업데이트
+-npm install --save-dev @testing-library/react@latest
+npm install --save-dev @testing-library/jest-dom@latest
+npm install --save-dev @testing-library/user-event@latest
+사용중인 리엑트 테스팅 라이브러리 패키지의 버전을 모두 업데이트 해준 후 해결
+
+
 
 
 

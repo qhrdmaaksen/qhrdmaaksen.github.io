@@ -215,6 +215,7 @@ git pull origin ex:master --allow-unrelated-histories
   </dt>
   <dd>
     git remote rm (저장소)
+    git remote remove master
   </dd>
   <dt>
     git remote 변경  
@@ -267,16 +268,19 @@ Another git process seems to be running in this repository, e.g.an editor opened
     최상위 폴더에 .gitignore 파일 생성 후 node_modules/ 입력 끝
   </dd>
   <dt>
-    
+    깃 커밋 수정 local 에 있을때
   </dt>
   <dd>
-
+    git commit --amend
+위와 같이 amend 를 이용하면 가장 마지막에 commit 한 내용을 수정할 수 있습니다.
+git commit --amend 를 사용하고 커밋을 수정할 수 있는 창이 뜨면, 수정을 완료한 후 esc -> :wq(저장 + 창 닫기) 를 해주면 됩니다.
   </dd>
   <dt>
-    
+    깃 커밋 수정 REMOTE 에 올린 상황
   </dt>
   <dd>
-
+    local 에서 commit 메세지를 수정한 후 git push --force 브랜치이름
+    (최대한 사용자제, 팀원이 PUSH 된 커밋 LOG 를 가지고있으면 수정해야함)
   </dd>
   <dt>
     

@@ -198,6 +198,31 @@ cellspacing, cellpadding : 셀 간 간격과 셀 안의 텍스트와의 간격 �
 rules : 테이블 내부에 선을 그려줌
 rowspan cellspan : 셀 합치기
 
+PHP : 웹 서버에서 실행됨
+-웹 브라우저에서 HTTP 요청하면 웹 서버 프로그램에서 PHP 웹 문서에서
+DBMS DATA 필요하다면 DB DATA 및 웹 문서를 가지고 HTTP 응답해줌
+-fileName.php 확장자 사용
+-PHP 해석기가 필요함
+-운영체제가 달라도 호환성이 높음
+----------------------------------------------------------------
+PHP 웹 애플리케이션 개발 환경 구축
+-웹 브라우저와 웹 서버, 웹 서버 언어,PHP 웹 서버와 웹 클라이언트의 동작원리
+PHP 웹 개발 환경
+-동작원리
+웹->서버>PHP해석기>웹문서>DB>PHP해석기>서버>웹
+
+APM:웹 서버를 구성하는 주요 도구인 아파치+PHP+MYSQL 의미
+XAMPP: PHP TOTAL PACKAGE
+
+-<?code?> tag 사용
+-변수는 $ 붙여서 사용
+-변수선언할때 데이터형을 따로 지정하지않음
+-gettype() 함수는 사용된 변수의 데이터형을 보여줌
+-echo : printf 와 같은 기능, 큰따옴표 안에 내용 출력, 기호 출력시 \ 사용
+-문자열안에 변수사용시 변수명 앞뒤에 공백을 두거나 중괄호로 표시해야 출력됨
+-
+
+
 ================================================================
 
 
@@ -285,6 +310,8 @@ HTML
 react-router-dom
 -{NavLink} compo : navigation 역할 css add 가능 activeClassName prop
 -{Link} compo: <a> 역할 href 대신 to 사용
+
+
 
 
 
