@@ -7,7 +7,7 @@ title: "기타 등등"
 
 ```js
 prettier setting (.prettierrc.js)
--prettier : $  
+-prettier : $ npm install --save-dev --save-exact prettier
 module.exports =  {
 	//한 줄이 이 글자수를 넘게 되면 들여쓰기되어 코드가 세로로 정리된다. (default: 80)
 	"printWidth": 80,
@@ -39,7 +39,7 @@ module.exports =  {
 	// 또한 파일 뿐만 아니고 코드내에서 주석으로 // prettier-ignore 라고 작성하면 해당 코드만 무시
 	//ignorePath
 	// 이 확장 기능을 비활성화 할 언어 ID 목록
-	disableLanguages: ["vue"]
+	//disableLanguages: ["vue"]
 };
 ================================================================
 -eslint : $ npm i -D eslint-plugin-import eslint-plugin-react
@@ -61,11 +61,19 @@ mongodb package install
 ================================================================
 React Transition Group install
 -npm install react-transition-group --save
+================================================================
+TypeScript install
+-npm install -g typescript
 
+TypeScript 로 새로운 Create React App 프로젝트를 시작
+-npx create-react-app my-app --template typescript
+또는
+-yarn create react-app my-app --template typescript
 
-
-
-
+기존 Create React App 프로젝트에 TypeScript 를 추가
+-npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+또는
+-yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
 
 
