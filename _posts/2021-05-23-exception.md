@@ -498,7 +498,8 @@ npm install --save-dev @testing-library/user-event@latest
 사용중인 리엑트 테스팅 라이브러리 패키지의 버전을 모두 업데이트 해준 후 해결
 
 
-
+A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component
+-useState() 초기값 설정안한 상태에서 입력 값을 받으려할때 발생하였음, 초기값 설정 후 에러 해결
 
 
 
