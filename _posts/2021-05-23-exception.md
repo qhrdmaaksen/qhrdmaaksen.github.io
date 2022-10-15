@@ -502,6 +502,17 @@ A component is changing an uncontrolled input to be controlled. This is likely c
 -useState() 초기값 설정안한 상태에서 입력 값을 받으려할때 발생하였음, 초기값 설정 후 에러 해결
 
 
+Cannot assign to read only property object
+-개체의 읽기 전용 속성 할당 할 수 없음
+--props.onAddIngredient=({
+      title: enteredTitle,
+      amount: enteredAmount,
+    });
+로 문법 실수로 발생된 에러, 아래 코드로 수정 후 에러 해결
+props.onAddIngredient({
+      title: enteredTitle,
+      amount: enteredAmount,
+    });
 
 
 
