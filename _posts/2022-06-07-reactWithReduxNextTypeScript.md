@@ -3279,6 +3279,21 @@ useCallback()
 -콜백설정하면 리액트는 첫 번째 인자인 함수를
 캐싱(cache)합니다, 리렌더링되어도 남아있도록요, Ingredients 컴포넌트가 리렌더링되어도
 이 함수는 새로 생성되지 않기 때문에 값이 변하지 않습니다
+-공식문서
+useCallback
+const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b],
+);
+메모이제이션된 콜백을 반환합니다.
+인라인 콜백과 그것의 의존성 값의 배열을 전달하세요. useCallback은 콜백의 메모이제이션된 버전을 반환할 것입니다. 그 메모이제이션된 버전은 콜백의 의존성이 변경되었을 때에만 변경됩니다. 이것은, 불필요한 렌더링을 방지하기 위해 (예로 shouldComponentUpdate를 사용하여) 참조의 동일성에 의존적인 최적화된 자식 컴포넌트에 콜백을 전달할 때 유용합니다.
+useCallback(fn, deps)은 useMemo(() => fn, deps)와 같습니다.
+주의
+의존성 값의 배열이 콜백에 인자로 전달되지는 않습니다. 그렇지만 개념적으로는, 이 기법은 콜백 함수가 무엇일지를 표현하는 방법입니다. 콜백 안에서 참조되는 모든 값은 의존성 값의 배열에 나타나야 합니다. 나중에는 충분히 발전된 컴파일러가 이 배열을 자동적으로 생성할 수 있을 것입니다.
+eslint-plugin-react-hooks 패키지의 일부로써 exhaustive-deps 규칙을 사용하기를 권장합니다. 그것은 의존성이 바르지 않게 정의되었다면 그에 대해 경고하고 수정하도록 알려줍니다.
+
 
 useEffect 안에서 setTimeout()
  // useEffect 에서 어떤것도 반환하지 않아도되지만 만약 반환한다면 그것은 반드시 함수여야함
@@ -3324,10 +3339,94 @@ action 은 객체 형태이며 타입을 가지고 switch 문을 사용해 액�
 true에서 false로 바꾸는 그런 경우가 아니라, 이렇게 재료를 추가하거나 삭제하는 것처럼
 state의 형태가 다소 복잡하고, 이전 state를 기반으로 업데이트해야 할 경우
 리듀서 사용을 진지하게 고려해 봐야 합니다, state를 한 곳에서 더 명확한 방식으로 관리할 수 있으니까요
+-공식문서
+const [state, dispatch] = useReducer(reducer, initialArg, init);
+useState의 대체 함수입니다. (state, action) => newState의 형태로 reducer를 받고 dispatch 메서드와 짝의 형태로 현재 state를 반환합니다. (Redux에 익숙하다면 이것이 어떻게 동작하는지 여러분은 이미 알고 있을 것입니다.)
+다수의 하윗값을 포함하는 복잡한 정적 로직을 만드는 경우나 다음 state가 이전 state에 의존적인 경우에 보통 useState보다 useReducer를 선호합니다. 또한 useReducer는 자세한 업데이트를 트리거 하는 컴포넌트의 성능을 최적화할 수 있게 하는데, 이것은 콜백 대신 dispatch를 전달 할 수 있기 때문입니다.
+아래는 useState 내용에 있던 카운터 예시인데 reducer를 사용해서 다시 작성한 것입니다.
+const initialState = {count: 0};
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    default:
+      throw new Error();
+  }
+}
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <>
+      Count: {state.count}
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+주의
+React는 dispatch 함수의 동일성이 안정적이고 리렌더링 시에도 변경되지 않으리라는 것을 보장합니다. 이것이 useEffect나 useCallback 의존성 목록에 이 함수를 포함하지 않아도 괜찮은 이유입니다.
+초기 state의 구체화
+useReducer state의 초기화에는 두 가지 방법이 있습니다. 유스케이스에 따라서 한 가지를 선택하세요. 가장 간단한 방법은 초기 state를 두 번째 인자로 전달하는 것입니다.
+  const [state, dispatch] = useReducer(
+    reducer,
+    {count: initialCount}
+  );
+주의
+React에서는 Reducer의 인자로써 state = initialState와 같은 초기값을 나타내는, Redux에서는 보편화된 관습을 사용하지 않습니다. 때때로 초기값은 props에 의존할 필요가 있어 Hook 호출에서 지정되기도 합니다. 초기값을 나타내는 것이 정말 필요하다면 useReducer(reducer, undefined, reducer)를 호출하는 방법으로 Redux를 모방할 수는 있겠지만, 이 방법을 권장하지는 않습니다.
+초기화 지연
+초기 state를 조금 지연해서 생성할 수도 있습니다. 이를 위해서는 init 함수를 세 번째 인자로 전달합니다. 초기 state는 init(initialArg)에 설정될 것입니다.
+이것은 reducer 외부에서 초기 state를 계산하는 로직을 추출할 수 있도록 합니다. 또한, 어떤 행동에 대한 대응으로 나중에 state를 재설정하는 데에도 유용합니다.
+function init(initialCount) {
+  return {count: initialCount};
+}
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    case 'reset':
+      return init(action.payload);
+    default:
+      throw new Error();
+  }
+}
+function Counter({initialCount}) {
+  const [state, dispatch] = useReducer(reducer, initialCount, init);
+  return (
+    <>
+      Count: {state.count}
+      <button
+        onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+        Reset
+      </button>
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+dispatch의 회피
+Reducer Hook에서 현재 state와 같은 값을 반환하는 경우 React는 자식을 리렌더링하거나 effect를 발생하지 않고 이것들을 회피할 것입니다. (React는 Object.is 비교 알고리즘을 사용합니다.)
+실행을 회피하기 전에 React에서 특정 컴포넌트를 다시 렌더링하는 것이 여전히 필요할 수도 있다는 것에 주의하세요. React가 불필요하게 트리에 그 이상으로 「더 깊게」 까지는 가지 않을 것이므로 크게 신경 쓰지 않으셔도 됩니다. 렌더링 시에 고비용의 계산을 하고 있다면 useMemo를 사용하여 그것들을 최적화할 수 있습니다.
 
 
-
-
+useMemo() 공식문서
+-useMemo
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+메모이제이션된 값을 반환합니다.
+“생성(create)” 함수와 그것의 의존성 값의 배열을 전달하세요. useMemo는 의존성이 변경되었을 때에만 메모이제이션된 값만 다시 계산 할 것입니다. 이 최적화는 모든 렌더링 시의 고비용 계산을 방지하게 해 줍니다.
+useMemo로 전달된 함수는 렌더링 중에 실행된다는 것을 기억하세요. 통상적으로 렌더링 중에는 하지 않는 것을 이 함수 내에서 하지 마세요. 예를 들어, 사이드 이펙트(side effects)는 useEffect에서 하는 일이지 useMemo에서 하는 일이 아닙니다.
+배열이 없는 경우 매 렌더링 때마다 새 값을 계산하게 될 것입니다.
+(메모이제이션 :메모이제이션(memoization)은 컴퓨터 프로그램이 동일한 계산을 반복해야 할 때, 이전에 계산한 값을 메모리에 저장함으로써 동일한 계산의 반복 수행을 제거하여 프로그램 실행 속도를 빠르게 하는 기술이다. 동적 계획법의 핵심이 되는 기술이다. 메모이제이션이라고도 한다.)
+-컴포넌트를 저장할 때 보통은 useMemo() 대신 React.memo를 사용하죠
+하지만 useMemo()를 사용하면, 어떤 데이터든 저장하여 컴포넌트가 렌더링 될 때마다
+다시 생성되지 않도록 할 수 있습니다
+복잡한 값에 대한 연산을 수행하느라 계산하는 데 시간이 오래 걸린다면
+해당 값에 useMemo() 사용을 고려해보는 게 좋습니다, 그럼 컴포넌트가 렌더링 될 때마다
+다시 계산하지 않고, 정말 필요한 경우에만 다시 계산할 테니까요
+그게 이 기능의 목적임
 
 
 

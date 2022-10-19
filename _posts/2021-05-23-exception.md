@@ -515,7 +515,11 @@ props.onAddIngredient({
     });
 
 
-
+React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: <App />. Did you accidentally export a JSX literal instead of a component?
+(React.createElement: type이 잘못되었습니다. 문자열(기본 제공 구성 요소의 경우) 또는 클래스/함수(복합 구성 요소의 경우)가 필요하지만 다음을 얻었습니다. <App /> 컴포넌트 대신 JSX 리터럴을 실수로 내보냈습니까?)
+-import 경로 설정 잘못하거나 jsx 에서 문법 에러 발생해서 나옴
+--나는 jsx 에서 props.children 을 중괄호가 아닌 <props.children/>
+으로 정신없이 코딩하다 발생된 에러 중괄호로 변경 후 에러 해결
 
 
 
