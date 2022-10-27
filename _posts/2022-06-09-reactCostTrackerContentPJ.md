@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "reactSideProject_CostTracker"
+...
+published: false
+...
 ---
 
 ## 비용 추적기 사이드 프로젝트
