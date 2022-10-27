@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "리액트 게시판 공부"
+published: false
 ---
 
 ## 코드는 재산이다, 나중에 도움된다, 정리잘하자

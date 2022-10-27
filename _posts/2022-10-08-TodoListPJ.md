@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "일정 관리 앱 프로젝트"
+published: false
 ---
 
 ## 코드는 재산이다, 나중에 도움된다, 정리잘하자

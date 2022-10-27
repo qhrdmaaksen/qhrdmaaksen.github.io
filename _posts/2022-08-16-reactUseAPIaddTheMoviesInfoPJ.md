@@ -1,6 +1,6 @@
 ---
 layout: post
-published: true
+published: false
 title: "react - API 사용하여 영화 정보 추가 PJ"
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-published: true
+published: false
 title: "react - 영화 정보 API 에 영화 정보 가져오기"
 ---
 

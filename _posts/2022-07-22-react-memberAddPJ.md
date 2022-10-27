@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "회원 정보 추가 side PJ!"
+published: false
 ---
 
 ### 신규 회원 정보 추가

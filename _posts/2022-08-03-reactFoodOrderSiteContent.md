@@ -1,6 +1,6 @@
 ---
 layout: post
-published: true
+published: false
 title: "리액트 음식 주문 사이트 미니 프로젝트 문서 정리"
 ---
 
