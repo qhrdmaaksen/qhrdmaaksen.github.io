@@ -522,7 +522,17 @@ React.createElement: type is invalid -- expected a string (for built-in componen
 으로 정신없이 코딩하다 발생된 에러 중괄호로 변경 후 에러 해결
 
 
+Objects are not valid as a React child (found: [object Promise]). If you meant to render a collection of children, use an array instead.
+개체가 React 하위 개체로 유효하지 않습니다(찾은 항목: [object Promise]). 자식 컬렉션을 렌더링하려면 배열을 대신 사용하십시오.
+-화살표 함수 인자 앞에 테스트를 위해 async 를 작성했었는데 테스트 후 await 삭제 과정에서 async 는 삭제하는걸 깜빡하여 발생한 에러, async 삭제 후 해결됨
 
+
+-서버 상태 200 번 및 로그 찍어도 모두 응답을 잘 받은 상태에서 
+아이템이 비어있는 상태로 출력된 이슈라면 stringify 에서 혹시 
+중괄호로 인자를 받았는지 체크해보자 .. 인자는 그냥 소괄호 안에
+받으면된다 애초에 데이터 추가를 잘못했으니 데이터 형식이 잘못된 
+형식으로 저장된거고 겟요청 시 응답은 잘 받더라도 출력 형식이 
+데이터와 맞지 않아 출력되지않았다
 
 
 
