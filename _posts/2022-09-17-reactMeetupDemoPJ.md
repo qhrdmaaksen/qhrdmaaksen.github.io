@@ -68,29 +68,6 @@ Vercel deploy success
 게시글 등록 후 리스트 확인
 ![reactBigtest03List.png](../img/reactBigtest03List.png)
 
-FireBase 등록
-![reactBoardFireBaseWrite02.png](../img/reactBoardFireBaseWrite02.png)
-
-게시글 목록 불러오기
-![reactBoardLoadToData.png](../img/reactBoardLoadToData.png)
-
-게시글 존재 하지 않을 시
-![reactBoardListNotFound.png](../img/reactBoardListNotFound.png)
-
-댓글 작성시
-![reactBoardComments.png](../img/reactBoardComments.png)
-
-댓글 FireBase 등록
-![reactBoardFireBaseCommnet.png](../img/reactBoardFireBaseCommnet.png)
-
-댓글 목록
-![reactBoardCommentsList.png](../img/reactBoardCommentsList.png)
-
-로딩시 스피너
-![reactBoardLoadingSpinner.png](../img/reactBoardLoadingSpinner.png)
-
-Firebase deploy
-![reactBoardDeploy.png](../img/reactBoardDeploy.png)
 
 
 
