@@ -535,6 +535,9 @@ Objects are not valid as a React child (found: [object Promise]). If you meant t
 데이터와 맞지 않아 출력되지않았다
 
 
+Functions are not valid as a React child. This may happen if you return a Component instead of <Component /> from render. Or maybe you meant to call this function rather than return it.
+(기능은 React 하위 기능으로 사용할 수 없습니다. 렌더에서 <Component /> 대신 구성요소를 반환하는 경우 이 문제가 발생할 수 있습니다. 아니면 반품하기보다는 이 기능을 호출하려고 하셨을 수도 있습니다.)
+-컴포넌트를 <component /> 와 같이 작성치않고 그냥 component 로 작성해서 발생한 에러
 
 
 ```

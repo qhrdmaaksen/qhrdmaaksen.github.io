@@ -45,6 +45,10 @@ Outlet
       {/*루트 Route 안에 정의된 모든 컴포넌트 즉 지금 선택한 컴포넌트들이 여기에 렌더링되도록 Outlet 컴포넌트로 정의*/}
       <Outlet />
       {/*<main>{children}</main>*/}
+공식 문서
+-자식 경로 요소를 렌더링하려면 부모 경로 요소에서 An <Outlet>을 사용해야 합니다. 
+이를 통해 하위 경로가 렌더링될 때 중첩된 UI가 표시됩니다. 
+부모 라우트가 정확히 일치하면 자식 인덱스 라우트를 렌더링하거나 인덱스 라우트가 없으면 아무것도 렌더링하지 않습니다.
 ----------------------------------------------------------------
 -function App() {
 	/*js route 정의 몇가지 사용하기위해 배열 전달
@@ -169,6 +173,89 @@ function Root() {
   return (
     <div>
       {navigation.state === "loading" && <GlobalSpinner />}
+----------------------------------------------------------------
+defer
+-데이터를 가져오기 전에 페이지에 방문해서 진행 중이라는 걸 사용자에 알릴 수 있다
+-페이지 컴포넌트의 데이터 로딩을 연기하는 역할을 합니다
+여러 데이터를 로딩하는 경우 필요한 데이터의 일부만 연기할 수 있다
+
+Await
+-defer를 사용하면 페이지 컴포넌트 안에 특수 컴포넌트 Await 사용
+
+Suspense
+-Await component 가 작동하려면 Suspense component 로 래핑해줘야함
+
+function DeferredBlogPostsPage() {
+  const loaderData = useLoaderData();
+
+  return (
+    <>
+      <h1>Our Blog Posts</h1>
+      {/*Await 컴포넌트가 작동하려면 Suspense 컴포넌트로 래핑해야 함
+        React Router에서도 Suspense 컴포넌트를 사용해 대기 중인 데이터가 로딩될 때까지 폴백을 보여줍니다
+        Suspense에 fallback 프로퍼티를 추가하고 "로딩 중..." 등의 메시지를 입력할게요
+        로딩 아이콘이나 로딩 폴백 코드를 여기에 입력하셔도 됩니다*/}
+      <Suspense fallback={<p>로딩중...</p>}>
+        {/*Await 그 안에 특별한 프로퍼티 resolve를 가져요 resolve 프로퍼티에 함수에 대한 포인터를 전달합니다
+          여기서 연기하고 있는 함수는 로딩 함수이니까 loaderData.posts가 되겠네요
+          loaderData라는 객체를 defer를 통해 반환하고 있으며 이 객체에는 posts라는 키가 있고
+          posts 키는 느리게 하는 함수를 가지고 있잖아요 그 함수에 대한 포인터를 전달해서
+          Await 컴포넌트에서 리졸브를 대기하는 거죠 여기에 errorElement를 추가해서 데이터 로딩에 실패했을 때
+          무슨 요소를 나타낼지 지정*/}
+        <Await
+          resolve={loaderData.posts}
+          errorElement={<p>에러 로딩 블로그 포스트</p>}
+        >
+          {/*데이터가 로딩을 마쳤을때 실행될 함수 정의
+            이 함수가 loadedPosts를 받고 게시물을 로딩하는 함수 getSlowPosts 함수의 실행을 완료하면
+            React Router에 의해 실행될 거예요 그러면 Posts 컴포넌트를 렌더링하는데 blogPosts 프로퍼티로 loadedPosts를 받겠습니다
+            데이터 로딩이 완료되면 블로그 컨텐츠를 보여줌*/}
+          {(loadedPosts) => <Posts blogPosts={loadedPosts} />}
+        </Await>
+      </Suspense>
+      <Posts blogPosts={loaderData} />
+    </>
+  );
+}
+
+export default DeferredBlogPostsPage;
+
+export async function loader() {
+  /*지금은 하나의 데이터 게시물 리스트만 로딩하고 있는데 이걸 연기하기 위해서는
+defer로 래핑하고 객체로 만든 다음 posts라는 키를 입력하면 posts 키에 저장된 값들이
+getSlowPosts 호출의 결과가 되겠네요 호출이 반환하는 프로미스는 defer로 래핑한 객체의 posts 안에 저장됨*/
+  return defer({ posts: getSlowPosts() });
+}
+
+참고 사항
+-지금은 게시물 리스트만을 가져오는데복잡한 관리자 대시보드 같은 페이지에는
+여러 데이터 소스가 있을 거예요 이런 경우 모든 데이터를 기다렸다가 보여주지 않고
+페치가 완료된 데이터 일부를 먼저 보여주면 유용하겠죠 여러 데이터에 defer 함수를 사용하면
+원하는 만큼 키를 추가해서 연기할 데이터와 연기하지 않을 데이터를
+키 별로 제어할 수 있습니다
+프로미스를 반환하는 함수 앞에 await만 추가하면 돼요 await를 추가하면 React Router에게
+페이지를 보여주기 전에 함수 실행을 기다리라고 알려줘요 await를 추가하니까
+Home 페이지에 갔다가 Blog를 클릭했을 때 2초 동안 아무 일도 일어나지 않다가 페이지가 한 번에 로딩되죠
+await를 제거하면 React Router에게 함수 실행이 완료될 때까지 페이지 로딩을 연기하지 말고
+우선 페이지를 보여준 다음에 데이터 페치가 완료됐을 때 페이지에 나타내라고 알려줍니다
+이렇게 await가 없으면 페이지를 방문했을 때 데이터의 일부를 바로 보여주고
+await가 있으면 데이터가 전부 로딩된 후 페이지가 로딩됩니다
+여러 데이터가 있을 때는
+빼놓고 페이지가 로딩되어서는 안될 만한 중요한 일부 데이터에 await를 추가하고
+대기 시간을 가지고 로딩돼도 되는 데이터에는 await를 추가하지 마세요
+----------------------------------------------------------------
+useFetcher()
+-양식 제출을 직접 트리거하는 데 사용되거나 (컴포넌트 안에서 "loader"를 직접 트리거할 때도 사용됩니다)
+fetcher.Form을 통해 양식을 구축하는 데 사용
+-페이지 전환 등이 없는 대신 요청이 내부에서 전송되며 요청을 전송할 특정 페이지를 대상으로 할 수 있어요
+-fetcher 기능은 페이지 전환 없이 요청을 보내고 싶은 페이지에 적합합니다
+예를 들어 블로그 게시물 내에서 뉴스레터를 구독하는 경우
+이 페이지를 벗어나고 싶지 않겠죠 이럴 때 fetcher를 통해
+내부에서 요청을 전송하면 됩니다
+
+
+
+
 
 
 
