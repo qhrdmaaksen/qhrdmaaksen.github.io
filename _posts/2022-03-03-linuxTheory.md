@@ -353,6 +353,34 @@ RAID 정의 및 종류
 
 ```js
 
+DB 와 관련된 SQL 문
+DB 이름 조회 : SHOW DATABASE;
+사용할 DB 지정: USE 데이터베이스이름;
+DB 생성: CREATE DATABASE 데이터베이스이름;
+DB 삭제: DROP DATABASE 데이터베이스이름;
+
+TABLE 과 관련된 SQL 문
+테이블 이름 조회: SHOW TABLES;
+테이블 구조 조회: EXPLAIN 테이블 이름;
+테이블 생성:CREATE TABLE 테이블 이름;
+테이블 삭제:DROP TABLE 테이블이름;
+테이블 수정:ALTER TABLE 옵션;
+레코드 삽입:INSERT INTO 테이블 이름 VALUES('HONG','홍길동');
+레코드 삭제:DELETE FROM 테이블 이름 WHERE 조건;
+레코드 수정:UPDATE 테이블 이름 SET 필드이름1 = 수정할값1
+테이블 조회:SELECT 필드이름1, 필드이름2 FROM 테이블 이름 WHERE 조건;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```
