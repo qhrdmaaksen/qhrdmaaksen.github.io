@@ -74,6 +74,10 @@ TypeScript 로 새로운 Create React App 프로젝트를 시작
 -npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 또는
 -yarn add typescript @types/node @types/react @types/react-dom @types/jest
+================================================================
+실시간 브라우저 연동 lite-server
+npm install lite-server
+================================================================
 
 
 
