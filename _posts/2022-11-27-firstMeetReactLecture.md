@@ -301,6 +301,57 @@ inheritance : 상속/부모 클래스를 상속받아 새로운 자식 클래스
 
 복잡한 컴포넌트를 쪼개서 여러 개의 컴포넌트로 만들고 만든 컴포넌트들을 조합해 새로운 컴포넌트를 만들자
 ----------------------------------------------------------------
+Context : 컨텍스트를 사용하면 props 를 전달할 필요 없이 데이터를 필요로 하는 컴포넌트에 데이터를 전달할 수 있다. 코드도 깔끔해지며 데이터를 한곳에서 관리하기때문에 디버깅에도 유리하다/ 여러개의 컴포넌트들이 접근해야하는 데이터(로그인 여부 로그인정보 ui 테마 현재 언어 등)
+
+
+Context.Provider : 데이터를 제공해주는 프로바이더 <MyContext.Provider value={'some value'}> / Provider component 가 rerendering 될때마다 모든 하위 consumer 컴포넌트가 재렌더링됨(state 를 사용해 불필요한 재렌더링을 막을 수 있다 ex code
+const [value, setValue] = useState({something: 'something'})
+return (
+  <MyContext.Provider value={value}>
+  <Component />
+  </MyContext.Provider>
+)
+)
+
+
+Context.Consumer : 컨텍스트의 데이터를 구독하는 컴포넌트/
+ex code
+<MyContext.Consumer>
+/* 만약 상위 컴포넌트의 provider 가 없다면 value 는 createContext 를 호출할때 넣는 기본값과 동일한 역할을 함 */
+  {value => /* 컨텍스트의 값에 따라 컴포넌트들을 렌더링*/}
+</MyContext.Consumer>
+
+
+Function as a child : 컴포넌트의 자식으로 함수를 사용하는 방법
+ex code
+// children 이라는 prop 을 직접 선언 방식
+<Profile children={name => <p>이름: {name}</p>}>
+// Profile 컴포넌트로 감싸서 children  으로 만드는 방식
+<Profile>{name => <p>이름: {name}</p></Profile>
+
+
+Context.displayName : 컨텍스트 객체는 displayName 이라는 문자열 속성을 가지며 크롬의 리액트 개발자 도구에서는 컨텍스트의 프로바이더나 컨슈머를 표시할때 displayName 을 함께 표시해준다 
+ex code
+const MyContext = React.createContext('some value')
+MyContext.displayName = "MyDisplayName"
+// 개발자 도구에서 MyDisplayName.Provider 로 표시됨
+<MyContext.Provider>
+// 개발자 도구에서 MyDisplayName.Consumer 로 표시됨
+<MyContext.Consumer>
+
+
+useContext() :
+ex code 
+function MyComponent(props) {
+  const value = useContext(MyContext)
+  return (
+    ...
+  )
+}
+
+
+Context API : MyContext = React.createContext(기본값) context 생성/ 만약 상위 레벨에 매칭되는 Provider 가 없다면 기본값이 사용됨 
+
 ----------------------------------------------------------------
 
 
