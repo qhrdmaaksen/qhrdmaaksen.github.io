@@ -353,6 +353,109 @@ function MyComponent(props) {
 Context API : MyContext = React.createContext(기본값) context 생성/ 만약 상위 레벨에 매칭되는 Provider 가 없다면 기본값이 사용됨 
 
 ----------------------------------------------------------------
+Styling 
+css : cascading style sheets 스타일링이라는 언어
+
+Class selector 사용 예시
+<p class='medium'></p>
+p.medium { font-size: 16px}
+
+Universal selector 사용 예시
+* {
+  font-size: 16px;
+  color: black;
+}
+
+Grouping selector 사용 예시
+h1, h2, p {
+  color: black;
+  text-align: center;
+}
+
+
+:hover : 마우스 커서가 element 위에 올라왔을때
+button:hover {
+  font-weight: bold;
+}
+:active : 주로 a tag 에 사용되며 element 가 클릭됐을때를 의미
+a:active {
+  color: red;
+}
+:focus : 주로 input tag 사용되며 element 가 초점을 갖고있을 경우 의미
+input:focus {
+  color: #000000;
+}
+:checked : radio button 이나 checkbox 같은 유형의 input tag 가 체크되어있는 경우 의미
+option:checked {
+  background: #00ff00;
+}
+:first-child :last-child :: 상위 element 기준으로 각각 첫 번째 child 마지막 child 일 경우 의미
+p:first-child {
+  background: #00ff00;
+}
+p:last-child {
+  background: #00ff00;
+}
+
+
+----------------------------------------------------------------
+layout
+화면에 element 들을 어떻게 배치할지
+
+display 속성 : 엘리먼트를 어떻게 표시할지 방법에대한 속성/ none|block|inline|flex
+--none : element 를 화면에 숨기기 위해 사용/ script tag 의 display 속성 기본값은 display: none;
+--block : 블록 단위로 element 를 배치/ p,div,h1~6 tag 의 display 속성 기본값이 display:block
+--inline : element 를 라인 안에 넣는것/ span tag 의 display 속성 기본값이 display: inline;
+--flex: element 를 블록 레벨의 flex container 로 표시 / container 이기 때문에 내부에 다른 element 들을 포함 
+
+visibility : 가시성 / 보여주거나 감추기 위해 사용하는 속성
+--visible : element 를 화면에 보이게하는것
+--hidden : 화면에서 안보이게 감추는것이며 화면에서의 영역은 그대로 차지함
+
+
+position : 엘리먼트를 어떻게 위치시킬것인지 
+-- static : 기본값으로 element 를 원래의 순서대로 위치시킴
+-- fixed : element 를 브라우저 window 에 상대적으로 위치시킴
+-- relative : element 를 보통의 위치에 상대적으로 위치시킴
+-- absolute : element 를 절대 위치에 위치시킴 (기준은 상위 element 가 됨)
+----------------------------------------------------------------
+Flexbox : 기존 css 의 layout 사용이 불편하기에 개선하기위해 등장함
+container 와 item 으로 구분됨/ 컨테이너에는 여러개의 엘리먼트를 포함할 수 있으며 이게 플렉스 아이템임 
+속성
+display: flex;
+flex-direction 속성의 대표적인 값들
+row: 기본값이며 아이템을 row 행을 따라 가로 순서대로 왼쪽부터 배치
+column:아이템을 column 열을 따라 세로 순서대로 위쪽부터 배치
+row-reverse: 아이템을 row 행의 역 방향으로 오른쪽부터 배치
+column-reverse: 아이템을 column 의 역 방향으로 아래쪽부터 배치
+
+
+align-items 속성의 대표적인 값들
+stretch:기본값으로써 아이템을 늘려서 컨테이너를 가득 채움
+flex-start: cross axis 의 시작 지점으로 아이템을 정렬
+center: cross axis 의 중앙으로 아이템을 정렬
+flex-end:cross axis 의 끝 지점으로 아이템을 정렬
+baseline: 아이템을 baseline 기준으로 정렬
+
+
+justify-content 속성의 대표적인 값들
+flex-start: main axis 의 시작 지점으로 아이템을 맞춤
+center: main axis 의 중앙으로 아이템을 맞춤
+flex-end: main axis 의 끝 지점으로 아이템을 맞춤
+space-between: main axis 를 기준으로 첫 아이템은 시작 지점에 맞추고 마지막 아이템은 끝 지점에 맞추며 중간에 있는 아이템들 사이의 간격이 일정하게 되도록 맞춤
+space-around: main axis 를 기준으로 각 아이템의 주변 간격을 동일하게 맞춤
+----------------------------------------------------------------
+Font
+font-family : 어떤 글꼴을 사용할지 결정하는 속성/ 글꼴의 이름에 띄워쓰기가 들어갈경우 쌍따옴표로 묶어줘야함
+
+일반적인 글꼴 분류
+serif : 각 글자의 모서리에 작은 테두리를 갖고있는 형태의 글꼴
+sans-serif : 모서리에 테두리가 없는 갈끔한 선을 가진 글꼴/ 컴퓨터 모니터에서는 serif 보다 가독성이 좋음
+monospace: 모든 글자가 같은 가로 길이를 가지는 글꼴/ 코딩할때 주로 사용
+cursive: 사람이 쓴 손글씨 모양의 글꼴
+fantasy: 장식이 들어간 형태의 글꼴
+
+----------------------------------------------------------------
 
 
 
