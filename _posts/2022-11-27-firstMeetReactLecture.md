@@ -476,6 +476,18 @@ styled-component : css 문법을 그대로 사용하며 결과물을 스타일�
 tagged template literal : js 에서 제공하는 문법중 하나/ literal : 소스 코드의 고정된 값을 의미하며 상수와 다른 개념 /
 
 
+styled-component 확장 
+ex code 
+// 버튼 컴포넌트
+const Button = styled.div`
+  color: grey;
+  border : 1px solid red;
+`
+// Button 에 style 이 추가된 RoundedButton 컴포넌트
+const RoundedButton = styled(Button)`
+border-radius: 16px;
+`
+
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------
