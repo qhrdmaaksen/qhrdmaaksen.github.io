@@ -6,6 +6,9 @@ title: "기타 등등"
 ## 필요한 기타 등등
 
 ```js
+================================================================
+항상 dependencies 에 추가되도록 install --save 를 사용습관을 기르자
+================================================================
 prettier setting (.prettierrc.js)
 -prettier : $ npm install --save-dev --save-exact prettier
 module.exports =  {
@@ -80,10 +83,13 @@ npm install lite-server
 ================================================================
 styled-component 설치 
 // npm 사용
+--save : 지금 설치하는 패키지들을 package.json 파일이 관리하는 의존성 목록에 저장하겠다는 의미
 npm install --save styled-components
 // yarn 사용
 yarn add styled-components
 ================================================================
+(window) powershell 생성할 경로
+npx create-react-app {폴더명}
 ================================================================
 ================================================================
 
