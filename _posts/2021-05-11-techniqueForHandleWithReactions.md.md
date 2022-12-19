@@ -68,6 +68,61 @@ ReactDOM.render
 --------------------------------------------------------
 props
 -컴포넌트 속성을 설정할때 사용하는 요소 / 프롭스 값은 해당 컴포넌트를 불러와 사용하는 부모 컴포넌트에서 설정할 수있음
+
+default props setting
+ex code
+MyComponent.defaultProps ={
+  name: 'vitamin'
+}
+
+
+비구조화 할당 문법 통해 props 내부 값 추출
+ex code
+const {name, children} = props;
+
+/** 프롭 타입 세팅 및 타입 오류 시 경고 메시지 출력토록 isRequired 설정*/
+MyPropsTypeComponent.propTypes = {
+	name: PropTypes.string,
+  myNumber: PropsTypes.number.isRequired,
+}
+
+-props 는 컴포넌트가 사용되는 과정에서 부모 컴포넌트가 설정하는 값이며 컴포넌트 자신은 해당 props 를 읽기 전용으로만 사용할수있고/ props 를 바꾸려면 부모컴포넌트에서 바꿔줘야한다
+
+PropTypes 종류
+-array: 배열
+-arrayOf: 특정 PropType 으로 이루어진 배열을 의미, ex arrayOf(PropTypes.number)는 숫자로 이루어진 배열
+-bool: true or false value 
+-fuc: 함수
+-number: 숫자
+-object: 객체
+-string: 문자열
+-symbol: es6 의 Symbol
+-node: 렌더링할 수 있는 모든 것
+-instanceOf:특정 클래스의 인스턴스
+-oneOf(['dog','cat']): 주어진 배열 요소 중 값 하나
+-oneOfType([React.PropTypes.string, PropTypes.number]): 주어진 배열안에 종류중 하나
+-objectOf(React.PropTypes.number):객체의 모든 키 값이 인자로 주어진 PropType 인 객체 
+-shape({name:PropTypes.string, num:PropTypes.number}): 주어진 스키마를 가진 객체
+-any: 아무 종류
+
+
+defaultProps & PropTypes 는 사용해도되고 안해도되지만 큰 규모에 협업 프로젝트에서는 개발자들끼리 헷갈리지않도록 사용해주는게 좋다.
+--------------------------------------------------------
+state
+-컴포넌트 내부에서 바뀔수 있는 값을 의미
+
+--------------------------------------------------------
+class component
+
+-클래스형 컴포넌트에서 constructor 를 작성시 반드시 super(props) 를 호출해줘야함 이 함수가 호출되면 현재 클래스 컴포넌트가 상속받고있는 리액트의 component 클래스가 지닌 생성자 함수를 호출해줌
+--------------------------------------------------------
+배열 비구조화 할당
+ex code
+const array = [1, 2]
+const one = array[0]
+const tow = array[1]
+을
+const [one, tow] = array
 --------------------------------------------------------
 --------------------------------------------------------
 
