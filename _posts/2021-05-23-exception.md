@@ -540,4 +540,7 @@ Functions are not valid as a React child. This may happen if you return a Compon
 -컴포넌트를 <component /> 와 같이 작성치않고 그냥 component 로 작성해서 발생한 에러
 
 
+ You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+ (<input>태그 사용시 value속성이 고정값이 아니라 나는 에러임)
+ value속성을 defaultValue로 변경하면 에러해결
 ```
