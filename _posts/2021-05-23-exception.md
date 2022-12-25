@@ -543,4 +543,24 @@ Functions are not valid as a React child. This may happen if you return a Compon
  You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
  (<input>태그 사용시 value속성이 고정값이 아니라 나는 에러임)
  value속성을 defaultValue로 변경하면 에러해결
+
+
+LifeCycleSample.getSnapshotBeforeUpdate(): A snapshot value (or null) must be returned. You have returned undefined.
+-getSnapshotBeforeUpdate 사용시 return 명시 하지 않아서 생긴 에러 return 명시 후 해결
+
+
+LifeCycleSample: getSnapshotBeforeUpdate() should be used with componentDidUpdate(). This component defines getSnapshotBeforeUpdate() only.
+-getSnapshotBeforeUpdate 사용시 componentDidUpdate 함수를 사용하지 않아서 생긴 에러
+
+
+A page or script is accessing at least one of navigator.userAgent, navigator.appVersion, and navigator.platform. Starting in Chrome 101, the amount of information available in the User Agent string will be reduced.
+To fix this issue, replace the usage of navigator.userAgent, navigator.appVersion, and navigator.platform with feature detection, progressive enhancement, or migrate to navigator.userAgentData.
+Note that for performance reasons, only the first access to one of the properties is shown.
+-크롬 문제/ 다른 브라우저 사용시 메시지 출력되지 않음
+
+
+
+
+
+
 ```
