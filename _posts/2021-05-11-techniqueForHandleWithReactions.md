@@ -408,9 +408,99 @@ ex code
 --------------------------------------------------------
 useRef
 -함수 컴포넌트에서 ref 를 쉽게 사용할수 있도록해줌
--
+-useRef 를 사용해 ref 를 설정하면 useRef 를 통해 만든 객체 안의 current 값이 실제 엘리먼트를 가리킴
+-로컬 변수를 사용해야할때도 useRef 를 활용할 수 있음
+--로컬변수 : 렌더링과 상관없이 바뀔수 있는 값을 의미함
+---ref 안의 값이 바뀌어도 컴포넌트가 렌더링되지 않는다는 점을 주의해야함 / 렌더링과 관련되지 않은 값을 관리할때만 로컬 변수를 사용해 코드를 작성함
 --------------------------------------------------------
+커스텀 훅 customHooks
+-여러 컴포넌트에서 비슷한 기능을 공유할 경우 커스텀 훅을 작성해 로직을 재 사용할수 있음
 --------------------------------------------------------
+컴포넌트 스타일링
+-일반 css : 컴포넌트를 스타일링하는 가장 기본적인 방식
+-Sass : 자주 사용되는 CSS 전처리기 중 하나로 확장된 css 문법을 사용해 css 코드를 더욱 쉽게 작성할수 있도록해줌
+-CSS Module: 스타일을 작성할 때 css 클래스가 다른 css 클래스의 이름과 절대 충돌하지 않도록 파일마다 고유한 이름을 자동으로 생성해주는 옵션임
+-styled-components: 스타일을 js 파일에  내장시키는 방식으로 스타일을 작성함과 동시에 해당 스타일이 적용된 컴포넌트를 만들 수 있게 해줌
+
+
+BEM naming : css 방법론 중 하나로 이름을 지을때 일종의 규칙을 준수해 해당 클래스가 어디에서 어떤 용도로 사용되는지 명확하게 작성하는 방식임
+ex code 
+useInfo__nickname-color
+
+
+CSS Selector : css 클래스가 특정 클래스 내부에있는 경우에만 스타일을 적용할 수 있음
+ / 컴포넌트의 최상위 html 요소에 컴포넌트의 이름으로 클래스 이름을 짓고 그 내부에서 소문자를 입력하거나 태그를 사용해 클래스 이름이 불필요한 경우엔 아예 생략할수있음
+
+
+ Sass (Syntactically Awesome Style Sheet (문법적으로 매우 멋진 스타일 시트) )::: css 전처리기로 복잡한 작업을 쉽게 할 수 있도록 해주며 스타일 코드의 재활용성을 높여주고 코드의 가독성을 높여 유지 보수를 더욱 쉽게 해줌
+-Sass 에서는 두가지 확장자 .scss 와 .sass 를 지원함
+-Sass 가 처음 나왔을땐 .sass 확장자만 지원됐으며 나중에 .scss 확장자도 지원하게되었음
+
+ex code .sass 문법
+$font-stack: Helvetica, sans-serif
+$primary-color: #333
+body 
+  font: 100% $font-stack
+  color: $primary-color
+
+ex code .scss 문법
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+위 sass 와 scss 의 차이점은 sass 확장자는 중괄호 및 세미콜론을 사용하지 않음 / 보통 scss 문법을 더 많이 사용함
+
+
+utils 함수 분리하기
+-여러 파일에서 사용될 수 있는 Sass 변수 및 믹스인은 다른 파일로 따로 분리해 작성한뒤 필요한곳에서 쉽게 불러와 사용할 수 있음
+-다른 scss 파일을 불러올땐 @import 구문을 사용함
+
+
+sass-loader 설정 커스터마이징
+-Sass 를 사용할때 반드시해야하는건 아니며 해두면 유용함 / SassComponent 에서 utils 를 불러올때 프로젝트 디렉터리를 많이 만들어 구조가 깊어졌다면 웹팩에서 Sass 를 처리하는 sass-loader 의 설정을 커스터마이징해서 해결할수있음 
+--create-react-app 으로 만든 프로젝트는 프로젝트 구조의 복잡도를 낮추기위해 세부설정이 모두 숨겨져있기때문에 커스터마이징하려면 프로젝트 디렉터리에서 yarn eject 명령어를 통해 세부 설정을 밖으로 꺼내줘야함
+--create-react-app 에선 기본적으로 git 설정이되어있으며 yarn eject 는 아직 git 에 커밋되지않은 변화가있다면 진행되지않으니 커밋을 먼저해줘야함 / 만약 개발 서버 시작되지않는다면 프로젝트 디렉터리 노드모듈즈 디렉터리를 삭제 후 yarn install 명령어를 실행하고 yarn start 를 해보자 / 정상적으로 진행됐다면 프로젝트 디렉터리에 config 라는 디렉터리가 생성되었을 것이며 디렉터리 안에 들어있는 webpack.config.js 를 열면 sassRegex 키워드를 찾아 use 에 sass-loader 를 지우고 concat 을 통해 커스터마이징된 sass-loader 설정을 넣어주면 됨
+ex code
+{
+  test: sassRegex,
+  exclude: sassModuleRegex,
+  use: getStyleLoaders(
+    {
+      importLoaders: 3,
+      sourceMap: isEnvProduction
+        ? shouldUseSourceMap
+        : isEnvDevelopment,
+      modules: {
+        mode: 'icss',
+      },
+    }).concat({
+      loader: require.resolve("sass-loader"),
+      options: {
+        sassOptions: {
+          includePaths: [paths.appSrc + "/styles"],
+        },
+      },
+    }),
+  // Don't consider CSS imports dead code even if the
+  // containing package claims to have no side effects.
+  // Remove this when webpack adds a warning or an error for this.
+  // See https://github.com/webpack/webpack/issues/6571
+  sideEffects: true,
+},
+위와 같이 설정하며 매번 utils.scss 를 포함시키는게 귀찮다면 해결방법으로 sass-loader 의 additionalData 옵션을 설정해주면됨 설정하면 Sass file 을 불러올때마다 코드의 맨 윗부분에 특정 코드를 포함시켜줌
+ex code
+}).concat({
+  loader: require.resolve("sass-loader"),
+  options: {
+    sassOptions: {
+      includePaths: [paths.appSrc + "/styles"],
+    },
+    additionalData: "@import 'utils';",
+  },
+}),
+위와 같이 작성하고 개발 서버 재시작시 모든 scss file 에서 utils.scss 를 자동으로 불러오며 맨 윗줄에 있는 import 구문을 지워도 정상적으로 작동함
 --------------------------------------------------------
 --------------------------------------------------------
 
