@@ -559,8 +559,32 @@ Note that for performance reasons, only the first access to one of the propertie
 -크롬 문제/ 다른 브라우저 사용시 메시지 출력되지 않음
 
 
+[eslint] package.json: Environment key "NODE_ENV" is unknown
+-"eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "parserOptions": {
+      "babelOptions": {
+        "presets": [
+          ["babel-preset-react-app", false],
+          "babel-preset-react-app/prod"
+        ]
+      }
+    }
+  },
+    로 package.json 설정 해주니 해결됨
 
 
+SassError: Undefined variable.
+-@import '~open-color/open-color.css'; 를 @import '~open-color/open-color';
+로 변경 후 해결됨
+
+
+Module build failed (from ./node_modules/sass-loader/dist/cjs.js): SassError: Can't find stylesheet to import.
+(scss file 을 import 했는데 적용되지 않았고 발생된 이슈 메시지)
+-npm install sass 로 해결
 
 
 ```
