@@ -809,6 +809,121 @@ const biggerThanTwo = array.filter((number) => number > 2)
 
 -보통 지우기 기능에서는 배열에서 id 로 지움
 --------------------------------------------------------
+컴포넌트 리렌더링 조건
+-자신이 전달받은 props 가 변경될 때
+
+-자신의 state 가 바뀔때
+
+-부모 컴포넌트가 리렌더링될 때
+
+-forceUpdate 함수가 실행될때
+--------------------------------------------------------
+성능 최적화
+
+React.memo 를 사용해 컴포넌트 성능 최적화
+-컴포넌트 리렌더링 방지할때 shouldComponentUpdate 라이프 사이클 사용하면됨
+-함수 컴포넌트에서는 React.memo 를 사용하면됨
+-컴포넌트의 props 가 바뀌지 않았다면 리렌더링하지않도록 설정해 함수 컴포넌트의 리렌더링 성능을 최적화해줄수있음
+
+React.memo 사용법 ex code
+export default React.memo(component name)
+
+
+useState 함수형 업데이트
+-todos 배열이 업데이트되면 onRemove, onToggle 함수들도 새롭게 바뀌기때문에
+onRemove, onToggle 함수는 배열상태를 업데이트하는 과정에서 최신 상태의 todos 를 참조하여 todos 배열이 바뀔때마다 함수가 새로 만들어지기때문에 함수가 계속 만들어지는 상황을 방지하는 방법으로 useState 의 함수형 업데이트 기능을 사용하거나 useReducer 를 사용하는 방법이있음
+
+setTodos(직접 변경) 사용해 새로운 상태를 파라미터로 넣는 대신 상태 업데이트를 어떻게 할지 정의해주는 업데이트 함수를 넣을수있으며 함수형 업데이트라고 부름
+ex code
+const [number, setNumber] = useState(0)
+// 기존 코드 
+const onIncrease => useCallback(setNumber(prevNumber => prevNumber + 1),
+[prevNumber]);
+// 업데이트 함수를 넣어준 코드
+const onIncrease => useCallback(() => setNumber(prevNumber => prevNumber + 1),
+[]);
+위 코드 처럼 어떻게 업데이트할지 정의해주는 업데이트함수를 넣어주면 useCallback 을 사용할때 두번째 파라미터로 넣는 배열에 넣지 않아도됨
+
+
+useReducer 사용해 최적화하기
+-useState 의 함수형 업데이트를 사용하는 대신 useReducer 를 사용해 onToggle, onRemove 가 계속 새로워지는 문제를 해결 할 수 있음
+-useReducer 를 사용하면 기존 코드를 많이 고쳐야하는 단점이있고 상태를 업데이트하는
+로직을 모아서 컴포넌트 바깥에 둘수있다는 장점이있음
+-useReducer 의 두 번째 파라미터로 undefined 를 넣고 세 번째 파라미터에 초기값을 두면 컴포넌트가 맨 처음 렌더링될때만 createBulkTodos 함수가 호출됨
+--------------------------------------------------------
+불변성의 중요성
+
+const onToggle = useCallback((id) => {
+  setTodos((todo => todo.id === id ? {...todo, checked: !todo.checked} : todo))
+}, [])
+위 코드와 같이 기존 데이터를 수정할때 직접 수정하지않고 새로운 배열을 만든다음에 새로운 객체를 만들어 필요한 부분을 교체해주는 방식으로 구현했기때문에 React.memo 를 사용했을때 props 가 바뀌었는지 혹은 바뀌지 않았는지 알아내서 리렌더링 성능을 최적화해줄 수 있음
+--기존의 값을 직접 수정하지 않으면서 새로운 값을 만들어내는 것을 불변성을 지킨다라고함
+--리액트 컴포넌트에서 상태를 업데이트할때 불변성을 지키는 것을 매우 중요시함
+ex code
+배열 예제
+const array = [1,2,3]
+const nextArrayBad = array // 배열 복사가아닌 똑같은 array 배열을 가리킴
+nextArrayBad[0] = 100
+console.log(array === nextArrayBad) // 결과 true
+// 배열 복사
+nextArrayGood = [...array] // 배열 복사, 배열 내부의 값을 모두 복사함
+nextArrayGood[0] = 100
+console.log(array === nextArrayGood) // 복사한 다른 배열이기때문에 false
+
+객체 예제
+const object = {
+  foo: 'bar',
+  value: 1
+}
+const nextObjectBad = object // 객체가 복사되지않고 똑같은 객체를 가리킴
+nextObjectBad.value = nextObjectBad.value + 1 ;
+console.log(object === nextObjectBad) // 같은 객체이기 때문에 결과 : true
+// 객체 복사
+const nextObjectGood = {
+  ...object, // 기존에 있던 내용을 모두 복사해서 넣음
+  value: object + 1; // 새로운 값을 덮어 씌움
+  } // 객체 값 복사
+console.log(object === nextObjectGood) // 다른 객체이기때문에 결과 : false
+
+-불변성이 지켜지지 않으면 객체 내부의 값이 새로워져도 바뀐것을 감지하지 못하며 React.memo 에서 서로 비교하여 최적화하는것이 불가능함
+-전개 연산자 ... 문법을 사용해 객체나 배열 내부의 값을 복사할땐 얕은 복사를 하게되는데 내부의 값이 완전히 새로 복사되는것이아닌 가장 바깥쪽에있는 값만 복사됨
+-- 내부의 값이 객체 혹은 배열이라면 내부의 값 또한 따로 복사해줘야함
+ex code
+const todos = [{id:1, checked: true}, {id:2, checked: true}]
+const nextTodos = [...todos]
+nextTodos.checked = false;
+console.log(todos[0] === nextTodos[0])  // 아직까지 똑같은 객체를 가리키기때문에 true
+// 새로운 객체 할당
+nextTodos[0] = {
+  ...nextTodos[0],
+  checked: false
+}
+console.log(todos[0] === nextTodos[0]) // 새로운 객체를 할당해줬기에 false
+
+
+-배열 혹은 객체의 구조가 정말 복잡해진다면 불변성을 유지하면서 업데이트하는 것도 까다로워짐
+--이렇게 복잡한 상황일 경우 immer 라는 라이브러리의 도움을 받으면 편하게 작업할 수 있음
+
+-리스트에 관련된 컴포넌트를 최적화할땐 리스트 내부에서 사용하는 컴포넌트도 최적화해야하고 리스트로 사용되는 컴포넌트 자체도 최적화해주는것이 좋음
+--리스트 관련 컴포넌트 작성시 리스트 아이템과 리스트 두가지 컴포넌트를 최적화해주는것을 잊지 말자 / 하지만 내부 데이터가 100개를 넘지않거나 업데이트가 자주 발생하지 않는다면 이런 최적화 작업을 반드시 해줄 필요는 없음
+
+
+react-virtualized 사용한 렌더링 최적화
+-리스트 컴포넌트에서 스크롤 되기 전에 보이지 않는 컴포넌트는 렌더링하지않고 크기만 차지하게끔 할 수 있음
+-만약 스크롤되면 해당 스크롤 위치에서 보여주어야할 컴포넌트를 자연스럽게 렌더링시킴
+--이렇게 해주므로 라이브러리를 사용하면 낭비되는 자원을 쉽게 아낄 수 있음
+설치
+$ yarn add react-virtualized
+-제공하는 List 컴포넌트를 사용해 list component 의 성넝을 최적화할 수 있음
+-최적화를 수행하려면 사전에 각 항목의 실제 크기를 px 단위로 알아내야함
+-- 이 값은 작성한 css 를 확인해서 직접 계산해도되지만 크롬 개발자 도구의 좌측 상단에있는 아이콘을 눌러서 크기를 알고싶은 항목에 커서를대서 알아 볼 수 있음
+
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
 
