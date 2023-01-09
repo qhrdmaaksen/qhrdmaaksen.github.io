@@ -1010,11 +1010,225 @@ URL 파라미터 : /profile/velopert
 -쿼리스트링은 주소의 뒷부분에 ? 문자열 이후 key=value 로 값을 정의하고 & 로 구분하는 형태
 -쿼리스트링은 키워드검색,페이지네이션,정렬방식등 데이터조회에 필요한 옵션을 전달할때 사용
 -URL 파라미터와 달리 Route 컴포넌트를 사용할때 별도로 설정해야함
+-useLocation() : location 객체를 반환하며 해당 객체는 현재 사용자가 보고있는 페이지의 정보를 지니고 있음
+ex code
+const location = useLocation()
+location.pathname :현재 주소의 경로 (쿼리스트링 제외)
+location.search : 맨앞의 ? 문자를 포함한 쿼리스트링 값
+location.hash : 주소의 # 문자열 뒤의 값 (주로 History API 가 지원되지않는 구형 브라우저에서 클라이언트 라우팅을 사용할때 쓰는 해시라우터에서 사용함)
+location.state : 페이지로 이동할때 임의로 넣을 수 있는 상태 값
+location.key : location 객체의 고유값 / 초기에는 default 이며 페이지가 변경될때마다 고유의 값이 생성됨
+
+-useSearchParams : 배열 타입의 값을 반환하고 첫 번째 원소는 쿼리파라미터를 조회하거나 수정하는 메서드들이 담긴 객체를 반환함 / get 메서드를 통해 특정 쿼리파라미터를 조회할수 있으며 set 메서드를 통해 특정 쿼리파라미터를 업데이트할수있음 / 만약 조회시 쿼리파라미터가 존재하지 않는다면 null 로 조회됨 / 두 번째 원소는 쿼리파라미터를 객체 형태로 업데이트할수있는 함수를 반환함
+
+-쿼리파라미터를 사용할때 주의점은 쿼리파라미터를 조회할때 값은 무조건 문자열 타입이라는 점임 / true or false 값을 넣으면 값을 비교할때 꼭 'true' 와 같이 따옴표로 감싸서 비교를 해야하고 숫자를 다룬다면 parseInt 를 사용해 숫자 타입으로 반환을 해야함
+--------------------------------------------------------
+중첩된 라우트
+ex code
+<Route path="/articles" element={<Articles />}>
+  <Route path=":id" element={<Article />} />
+</Route>
+
+Outlet component
+-Route 의 children 으로 들어가는 JSX 엘리먼트를 보여주는 역할을 함
+--------------------------------------------------------
+공통 레이아웃 컴포넌트
+-중첩된 라우트와 Outlet 은 페이지끼리 공통적으로 보여줘야하는 레이아웃이있을때도 유용하게 사용 가능
+-- 예를들어 홈, 소개, 프로필 페이지 상단에 헤더를 보여줘야하는 상황등
+-중첩된 라우트를 사용하는 방식으로 사용하면 컴포넌트를 한번만 사용해도된다는 장점이있음
+ex code
+function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        {/*URL 파라미터는 /profile/:username 과 같이 경로에 : 를 사용해서 설정함
+--만약 url 파라미터가 여러개인경우에 /profiles/:username/:field 와 같은 형태로 설정할수있음*/}
+        <Route path="/profile/:username" element={<Profile />} />
+      </Route>
+      <Route path="/articles" element={<Articles />}>
+        <Route path=":id" element={<Article />} />
+      </Route>
+    </Routes>
+  );
+}
+--------------------------------------------------------
+index props
+-path="/" 와 동일한 의미를 가짐
+-index prop 을 사용하면 상위 라우트의 경로와 일치하지만 그 이후에 경로가 주어지지 않을때 보여지는 라우트를 설정할수있음
+--------------------------------------------------------
+useNavigate
+-useNavigate 는 Link 컴포넌트를 사용하지않고 다른 페이지로 이동해야하는 상황에서 이용하는 훅임
+-replace 옵션 : 사용하면 페이지를 이동할때 현재 페이지를 페이지 기록에 남기지 않음
+--------------------------------------------------------
+NavLink
+- 링크에서 사용하는 경로가 현재 라우트의 경로와 일치하는 경우 특정 스타일 or CSS 클래스를 적용하는 컴포넌트임
+-이 컴포넌트는 style 과 className 은 {isActive : boolean } 을 파라미터로 전달받는 함수 타입의 값을 전달함
+--------------------------------------------------------
+Navigate 컴포넌트
+-컴포넌트를 화면에 보여주는 순간 다른 페이지로 이동하고 싶을때 사용하는 컴포넌트임
+-페이지를 리다이렉트로 사용자의 로그인이 필요한 페이지에 로그인을 안했다면 로그인 페이지를 보여줘야할때 사용할수잇음
+--------------------------------------------------------
+비동기 작업의 이해
+-예를들어 웹 앱에서 서버쪽 데이터가 필요할때 Ajax 기법을 사용해 서버의 API 를 호출해서 데이터를 수신함 / 이렇게 서버의 api 를 사용해야할때 네트워크 송수신 과정에서 시간이 걸리기때문에 작업이 즉시처리되는것이아닌 응답을 받을때까지 기다렸다가 전달받은 응답 데이터를 처리하는데 이 과정에서 해당 작업을 비동기적으로 처리하게 됨
+-만약 작업을 동기적으로 처리한다면 요청이 끝날때까지 기다리는동안 중지상태가되기때문에 다른 작업을 할수 없음 / 그리고 요청이 끝나야 비로소 그다음 예정된 작업을 할수있음
+--비동기적으로 처리한다면 웹앱이 멈추지않기때문에 동시에 여러가지 요청을 처리할수있고 기다리는 과정에서 다른 함수도 호출할수있음
+---서버 api 를 호출할때 외에 작업을 비동기적으로 처리할때가있는데 보통 setTimeout 함수를 사용해 특정 작업을 예약할때임
+ex code 3 초후에 printMe 함수를 호출함
+function printMe() {
+  console.log('hello world')
+}
+setTimeout(printMe, 3000)
+console.log('대기중...')
+// 결과 대기 중... hello world
+위와 같이 setTimeout 이 사용되는 시점에서 코드가 3초동안 멈추는것이아닌 일반 코드가 위부터 아래까지 다 호출되고 3초뒤에 지정해둔 printMe 가 호출됨
+-js 에서 비동기작업을할때 흔히 사용되는 방법이 콜백함수를 사용함 / 위의 ex code 와 같이 printMe 가 3초뒤에 호출되도록 printMe 함수자체를 setTimeout 함수의 인자로 전달해줬는데 이런 함수를 콜백함수라고함
+--------------------------------------------------------
+콜백 함수
+-예를들어 파라미터 값이 주어지면 1초 뒤에 10을 더해서 반환하는 함수가 있을 때 해당 함수가 처리된 직후 어떤 작업을 하고 싶다면 콜백함수를 활용해서 작업함
+ex code
+function increase(number, callback) {
+  setTimeout(() => {
+    const result = number + 10;
+    if(callback){
+      callback(result)
+    }
+  }, 1000)
+}
+increase(0, result => {
+  console.log(result)
+})
+
+1초에 걸쳐 10 20 30 40 과 같은 형태로 여러번 순차적으로 처리하고싶다면 콜백 함수를 중첩해 구현 가능
+ex code
+function increase(number, callback){
+  setTimeout(() => {
+    const result = number + 10;
+    if(callback) {
+      callback(result)
+    }
+  }, 1000)
+}
+console.log('작업시작')
+increase(0, result => {
+  console.log(result)
+  increase(result, result => {
+    console.log(result)
+    increase(result, result => {
+      console.log(result)
+      increase(result, result => {
+        console.log(result)
+        console.log('작업완료')
+      })
+    })
+  })
+})
+// 결과
+작업 시작
+10
+20
+30
+40
+작업 완료
+-위와 같은 형태의 콜백안에 또 콜백을 넣어 구현하면 콜백 지옥이라 부르는 가독성이 떨어지는 코드를 Promise 로 해결 가능
+
+Promise 프로미스
+-콜백 지옥 같은 코드가 형성되지않게하는 방안으로 es6 에 도입된 기능임
+function increase(number) {
+  const promise = new Promise((resolve, reject) => {
+    // resolve 는 성공, reject 는 실패
+    setTimeout(() => {
+      const result = number + 10;
+      if (result > 50) {
+        // 50 보다 높다면 에러 발생
+        const e = new Error('NumberTooBig')
+        return reject(e)
+      }
+      resolve(result) // number 값에 +10 후 성공 처리
+    }, 1000)
+  })
+  return promise
+}
+increase(0).then(number => {
+  // Promise 에서 resolve 된 값은 .then 을 통해 받아 올 수 있음
+  console.log(number)
+  return increase(number) // Promise 를 리턴하면
+}).then(number => {
+  // 또 .then 으로 처리 가능 (Promise 를 리턴했다는건 resolve 된 값이라서?)
+  console.log(number)
+  return increase(number) // Promise 를 리턴하면
+}).then(number => {
+  // 또 .then 으로 처리 가능
+  console.log(number)
+  return increase(number) // Promise 를 리턴하면
+}).then(number => {
+  console.log(number)
+  return increase(number) // Promise 를 리턴
+}).catch(e => {
+  // 도중에 에러 발생한다면 .catch 를 통해 알 수 있다
+  console.log(e)
+})
+-처음 처럼 여러 작업을 연달아 처리한다고 함수를 여러번 감싸는것이아닌 바로 위에 코드처럼 .then 을 사용해 그다음 작업을 설정하기때문에 콜백 지옥이 형성되지 않음
+
+
+async/await
+-Promise 를 더욱 쉽게 사용할수있게해주는 es8 문법임
+-이 문법을 사용하려면 함수의 async 키워드를 추가하고 해당 함수 내부에서 Promise 의 앞부분에 await 키워드를 사용함 이렇게하면 Promise 가 끝날때까지 기다리고 결과 값을 특정 변수에 담을 수 있다
+function increase(number) {
+  const promise = new Promise((resolve, reject) => {
+    // resolve 는 성공, reject 는 실패
+    setTimeout(() => {
+      const result = number +10
+      if (result > 50) { // 50 보다 높으면 에러 발생
+        const e = new Error('NumberTooBig')
+        return reject(e)
+      }
+      resolve(result) // number 값에 +10 후 성공 처리
+    }, 1000)
+  })
+  return promise
+}
+async function runTasks() {
+  try { // try/catch 구문을 사용해 에러를 처리
+    let result = await increase(0)
+    console.log(result)
+    result = await increase(result)
+    console.log(result)
+    result = await increase(result)
+    console.log(result)
+    result = await increase(result)
+    console.log(result)
+    result = await increase(result)
+    console.log(result)
+    result = await increase(result)
+    console.log(result)
+  } catch (e) {
+    console.log(e)
+  }
+}
+--------------------------------------------------------
+axios 로 api 호출해서 데이터 받아 오기
+-axios 는 현재 가장 많이 사용되고있는 js HTTP 클라이언트임
+-이 라이브러리의 특징은 HTTP 요청을 Promise 기반으로 처리한다는 점임
 
 --------------------------------------------------------
+파일 자동 불러오기 기능 활용하고 싶다면 최상위 디렉터리에서 jsconfig.json file create
+ex code
+{
+  "compilerOptions": {
+    "target": "es6"
+  }
+}
 --------------------------------------------------------
 --------------------------------------------------------
-
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
 
 
 
