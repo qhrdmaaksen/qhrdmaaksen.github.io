@@ -1227,11 +1227,30 @@ Context API
 
 -리덕스,리액트 라우터, styled-component 등의 라이브러리들은 Context API 기반으로 구현되어있음
 
-Consumer 사용
--
 
+Provider
+-Provider 를 사용하면 Context 의 value 를 변경할 수 있음
+-기존에 createContext 함수를 사용할때 파라미터로 Context 의 기본값을 넣어주는데 
+이 기본값은 Provider 를 사용하지 않았을때만 사용되며 Provider 를 사용했는데 
+value 를 명시하지않는다면 기본값을 사용하지 않았기때문에 오류가 발생함
 --------------------------------------------------------
+Render props 예제
+-const RenderPropsSample = ({children}) => {
+  return <div>결과: {children(5)}</div>
+}
+export default RenderPropsSample;
+위와 같은 컴포넌트가 있다면 추후 사용할때 다음과 같이 사용함
+<RenderPropsSample>
+  {value => 2 * value}
+</RenderPropsSample>
+-RenderPropsSample 에게 children props 로 파라미터에 2를 곱해서 반환하는 함수를 
+전달하면 해당 컴포넌트에서는 이 함수에 5를 인자로 넣어서 결과: 10 을 렌더링함
 --------------------------------------------------------
+동적 Context 사용
+
+Context file 수정하기
+-Context 의 value 에는 무조건 상태 값만있어야하는것은 아님 / 함수를 전달해줄수도있음
+
 --------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
