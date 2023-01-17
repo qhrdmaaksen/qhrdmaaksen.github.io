@@ -119,6 +119,12 @@ yarn add react-icons
 react-virtualized 최적화 라이브러리 
 $ yarn add react-virtualized
 ================================================================
+Parcel
+-이 도구를 사용하면 쉽고 빠르게 웹 앱 프로젝트를 구성할 수 있음
+yarn global add parcel-bundler
+npm install -g parcel-bundler
+
+프로젝트 디렉터리 생성 후 package.json 파일 생성
 ================================================================
 ================================================================
 
