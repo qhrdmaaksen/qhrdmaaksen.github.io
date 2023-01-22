@@ -1561,9 +1561,57 @@ makeContainer(타겟 컴포넌트)
 -mapDispatchToProps 의 경우 store 의 내장함수 dispatch 를 파라미터로 받아옴
 
 -액션 생성 함수의 개수가 많아질땐 리덕스에서 제공하는 bindActionCreators 유틸 함수 사용
+--------------------------------------------------------
+redux-actions
+-리덕스 액션즈를 사용하면 액션생성함수를 더 짧은 코드로 작성가능(매번 객체를 직접 만들어줄 필요 없이 더욱 간단하게 액션 생성 함수를 선언할수있음)
+-리듀서를 작성할때도 switch/case 가아닌 handleActions 함수를 사용해 각 액션마다 업데이트 함수를 설정하는 형식으로 작성해줄수있음
+ex code
+// 액션 타입 정의
+const INCREASE = 'counter/INCREASE';
+const DECREASE = 'counter/DECREASE';
 
+// 액션 생성 함수
+export const increase = createAction(INCREASE)
+export const decrease = createAction(DECREASE)
+
+redux-actions 를 사용하면 handleActions 함수를 사용하여 리듀서 함수를 작성할 수 있음
+handleActions 함수의 파라미터에 첫 번째 파라미터에는 각 액션에 대한 업데이트 함수를 넣어줌
+-두 번째 파라미터에는 초기 상태를 넣어줌
+ed code
+const counter = handleActions(
+  {
+    [INCREASE]: (state, action) => ({ number: state.number + 1 }),
+    [DECREASE]: (state, action) => ({ number: state.number - 1 }),
+  },
+  initialState
+);
+
+만약 각 액션 생성 함수에서 파라미터를 필요할 경우
+-createAction 으로 액션을 만들면 액션에 필요한 추가 데이터는 payload 라는 이름을 사용함
+ex code
+const MY_ACTION = 'sample/MY_ACTION'; 
+const myAction = createAction(MY_ACTION)
+const action = myAction('hello world')
+// 결과 : {type: MY_ACTION, payload: 'hello world'}
+
+-액션 생성 함수에서 받아 온 파라미터를 그대로 payload 에 넣는 것이아니라 변형을 주어서 넣고 싶다면 createAction 의 두번째 함수에 페이로드를 정의하는 함수를 따로 선언해서 넣어주면됨
+ex code
+const MY_ACTION = 'sample/MY_ACTION';
+const myAction = createAction(MY_ACTION, text => `${text}!!!!`)
+const action = myAction('hello action')
+// 결과 : {type: MY_ACTION, payload: 'hello world!!!!'}
+
+-createAction 으로 만든 액션 생성 함수는 파라미터로 받아온 값을 객체안에 넣을때 원하는 이름으로 넣는것이아닌 action.id, action.to 와 같이 action.payload 라는 이름을 공통적으로 넣어주게됨
+--기존의 업데이트 로직에서도 모두 action.payload 값을 조회해 업데이트 하도록 구현해줘야함
+---액션 생성 함수는 액션에 필요한 추가 데이터를 모두 payload 라는 이름으로 사용하기 때문에 action.id, action.todo 를 조회하는 대신 모두 공통적으로 action.payload 값을 조회하도록 리듀서를 구현해줘야함
 --------------------------------------------------------
---------------------------------------------------------
+immer
+-리듀서에서 상태를 업데이트 할땐 불변성을 지켜야하기때문에 spread 연산자와 배열의 내장 함수를 활용햇지만 모듈의 상태가 복잡해질수록 불변성을 지키기가 까다로워짐
+--따라서 모듈의 상태를 설계할땐 객체의 깊이가 너무 깊어지지않도록 주의해야함
+-객체의 깊이가 깊지 않을수록 추후 불변성을 지켜가면서 값을 업데이트할때 수월함
+-상황에 따라 상태 값들을 하나의 객체안에 묶어서 넣는 것이 코드의 가독성을 높이는데 유리하며 나중에 컴포넌트에 리덕스를 연동할때도 더욱 편함
+-객체의 구조가 복잡해지거나 객체로 이뤄진 배열을 다룰경우 immer 를 사용하면 훨씬 편리하게 상태를 관리할수있음
+
 --------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
