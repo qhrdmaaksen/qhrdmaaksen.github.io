@@ -587,4 +587,9 @@ Module build failed (from ./node_modules/sass-loader/dist/cjs.js): SassError: Ca
 -npm install sass 로 해결
 
 
+Uncaught Invariant Violation: defaultState for reducer handling [object Object] should be defined
+(탐지되지 않은 불변 위반: [개체 개체]를 처리하는 기본 상태를 정의해야 합니다)
+-handleActions 를 handleAction 으로 작성해서 발생한 문제 
+
+
 ```
