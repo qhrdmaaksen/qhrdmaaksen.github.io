@@ -1693,11 +1693,137 @@ redux-thunk
 -리덕스를 사용하는 프로젝트에서 비동기 작업을 처리할때 가장 기본적으로 사용하는 미들웨어임 / 특정 작업을 나중에 할 수 있도록 미루기위해 함수형태로 감싼 것을 의미함 
 --------------------------------------------------------
 웹 요청 비동기 작업 처리하기
-첫 번째: API 는 모두 함수화 / 각 api 를 호출하는 함수를 따로 작성하면 나중에 사용할때 가독성도 좋아지고 유지보수도 쉬워짐
+1. API 는 모두 함수화 / 각 api 를 호출하는 함수를 따로 작성하면 나중에 사용할때 가독성도 좋아지고 유지보수도 쉬워짐
+ex code
+src/lib/api.js file 생성 후
+export const getPost = id =>
+	axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+export const getUsers = id =>
+	axios.get(`https://jsonplaceholder.typicode.com/users`)
+위와 같이 포스트 및 유저정보 호출할 함수를 따로 작성해 사용
 
-두 번째: 새로운 리듀서를 만들어 함수화했던 api 를 사용해 데이터를 받아와 상태를 관리할 리듀서를 생성
+2. 새로운 리듀서를 만들어 함수화했던 api 를 사용해 데이터를 받아와 상태를 관리할 리듀서를 생성
+ex code (src/modules/sample.jsx)
+2-1. 액션 타입선언 요청/성공/실패 3개 타입선언
+  const GET_POST = "sample/GET_POST";
+  const GET_POST_SUCCESS = 'sample/GET"_POST"_SUCCESS';
+  const GET_POST_FAILURE = "sample/GET_POST_FAILURE";
+2-2. thunk 함수 생성(함수내부에서 시작,성공,실패했을때 다른 액션 디스패치하도록함)
+ex code
+  export const getPost = (id) => async (dispatch) => {
+    dispatch({ type: GET_POST }); // 요청을 시작한 것을 알림
+    try {
+      const response = await api.getPost(id);
+      dispatch({
+        type: GET_POST_SUCCESS,
+        payload: response.data,
+      }); // 요청 성공
+      console.log('GET POST 비동기 함수 응답받은 데이터',response.data)
+    } catch (e) {
+      dispatch({
+        type: GET_POST_FAILURE,
+        payload: e,
+        error: true,
+      }); // 에러 발생
+      throw e; // 나중에 컴포넌트단에서 에러를 조회할 수 있게 해 줌
+    }
+  };
 
+2-3. 초기 상태 선언
+ex code
+const initialState = {
+  loading: {
+    GET_POST: false,
+    GET_USERS: false,
+  },
+  post: null,
+  users: null,
+};
 
+3. 리듀서 작성 후 루트 리듀서에 포함
+ex code (src/modules/index.js)
+const rootReducer = combineReducers({
+	sample,
+	counter
+})
+
+4. 데이터를 렌더링할 프레젠테이셔널 컴포넌트 Sample.jsx 작성
+-API 를 통해 전달받은 데이터의 형식 파악 후 작성
+ex code
+const Sample = ({ loadingPost, loadingUsers, post, users }) => {
+  console.log('Sample 컴포넌트에서 받은 데이터',post,users,'loadingPost, loadingUsers',loadingPost, loadingUsers)
+  return (
+    <div>
+      <section>
+        <h1>포스트</h1>
+        {loadingPost && "로딩 중..."}
+        {!loadingPost && post && ( // post 객체가 유효할 때 post.title/body 보여줌 유효하지않으면 오류발생
+          <div>
+            <h3>{post.title}</h3>
+            <h3>{post.body}</h3>
+          </div>
+        )}
+      </section>
+      <hr />
+      <section>
+        <h1>사용자 목록</h1>
+        {loadingUsers && "로딩 중..."}
+        {!loadingUsers && users && ( // users 객체가 유효할때 username/email 보여줌 유효하지않으면 오류발생
+          <ul>
+            {users.map((user) => {
+              return (
+                <li key={user.id}>
+                  {user.username}({user.email})
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+};
+
+5. 컨테이너 컴포넌트 생성
+const {useEffect} = React
+const SampleContainer = ({
+  getPost,
+  getUsers,
+  post,
+  users,
+  loadingPost,
+  loadingUsers,
+}) => {
+  // 컴포넌트가 처음 렌더링될 때 포스트와 사용자 목록을 요청
+  useEffect(() => {
+    getPost(1);
+    getUsers(1);
+  }, [getPost, getUsers]);
+  console.log('SampleContainer 컴포넌트에서 받은 데이터',post,users,'loadingPost, loadingUsers',loadingPost, loadingUsers)
+  return (
+    <Sample
+      post={post}
+      users={users}
+      loadingPost={loadingPost}
+      loadingUsers={loadingUsers}
+    />
+  );
+};
+
+export default connect(
+  ({ sample }) => ({
+    post: sample.post,
+    users: sample.users,
+    loadingPost: sample.loading.GET_POST,
+    loadingUsers: sample.loading.GET_USERS,
+  }),
+    {
+  getPost,
+  getUsers
+    }
+)(SampleContainer);
+
+6. App.js 컴포넌트에 SampleContainer component 렌더링
 --------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
