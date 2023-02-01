@@ -596,4 +596,11 @@ mapDispatchToProps() in Connect(SampleContainer) must return a plain object. Ins
 (Connect(SampleContainer)의 mapDispatchToProps()는 일반 개체를 반환해야 합니다. 대신 [오브젝트 약속]을 받았습니다.)
 -해결: connect 함수 내에서 mapDispatchToProps 에 객체를 반환해야해서 중괄호를 넣어야했지만 그렇지 않아서발생한문제
 
+
+defaultState for reducer handling sample/GET_POST_SUCCESS should be defined
+(환원기 처리 샘플/GET_POST_SUCCESS에 대한 defaultState를 정의해야 합니다)
+-해결: reducer 에 액션 생성 함수에서 state 에 대한 초기 값을 넣어주지 않아서 발생한 문제
+
+
+
 ```

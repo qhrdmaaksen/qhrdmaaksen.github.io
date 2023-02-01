@@ -1825,8 +1825,140 @@ export default connect(
 
 6. App.js 컴포넌트에 SampleContainer component 렌더링
 --------------------------------------------------------
+redux-saga
+-이 middleware 는 redux-thunk 다음으로 많이 사용하는 비동기 작업 관련 미들웨어임
+-redux-thunk 는 함수 형태의 액션을 디스패치해 미들웨어에서 해당 함수에 스토어의 dispatch 와 getState 를 파라미터로 넣어서 사용하는 원리임
+--그래서 구현한 thunk 함수 내부에서 원하는 api 요청도하고 다른 액션을 디스패치하거나 현재 상태를 조회하기도했고 대부분의 경우엔 redux-thunk 로도 충분히 기능 구현이 가능함
+
+-redux-saga 를 사용 장점
+-1- 기존 요청을 취소 처리해야할때 (불필요한 중복 요청 방지)
+-2- 특정 액션이 발생했을 때 다른 액션을 발생시키거나 api 요청등 리덕스와 관계없는 코드를 실행할때
+-3- 웹소켓을 사용할때
+-4- api 요청 실패시 재요청해야할때
+
+
+제너레이터 함수
+-redux-saga 에서는 제너레이터 함수 문법을 사용함
+-이 문법의 핵심 기능은 함수를 작성할때 함수를 특정 구간에 멈춰놓거나 원할때 다시 돌아가게 할수있음
+ex code 제너레이터 함수 미사용
+function testFunction() {
+  return 1;
+  return 2;
+  return 3;
+  return 4;
+}
+위와 같이 함수하나에서 값을 여러개 반환하는 것은 불가능하며 호출할때 맨위에있는 1 만 반환됨
+ex code 제너레이터 함수 사용
+function* generatorFunction() {
+  console.log('hello')
+  yield 1;
+  console.log('hello02')
+  yield 2;
+  console.log('hello03')
+  yield 3;
+  return 4;
+}
+위와 같이 제너 레이터 함수를 만들땐 function 뒤에 * 키워드를 사용함
+제너레이터 함수를 작성한 뒤에는 const generator = generatorFunction() 제너레이터 생성
+-제너 레이터 함수를 호출했을때 반환되는 객체를 제너레이터라고 부름
+ex code 제너레이터 함수 호출
+generator.next()
+// hello
+// {value: 1, done: false}
+generator.next()
+// hello02
+// {value: 2, done: false}
+generator.next()
+// hello03
+// {value: 3, done: false}
+generator.next()
+// {value: 4, done: true}
+generator.next()
+//{value: undefined, done: true}
+-제너레이터가 처음 만들어지면 함수의 흐름은 멈춰있는 상태이며 next() 가 호출되면 다음 yield 가 있는곳까지 호출하고 다시 함수가 멈춤
+-제너레이터 함수를 사용하면 함수를 도중에 멈출수도있으며 순차적으로 여러 값을 반환시킬수도있음 
+-next 함수에 파라미터를 넣어주면 제너레이터 함수에 yield 를사용해 해당 값을 조회할수있음
+ex code
+function* sumGenerator() {
+  console.log('sumGenerator 함수 생성')
+  let a = yield;
+  let b = yield;
+  yield a + b;
+}
+const sum = sumGenerator()
+sum.next()
+// sumGenerator 함수 생성
+// {value: undefined, done: false}
+sum.next(1)
+// {value: undefined, done: false}
+sum.next(2)
+// {value: 3, done: false}
+sum.next()
+// {value: undefined, done: true}
+
+-redux-saga 는 제너레이터 함수 문법을 기반으로 비동기 작업을 관리해줌
+-또한 디스패치하는 액션을 모니터링해서 그에따라 필요한 작업을 따로 수행할수있는 미들웨어임
+ex code
+function* watchGenerator() {
+  console.log('모니터링 중')
+  let prevAction = null;
+  while(true) {
+    const action = yield;
+    console.log('이전 액션', prevAction)
+    prevAction = action
+    if (action.type === 'HELLO') {
+      console.log('안녕하세요')
+    }
+  }
+}
+const watch = watchGenerator()
+watch.next()
+//모니터링중
+// {value: undefined, done: false}
+watch.next({type: 'TEST'})
+// 이전 액션: NULL
+// {value: undefined, done: false}
+watch.next({type: 'HELLO'})
+// 이전 액션: {type: 'TEST'}
+// 안녕하세요
+// {value: undefined, done: false}
+-리덕스 사가는 위 코드와 비슷한 원리로 작동하며 제너레이터함수의 작동방식만 기본적으로 파악하고있다면 redux-saga 에서 제공하는 여러 유용한 유틸함수를 사용해 액션을 쉽게 처리할수있음
+
+1. 비동기 함수 만들기
+modules/ 리덕스 모듈에서 액션 타입 선언 및 해당 액션에대한 액션 생성 함수 생성 및 제너레이터 함수 생성을하고 이 제너레이터 함수를 사가라고 함
+
+2. 루트 사가 생성 (modules/index.js)
+-추후 다른 리듀서에서도 사가를 만들어 등록할 것임
+ex code
+export function* rootSaga() {
+	// all 함수는 여러 사가를 합쳐주는 역할을 함
+	yield all([counterSaga()])
+}
+
+3. 스토어에 redux-saga middleware 적용
+ex code
+const sagaMiddleware = createSagaMiddleware();
+// 스토어에 thunk, saga, logger 미들웨어를 적용
+const store = createStore(
+  rootReducer,
+  applyMiddleware(logger, ReduxThunk, sagaMiddleware)
+);
+sagaMiddleware.run(rootSaga)
+
+4. App.js 에서 Container 렌더링
 --------------------------------------------------------
+redux-devtools-extension
+- 리덕스 개발자 도구를 적용해 액션 및 디스패치를 쉽게 확인할수있음
+- 이 라이브러리의 composeWithDevTools 함수를 리덕스 미들웨어와 함께 사용할땐 applyMiddleware 부분을 감싸주면됌
+ex code
+// 스토어에 thunk, saga, logger 미들웨어를 적용
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(logger, ReduxThunk, sagaMiddleware))
+);
 --------------------------------------------------------
+API 요청 상태 관리하기
+- 요청의 로딩중 상태, 결과, 에러 상태를 관리해야함
 --------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
