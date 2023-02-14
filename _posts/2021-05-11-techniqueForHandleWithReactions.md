@@ -2055,6 +2055,234 @@ ssr 과 코드 스플리팅 충돌
 --이런 이슈를 해결하려면 라우트 경로마다 코드 스플리팅된 파일중에서 필요한 모든 파일을 브라우저에서 렌더링하기전에 미리 불러와야함 
 -해결방법으로 Loadable Components 라이브러리에서 제공하는 기능을 써서 ssr 렌더링 후 필요한 파일의 경로를 추출해 렌더링 결과에 스크립트/스타일 태그를 삽입해주는 방법이있음
 --------------------------------------------------------
+서버 사이드 렌더링 구현하기
+
+-1- 서버 사이드 렌더링용 엔트리 만들기
+-엔트리는 웹팩에서 프로젝트를 불러 올때 가장 먼저 불러오는 파일임
+-ex 현재 작성중인 리액트 프로젝트에서 index.js 를 엔트리 파일로 사용함, 이 파일부터 시작해서 내부에 필요한 다른 컴포넌트와 모듈을 불러오고 있음
+-서버 사이드 렌더링을할땐 서버를 위한 엔트리 파일을 따로 생성해야함 ex src/index.server.js
+-서버에서 리액트 컴포넌트를 렌더링할땐 ReactDOMServer 의 renderToString 함수를 사용함 이 함수에 JSX 를 넣어서 호출하면 렌더링된 결과를 문자열로 반환함
+
+-2- 서버 사이드 렌더링 전용 웹팩 환경 설정 작성
+-2-01- 작성한 엔트리 파일을 웹팩으로 불러와서 빌드하려면 서버 전용 환경 설정을 만들어줘야함
+--먼저 CONFIG 경로의 PATHS.JS 파일을 열어 스크롤 맨 아래에 module.exports 부분에
+---ssrIndexJs: resolveApp(__dirname, '../src/index.server.js'), 를 추가함(서버 사이드 렌더링 엔트리)
+----ssrBuild: resolveApp('dist') 웹팩 처리 후 저장 경로
+-----ssrIndexJs 는 불러올 파일의 경로, ssrBuild 는 웹팩으로 처리한 뒤 결과물을 저장할 경로임
+-2-02- 웹팩 환경 설정 작성
+-config 디렉터리에 webpack.config.server.js 파일을 생성 후 아래 코드를 작성함
+const paths = require('./paths');
+module.exports = {
+	mode: 'production', // 프로덕션 모드로 설정하여 최적화 옵션들을 활성화
+	entry: paths.ssrIndexJs, // 엔트리 경로
+	target: 'node', // node 환경에서 실행될 것이라는 점을 명시
+	output: {
+		path: paths.ssrBuild, // 빌드 경로
+		filename: 'server.js', // 파일 이름
+		chunkFilename: 'js/[name].chunk.js', // 청크 파일 이름
+		publicPath: paths.publicUrlOrPath, // 정적 파일이 제공될 경로
+	}
+}
+
+-2-01-02 와 같이 웹팩 기본 설정을 작성해줌, 빌드할때 어떤파일에서 시작해서 파일을 불러오고 어디에 결과물을 저장할지 정해준것임
+
+-2-03- 로더 설정
+-웹팩의 로더는 파일을 불러올때 확장자에 맞게 필요한 처리를 해줌
+--ex js 는 babel 을 사용해 트랜스파일링을 해주고 css 는 모든 css 코드를 결합해주고 이미지파일은 파일을 다른 경로에 따로 저장하고 그 파일에대한 경로를 js 에서 참조할수있게해줌
+---ssr 을 할때 css or image file 은 중요하지않음, 완전히 무시할순 없지만 가끔 js 내부에서 파일에대한 경로가 필요하거나 css module 처럼 로컬 className 을 참조해야할 수있기때문임
+----그래서 해당 파일을 로더에서 별도로 설정해 처리하지만 따로 결과물에 포함되지 않도록 구현할 수 있음
+ex code src/webpack.config.server.js
+const paths = require('./paths');
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+
+const env = getClientEnviroment(paths.publicUrlOrPath.slice(0, -1))
+
+module.exports = {
+	mode: 'production', // 프로덕션 모드로 설정하여 최적화 옵션들을 활성화
+	entry: paths.ssrIndexJs, // 엔트리 경로
+	target: 'node', // node 환경에서 실행될 것이라는 점을 명시
+	output: {
+		path: paths.ssrBuild, // 빌드 경로
+		filename: 'server.js', // 파일 이름
+		chunkFilename: 'js/[name].chunk.js', // 청크 파일 이름
+		publicPath: paths.publicUrlOrPath, // 정적 파일이 제공될 경로
+	},
+	module: {
+		rules: [
+			{
+				oneOf: [
+						// 자바 스크립트를 위한 처리
+						// 기존 webpack.config.js를 참고하여 작성
+					{
+						test: /\.(js|mjs|jsx|ts|tsx)$/,
+						include: paths.appSrc,
+						loader: require.resolve('babel-loader'),
+						options: {
+							customize: require.resolve(
+									'babel-preset-react-app/webpack-overrides'
+							),
+							presets: [
+									[
+											require.resolve('babel-preset-react-app'),
+										{
+											runtime: 'automatic',
+										},
+									],
+							],
+							plugins: [
+									[
+											require.resolve('babel-plugin-named-asset-import'),
+										{
+											loaderMap: {
+												svg: {
+													ReactComponent:
+													'@svgr/webpack?-svgo,+titleProp,+ref![path]',
+												},
+											},
+										},
+									],
+							],
+							cacheDirectory: true,
+							cacheCompression: false,
+							compact: false,
+						},
+					},
+						// css 를 위한 처리
+					{
+						test: cssRegex,
+						exclude: cssModuleRegex,
+						// exportOnlyLocals: true 옵션을 설정해야 실제 css 파일을 생성하지 않음
+						loader: require.resolve('css-loader'),
+						options: {
+							importLoaders: 1,
+							modules: {
+								exportOnlyLocals: true,
+							},
+						},
+					},
+						// css module 을 위한 처리
+					{
+						test: cssModuleRegex,
+						loader: require.resolve('css-loader'),
+						options: {
+							importLoaders: 1,
+							modules: {
+								exportOnlyLocals: true,
+								getLocalIdent: getCSSModuleLocalIdent,
+							},
+						},
+					},
+						// sass 를 위한 처리
+					{
+						test: sassRegex,
+						exclude: sassModuleRegex,
+						use: [
+							{
+								loader: require.resolve('css-loader'),
+								options: {
+									importLoaders: 3,
+									modules: {
+										exportOnlyLocals: true,
+									},
+								},
+							},
+								require.resolve('sass-loader'),
+						],
+					},
+						// sass + css module 을 위한 처리
+					{
+						test: sassRegex,
+						exclude: sassModuleRegex,
+						use: [
+							{
+								loader: require.resolve('css-loader'),
+								options: {
+									importLoaders: 3,
+									modules: {
+										exportOnlyLocals: true,
+										getLocalIdent: getCSSModuleLocalIdent,
+									},
+								},
+							},
+								require.resolve('sass-loader'),
+						],
+					},
+						// url-loader 를 위한 설정
+					{
+						test: [/\.bmp$/, /\.git$/, /\.jpe?g$/, /\.png$/],
+						loader: require.resolve('url-loader'),
+						options: {
+							emitFile: false, // 파일을 따로 저장하지 않는 옵션
+							limit: 10000, // 원래는 9.76KB가 넘어가면 파일로 저장하는데 emitFile 값이 false 일땐 경로만 준비하고 파일은 저장하지 않음
+							name: 'static/media/[name].[hash:8].[ext]',
+						},
+					},
+						// 위에서 설정된 확장자를 제외한 파일들은 file-loader 를 사용함
+					{
+						loader: require.resolve('file-loader'),
+						exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+						options: {
+							emitFile: false, // 파일을 따로 저장하지 않는 옵션
+							name: 'static/media/[name].[hash:8].[ext]',
+						},
+					},
+				],
+			},
+		],
+	},
+	resolve: { // node_modules 내부의 라이브러리를 불러올 수있게 설정
+		modules: ['node_modules']
+	}
+};
+
+위와 같이 설정을 하면 react, react-dom/server 같은 라이브러리를 import 구문으로 불러오면 node_modules 에서 찾아 사용함, 라이브러리를 불러오면 빌드할때 결과물 파일안에 해당 라이브러리 관련 코드가 함께 번들링됨
+-브라우저에서 사용할때 결과물 파일에 리액트 라이브러리와 앱에 관한 코드가 공존해야하는데 서버에서 굳이 결과물 파일안에 리액트 라이브러리가 들어있지 않아도됨 node_modules 를 통해 바로 불러와서 사용할수있기때문임
+--서버를 위해 번들링할땐 node_modules 에서 불러오는것을 제외하고 번들링하는것이 좋음, 이를 위해 webpack-node-externals 라는 라이브러리를 사용함 
+yarn add webpack-node-externals
+
+--- 환경 변수를 주입하면 프로젝트 내에서 process.env.NODE_ENV 값을 참조해 현재 개발 환경인지 아닌지를 알 수 있음
+
+-3- 빌드 스크립트 작성
+-위에서 만든 환경 설정을 사용해 웹팩으로 프로젝트를 빌드하는 스크립트를 작성해야함
+-scripts 경로를 열면 build.js 파일이 있음, 이 스크립트는 클라이언트에서 사용할 빌드 파일을 만드는 작업을 함, 이 스크립트와 비슷한 형식으로 서버에서 사용할 빌드 파일을 만드는 build.server.js 스크립트 작성해야함
+ex code scripts/build.server.js
+process.env.BABEL_ENV = 'production';
+process.env.NODE_ENV = 'production';
+
+process.on('unhandleRejection', err => {
+	throw err;
+})
+
+require('../config/env');
+const fs = require('fs-extra');
+const webpack = require('webpack');
+const config = require('../config/webpack.config.server')
+const paths = require('../config/paths');
+
+function build() {
+	console.log('Creating server build...');
+	fs.emptyDirSync(paths.ssrBuild);
+	let compiler = webpack(config);
+	return new Promise((resolve, reject) => {
+		compiler.run((err, stats) => {
+			if (err) {
+				console.log(err)
+				return;
+			}
+			console.log(stats.toString())
+		})
+	})
+}
+
+build()
+
+위 코드를 다 작성뒤 다음 명령어를 실행해 빌드가 잘되는지 확인
+node scripts/build.server.js
 --------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
