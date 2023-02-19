@@ -113,4 +113,22 @@ LockedException = 계정이 잠겨있는경우
 DisabledException = 계정이 비어있는 경우 
 
 
+Warning: Can't perform a React state update on an unmounted component.
+This is a no-op, but it indicates a memory leak in your application.
+To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+(경고: 마운트 해제된 구성 요소에서 응답 상태 업데이트를 수행할 수 없습니다.
+이는 작동하지 않지만 응용 프로그램에서 메모리 누수가 발생했음을 참조하십시오.
+수정하려면 useEffect 정리 기능에서 모든 구독 및 비동기 작업을 취소하십시오.)
+해결: route 이동 후 이전 route 에서 값을 변경하는 경우에뜨는 메시지이며 finally 문을 router 이동 전으로 옮겨 해결함
+
+
+Actions must be plain objects. Use custom middleware for async actions
+(작업은 일반 개체여야 합니다. 비동기 작업에 사용자 지정 미들웨어 사용)
+해결: dispatch 잘못된 형식으로 실행하였기에 발생한 에러이며 disaptch 내부의 값이 함수인데 객체로 실행한 경우 뜨는 에러임
+ dispatch(thisIsFunction) -> dispatch(thisIsFunction()) 로 변경해 해결함
+
+
+You are using a whole package of antd-mobile, please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.
+(당신은 antd-mobile의 전체 패키지를 사용하고 있습니다. 앱 번들 크기를 줄이려면 https://www.npmjs.com/package/babel-plugin-import을 사용하십시오.)
+해결: 전체 번들 import 를 하지말고 필요한 컴포넌트만 사용해 해결
 ```

@@ -2283,6 +2283,42 @@ build()
 
 위 코드를 다 작성뒤 다음 명령어를 실행해 빌드가 잘되는지 확인
 node scripts/build.server.js
+
+
+-4- 서버 코드 작성
+-Express 라는 Node.js 웹 서버 프레임워크를 사용해 서버 코드를 작성함
+-Express 가 아녀도 Koa, Hapi, connect 라이브러리를 사용해 구현할수있음
+-Express 가 사용률이 가장 높으며 추후 정적 파일들을 호스팅할때도 쉽게 구현할수있기때문임
+yarn add express 로 express 라이브러리 설치 후 서버 코드 작성
+-리액트 라우터안에들어있는 StaticRouter 컴포넌트를 사용했으며 해당 라우터는 컴포넌트는 주로 ssr 렌더링 용도로 사용되는 라우터임
+--props 로 넣어주는 location 값에 따라 라우팅을 해주며 req.url 값을 넣어주었고 req 객체는 요청에대한 정보를 지니고있음
+---StaticRouter 에 context 라는 props 도 넣어주었고 이 값을 사용해 나중에 렌더링한 컴포넌트에따라 HTTP 상태 코드를 설정해줄수있음
+----초기 작성시 js file, css file 을 웹페이지에 불러오는것은 생략 후 리액트 srr 을 통해 만들어진 결과를 확인하도록 처리하고 서버 빌드 후 실행
+ex code 초기 서버 코드
+const app = express();
+
+// 서버 사이드 렌더링을 처리할 핸들러 함수
+const serverRender = (req, res, next) => {
+  // 이 함수는 404가 떠야하는 상황에 500을 띄워줍니다.
+  // 따라서 이 함수가 호출되었다는 것은 오류가 발생했다는 의미입니다.
+  res.status(500).send("오류 발생");
+  const context = {};
+
+  const jsx = (
+    <StaticRouter location={req.url} context={context}>
+      <App />
+    </StaticRouter>
+  );
+	const root = ReactDOMServer.renderToString(jsx); // 렌더링을 하고
+	res.send(root); // 클라이언트에게 결과물을 응답합니다.
+};
+
+app.use(serverRender)
+
+// 5000 포트로 서버 가동
+app.listen(5000, () => {
+	console.log("Running on http://localhost:5000")
+})
 --------------------------------------------------------
 --------------------------------------------------------
 --------------------------------------------------------
