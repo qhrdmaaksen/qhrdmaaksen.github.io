@@ -131,4 +131,25 @@ Actions must be plain objects. Use custom middleware for async actions
 You are using a whole package of antd-mobile, please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.
 (당신은 antd-mobile의 전체 패키지를 사용하고 있습니다. 앱 번들 크기를 줄이려면 https://www.npmjs.com/package/babel-plugin-import을 사용하십시오.)
 해결: 전체 번들 import 를 하지말고 필요한 컴포넌트만 사용해 해결
+
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+(이 저장소에서 다른 Git 프로세스가 실행되고 있는 것 같습니다.
+'git commit'로 개설된 편집자. 모든 프로세스를 확인하십시오
+종료된 후 다시 시도하십시오. 그래도 실패하면 Git 프로세스
+이전에 이 저장소에 충돌했을 수 있습니다:
+계속하려면 파일을 수동으로 제거하십시오.)
+해결: .git delete 후 다시 git init 으로 해결 
+
+
+
+
+
+
+
+
 ```
