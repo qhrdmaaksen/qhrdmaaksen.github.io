@@ -146,10 +146,17 @@ remove the file manually to continue.
 해결: .git delete 후 다시 git init 으로 해결 
 
 
+ts 작업중 exports is not defined
+해결: tsconfig 에서 module 을 ES2015 로 변경, index.html 에 script 의 type 을 module 로 작성해 해결함
 
 
+Cannot find module 'axios'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+(모듈 'axios'를 찾을 수 없습니다. 'moduleResolution' 옵션을 'node'로 설정하거나 'paths' 옵션에 별칭을 추가할 것을 의미합니까?)
+해결: tsconfig 에서 moduleResolution 을 node 로 변경해 해결함
 
 
-
+Cannot user import statement outside a module
+(모듈 외부에서 import 문을 사용할 수 없습니다.)
+해결: index.html 에 script 의 type 을 module 로 작성해 해결함
 
 ```
