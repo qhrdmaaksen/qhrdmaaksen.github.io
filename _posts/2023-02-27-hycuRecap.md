@@ -471,6 +471,30 @@ extensible markup language
 --- 웹 서비스는 xml 을 이용해 웹 서버와 클라이언트 간의 통신을 가능하게 함
 
 
+- XML 문서의 종류
+-- 첫 시작은 <?xml version="1.0" encoding="UTF-8"?> 시작함
+
+--EBNF (Extended Backus-Naur Form) : 문법을 표현하는 방법
+--- 기호 ::= 표현식 
+EX CODE
+Char a ~ z 까지 한 문자를 갖는 표현식
+Char ::= [a-z]
+EX CODE
+VersionNum 이 0~9 까지 한 문자를 갖는 표현식
+VersionNum ::= [0-9]
+EX CODE
+World 가 version 이라는 고정 문자열을 갖는 표현식
+World ::= version
+
+-- 표현식
+A? : A가 0번 또는 1번 나타남 (A가 있을 수도 있고 없을 수도 있음)
+A* : A가 0번 이상 나타남 (A가 0번 이상 나타남) 여러개가 와도 됨
+A+ : A가 1번 이상 나타남 (A가 1번 이상 나타남) 한개 이상이 와야함
+A|B : A 또는 B가 나타남 (A 또는 B가 나타남)
+
+
+-- DTD (Document Type Definition) : 문서의 구조를 정의하는 방법
+-- XML Schema : 문서의 구조를 정의하는 방법
 
 
 
