@@ -159,4 +159,12 @@ Cannot user import statement outside a module
 (모듈 외부에서 import 문을 사용할 수 없습니다.)
 해결: index.html 에 script 의 type 을 module 로 작성해 해결함
 
+
+Conversion of type 'string | undefined' to type 'number' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first
+(유형의 변환 '문자열 | 정의되지 않음'을 '숫자' 유형으로 지정하는 것은 실수일 수 있습니다. 어느 유형도 다른 유형과 충분히 겹치지 않기 때문입니다. 이것이 의도적이었다면 먼저 표현을 '알 수 없음'으로 변환하십시오.)
+원인 코드 : const PORT = (process.env.PORT as number) || 5000;
+해결: const PORT = (process.env.PORT as unknown as number) || 5000; 로 변경해 해결함
+
+
+
 ```
