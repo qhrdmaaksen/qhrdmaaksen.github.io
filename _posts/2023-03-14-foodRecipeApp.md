@@ -66,6 +66,12 @@ ex code
 
 -14- yarn add mongoose (mongoose는 mongoDB를 사용하기 위한 패키지)
 
+-15- src/models 폴더 생성 후 User.ts, Recipe.ts 생성 후 user,recipe 인터페이스 type 정의 후 스키마 작성
+-15-02- src/index.ts 에서 import { User, Recipe } from './models' 추가
+-15-03- src/models/index.ts 파일에  export { User, Recipe } 추가해 User, Recipe 내보내기 설정
+
+
+
 
 
 
