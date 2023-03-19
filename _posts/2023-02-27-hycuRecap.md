@@ -475,6 +475,7 @@ extensible markup language
 -- 첫 시작은 <?xml version="1.0" encoding="UTF-8"?> 시작함
 
 --EBNF (Extended Backus-Naur Form) : 문법을 표현하는 방법
+--- S 는 공백을 뜻함
 --- 기호 ::= 표현식 
 EX CODE
 Char a ~ z 까지 한 문자를 갖는 표현식
@@ -495,6 +496,104 @@ A|B : A 또는 B가 나타남 (A 또는 B가 나타남)
 
 -- DTD (Document Type Definition) : 문서의 구조를 정의하는 방법
 -- XML Schema : 문서의 구조를 정의하는 방법
+
+
+- XML 문서의 구조
+-- Document(문서) ::= Prolog(서두)Element(엘리먼트) Misc(기타)*
+--- 서두 1개 필수 , 엘리먼트 1개 필수, 기타 0개 or 여러개
+
+PORT=4000
+MONGODB_URI=mongodb+srv://foodie_doodie:7NDC6bfN1oViAvbd@foodiedoodie.w0xiwx7.mongodb.net/FoodieDoodie?retryWrites=true&w=majority
+
+
+- XML 선언 문법 : 현재 문서가 XML 문서임을 선언하는 문법
+-- 첫줄 : <?xml version="1.0" encoding="UTF-8"?>
+--- 주석을 첫줄에 넣어도 안됨, 공백을 넣어도 안됨
+--- version : 문서의 버전을 나타냄, 반드시 작성해야함
+--- encoding : 문서의 인코딩 방식을 나타냄, 디폴트 유니코드 인코딩 방식은 UTF-8
+--- standalone : 문서가 독립적으로 사용되는지를 나타냄, 디폴트 값은 no
+
+
+- 인코딩 및 유니코드
+-- 인코딩 : 문자를 컴퓨터가 이해할 수 있는 0과 1로 변환하는 과정
+
+- 한국 표준 문자 집합 (KSC5601) : 한글 2바이트, 영어 1바이트
+- EUC-KR 인코딩 : 한글 2바이트, 영어 1바이트
+= 둘의 차이 점: 백슬래시를 원화 기호로 부르는가의 차이
+
+- 유니코드 : 기존 언어의 인코딩 체계를 모두 포합할수있도록 고안된 거대한 문자 집합
+-- 유니코드의 특징
+--- 2바이트로 표현되는 문자 집합
+
+- XML 권고안
+-- 모든 xml 문서는 유니코드 인코딩 방식 UTF-8 인코딩 방식으로 저장할것을 기본으로함
+
+
+- 엘리먼트 작성 문법
+-- 엘리먼트 : 문서의 구성요소를 나타내는 태그
+-- 엘리먼트 특징
+--- 엘리먼트는 시작 태그와 종료 태그로 구성됨
+--- 시작 태그와 종료 태그는 반드시 같은 이름을 가져야함
+--- 부가적인 정보를 나타내는 속성을 가질 수 있다
+--- 시작 태그와 종료 태그 사이에는 내용이 들어갈 수 있다
+
+
+- 잘못된 태그의 예
+-- 첫 글자는 숫자로 이용할수없음
+-- 공백을 이용할수없음
+-- _ , - , . , : 이외의 특수 문자는 사용할수없음
+
+
+XML 1.0 권고안의 마크업
+- xml 선언 : <?xml version="1.0" encoding="UTF-8"?>
+- 문서 유형 선언 : <!DOCTYPE booklist SYSTEM "bml.dtd"?>
+- 주석 : <!-- 주석 내용 -->
+- 시작 태그 및 종료 태그 : <booklist> </booklist>
+- 빈 엘리먼트 태그 : <image src=""/>
+- 엔티티 참조 : DTD 에 정의되어있는 엔티티 참조
+- 문자 참조 : 유니코드 문자 참조
+- CDATA 섹션 : <![CDATA[ 문자 데이터 ]]> // Character data
+- 프로세싱 지시자 : <?xml-stylesheet type="text/xsl" href="bml.xsl"?>
+- 최상위 공백 문자열 : XML 문서 구성요소 중 루트 엘리먼트 외부에있는 공백 문자열
+- text 선언 : <?xml version="1.0" encoding="UTF-8"?>
+
+- 문자 데이터 내에는 & 문자와 < 문자를 사용할 수 없음
+
+
+엔티티 참조
+- 자주 쓰이는 내용을 엔티티로 정의함
+- xml 문서에서 엔티티로 정의된 내용과 동일한 내용이 작성되어야할 부분에 엔티티 참조를 사용함
+ex code DTD 문서에서 엔티티 정의
+<!ENTITY KR "대한민국">
+
+문자 참조 : 문자 집합 코드표상에 언급되어있는 코드값을 직접 사용해 문자를 나타낸것
+
+PCDATA (Parsed Character Data) : 문자 데이터를 의미함
+- 대부분의 문자 데이터
+- xml 파서가 해석하는 데이터
+
+CDATA (Character Data) : 섹션 내에 정의된 문자 데이터
+- xml 파서가 해석하지 않는 데이터
+- 문법: <![CDATA[ 문자 데이터 ]]>
+
+
+프로세싱 지시자
+ex code 스타일시트
+<?xml-stylesheet type="text/xsl" href="bml.xsl"?>
+
+ex code nameprocessor 에 select * from emp 명령 전달
+<?nameprocessor SELECT * FROM emp>
+
+ex code myapp1에 parm1="v" parm2="v2" 명령전달
+<?myapp1 parm1="v" parm2="v2"?>
+
+
+타깃 
+- 타깃 : 프로세싱 지시자를 처리하는 프로그램
+- 태그 이름 작성 규칙과 동일
+- 프로세싱 지시자를 처리하는 응용프로그램을 식별하는 역할을 함
+- 지시자는 해당 응용프로그램이 어떻게 문서를 처리하는지에대한 내용
+
 
 
 
@@ -836,11 +935,55 @@ WBI (Web Based Instruction) : 웹의 등장과 함께 부각된 새로운 교수
 -- 안드로이드 앱 개발
 
 
+안드로이드 프로젝트 생성
+- create android project
+- application name : 프로젝트 이름
+- company domain : 회사 도메인
+- project location : 프로젝트 위치
+- project format : 프로젝트 형식
+- minimum sdk : 최소 sdk 버전
+- target sdk : 타겟 sdk 버전
+- use gradle : gradle 사용 여부
+- use kotlin : kotlin 사용 여부
+- create activity : 액티비티 생성 여부
+- activity name : 액티비티 이름
+- layout name : 레이아웃 이름
+- activity type : 액티비티 타입
+- activity template : 액티비티 템플릿
+- create activity : 액티비티 생성 여부
 
 
+화면 디자인 편집
+- activity_main.xml 에서 android.support.constraint.ConstraintLayout 을 RelativeLayout(상대적인 위치에 배치) 으로 변경 
 
 
+AVD 에서 앱 아이콘 출력
+-1- JAVA -> mainActivity 에서 supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setIcon(R.mipmap.ic_launcher) 두줄 추가
+-2- manifests 의 AndroidManifest.xml 에 android:theme="@style/Theme.AppCompat.Light.DarkActionBar" 로 수정 후 실행하면 앱 아이콘이 출력됨
 
+
+AVD 명칭
+- 상태 바 : 안드로이드 스마트폰의 상태를 나타내는 바
+- 타이틀 바 : 앱의 이름을 나타내는 바
+- 네비게이션 바 : 앱의 메뉴를 나타내는 바
+- 툴바 : 앱의 기능을 나타내는 바
+
+
+디자인 속성
+<Button
+        android:layout_height="wrap_content" // 크기를 내용에 맞추기
+        android:layout_width="match_parent" // 가로로 꽉 채우기
+        android:id="@+id/button1" // 버튼의 id button1
+        android:text="@+string/strBtn1" // 텍스트는 문자열 
+        >
+        
+    </Button>
+
+
+R 클래스 : 레이아웃 파일에서 사용되는 리소스를 참조하기 위한 클래스
+
+res 폴더 : app 의 리소스를 저장하는 폴더
 
 
 
