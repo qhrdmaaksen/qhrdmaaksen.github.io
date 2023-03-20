@@ -70,6 +70,19 @@ ex code
 -15-02- src/index.ts 에서 import { User, Recipe } from './models' 추가
 -15-03- src/models/index.ts 파일에  export { User, Recipe } 추가해 User, Recipe 내보내기 설정
 
+-16- routes 폴더 생성 후 auth.ts, recipe.ts 생성 후 라우터 작성해서 내보내고 routes 폴더내에 index.ts 에서 모든 라우터를 import 해서 내보냄
+-16-02- src/index.ts 에서 import authRouter, recipeRouter from './routes' 추가
+-16-03- src/index.ts 에서 app.use() 로 /auth, /recipe 경로 추가
+
+-17- src/controllers 폴더 생성 후 auth.ts, recipe.ts 생성 후 컨트롤러 작성해서 내보내고 controllers 폴더내에 index.ts 에서 모든 컨트롤러를 import 해서 내보냄
+-17-02- src/routes 폴더내에 auth.ts 에 import {registerOrLogin} from '../controllers' 추가해 , controllers 에서 내보낸 별칭 registerOrLogin 을 url 경로 localhost:4000/auth/join 입력 시 registerOrLogin 에서 보낸 함수 실행결과 리턴 값 출력 확인 완료(postman 으로 확인)
+
+-18- yarn add yup (yup은 데이터 유효성 검사를 위한 패키지)
+-18-02- yarn add -D @types/yup (yup의 타입스크립트 타입을 사용하기 위한 패키지)
+
+
+
+
 
 
 
