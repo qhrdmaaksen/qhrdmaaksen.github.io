@@ -80,6 +80,15 @@ ex code
 -18- yarn add yup (yup은 데이터 유효성 검사를 위한 패키지)
 -18-02- yarn add -D @types/yup (yup의 타입스크립트 타입을 사용하기 위한 패키지)
 
+-19- src/schema-validations 폴더 생성 후 index.ts 에 다운로드 받은 yup 활용해 레시피 등록 시 필요한 데이터 유효성 검사 스키마 작성 후 내보내기(레시피 등록 유효성 검사 스키마, 단일 레시피 조회 유효성 검사 스키마, 레시피 검색 유효성 검사 스키마, 사용자 레시피 조회 유효성 검사 스키마)
+
+-20- 비밀번호 암호화를 위해 yarn add bcrypt (bcrypt는 비밀번호 암호화를 위한 패키지), yarn add -D @types/bcrypt (bcrypt의 타입스크립트 타입을 사용하기 위한 패키지)
+-20-02- 데이터 베이스에 등록된 유저 비번과 클라이언트에게 전달받은 비번이 일치 하지 않을 경우 에러 메세지 출력 (비밀번호 암호화를 위해 bcrypt.compare() 사용)
+
+-21- yarn add jsonwebtoken (jsonwebtoken은 토큰을 생성하고 검증하는 패키지)
+-21-02- yarn add passport(passport는 인증을 위한 패키지), yarn add -D @types/passport (passport의 타입스크립트 타입을 사용하기 위한 패키지)
+-21-03- yarn add passport-jwt (passport-jwt는 jwt를 사용한 인증을 위한 패키지), yarn add -D @types/passport-jwt (passport-jwt의 타입스크립트 타입을 사용하기 위한 패키지)
+
 
 
 
