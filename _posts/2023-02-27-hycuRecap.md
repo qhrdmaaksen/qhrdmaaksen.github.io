@@ -1916,6 +1916,82 @@ res 폴더 : app 의 리소스를 저장하는 폴더
 - 구문이 간결함
 
 
+뷰 클래스
+- 안드로이드 화면에서 실제로 사용되는 것들은 모두 뷰 클래스 상속을 받음
+- 뷰 클래스는 다른 말로 위젯이라고 함 
+- 다른 위젯을 담을 수 있는 위젯은 레이아웃이라고 함 
+- 레이아웃은 ViewGroup 클래스 아래에 존재함
+
+
+속성들 
+wrap_content : 뷰의 크기를 내용에 맞추기
+
+LinearLayout : 순서 있는 뷰를 배치하는 레이아웃
+
+match_parent : 뷰의 크기를 부모 뷰에 맞추기
+
+rotation : 뷰를 회전시키는 속성
+
+orientation : 뷰를 수평 또는 수직으로 배치하는 속성
+ex ) android:orientation="horizontal", android:orientation="vertical"
+
+
+
+텍스트 뷰
+- text 속성 : 텍스트를 지정하는 속성
+- textSize 속성 : 텍스트 크기를 지정하는 속성
+- textColor 속성 : 텍스트 색상을 지정하는 속성
+- gravity 속성 : 텍스트의 위치를 지정하는 속성
+- typeface 속성 : 텍스트의 폰트를 지정하는 속성
+- textStyle 속성 : 텍스트의 스타일을 지정하는 속성
+- textAllCaps 속성 : 텍스트를 대문자로 지정하는 속성
+- singleLine 속성 : 텍스트가 뷰의 크기를 넘어갈 때 생략하는 속성
+
+XML 속성과 관련 메소드
+- setText() : 텍스트를 지정하는 메소드
+- setTextSize() : 텍스트 크기를 지정하는 메소드
+- setTextColor() : 텍스트 색상을 지정하는 메소드
+- setGravity() : 텍스트의 위치를 지정하는 메소드
+- setTypeface() : 텍스트의 폰트를 지정하는 메소드
+- setTextStyle() : 텍스트의 스타일을 지정하는 메소드
+- setAllCaps() : 텍스트를 대문자로 지정하는 메소드
+- setSingleLine() : 텍스트가 뷰의 크기를 넘어갈 때 생략하는 메소드
+- setId() : 뷰의 id를 지정하는 메소드
+- setRotation() : 뷰를 회전시키는 메소드
+- setRawInputType() : 키보드의 입력 타입을 지정하는 메소드
+- setImeOptions() : 키보드의 옵션을 지정하는 메소드
+- setHint() : 힌트를 지정하는 메소드
+- setHintTextColor() : 힌트의 색상을 지정하는 메소드
+- setEnabled() : 뷰의 활성화 여부를 지정하는 메소드
+- setVisibility() : 뷰의 보임 여부를 지정하는 메소드
+- setOnClickListener() : 뷰를 클릭했을 때 이벤트를 지정하는 메소드
+- setOnLongClickListener() : 뷰를 길게 클릭했을 때 이벤트를 지정하는 메소드
+- setOnFocusChangeListener() : 뷰의 포커스 여부를 지정하는 메소드
+- setOnKeyListener() : 뷰에서 키를 눌렀을 때 이벤트를 지정하는 메소드
+- setOnTouchListener() : 뷰를 터치했을 때 이벤트를 지정하는 메소드
+- setOnDragListener() : 뷰를 드래그했을 때 이벤트를 지정하는 메소드
+- setOnCreateContextMenuListener() : 뷰를 롱클릭했을 때 컨텍스트 메뉴를 지정하는 메소드
+- setOnFocusChangeListener() : 뷰의 포커스 여부를 지정하는 메소드
+- setOnKeyListener() : 뷰에서 키를 눌렀을 때 이벤트를 지정하는 메소드
+- setOnTouchListener() : 뷰를 터치했을 때 이벤트를 지정하는 메소드
+- setOnDragListener() : 뷰를 드래그했을 때 이벤트를 지정하는 메소드
+- setOnCreateContextMenuListener() : 뷰를 롱클릭했을 때 컨텍스트 메뉴를 지정하는 메소드
+- setScaleX() : 뷰의 x축 크기를 지정하는 메소드
+- setScaleY() : 뷰의 y축 크기를 지정하는 메소드
+- setAlpha() : 뷰의 투명도를 지정하는 메소드
+- setPadding() : 뷰의 여백을 지정하는 메소드
+- setPaddingRelative() : 뷰의 여백을 지정하는 메소드
+
+
+
+
+
+
+
+
+
+
+
 
 
 
