@@ -96,6 +96,12 @@ ex code
 -22-03- yarn add cloudinary (cloudinary는 이미지 업로드를 위한 패키지)
 -yarn add -D @types/cloudinary (cloudinary의 타입스크립트 타입을 사용하기 위한 패키지)
 
+----------------------------------------------------------------
+frontend
+-23- yarn create vite ./ (vite는 리액트 프로젝트를 위한 번들러)
+-24- yarn add -D tailwindcss postcss autoprefixer (tailwindcss는 css 프레임워크, postcss는 css 전처리기, autoprefixer는 css 벤더프리픽스 자동으로 붙여주는 패키지)
+-25- yarn add react-router-dom (react-router-dom은 리액트 라우터 패키지)
+-25-02- yarn add -D @types/react-router-dom (react-router-dom의 타입스크립트 타입을 사용하기 위한 패키지)
 
 
 - 공부하며 알게된 내용들
