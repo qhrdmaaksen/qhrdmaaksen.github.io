@@ -103,7 +103,8 @@ frontend
 -25- yarn add react-router-dom (react-router-dom은 리액트 라우터 패키지)
 -25-02- yarn add -D @types/react-router-dom (react-router-dom의 타입스크립트 타입을 사용하기 위한 패키지)
 -26- yarn add axios (axios는 http 통신을 위한 패키지)
--27- yarn add c
+-27- yarn add cogo-toast (cogo-toast는 토스트 패키지)
+-28- yarn add prop-types (prop-types는 props의 타입을 검사하는 패키지)
 
 
 - 공부하며 알게된 내용들
@@ -145,9 +146,27 @@ p가 안붙은 계열 : 경로를 지정해주면 ,현재/절대경로를 기준
 p가 붙은 계열(path) : path에 잡혀있으면 실행됩니다.(실행파일의 이름만 지정)
 
 
-
 exec계열은 첫번째 인자의 코드가 들어오고 나머지 기존에 exec아래에서 실행해야할 코드는 전부 잃어버리게 된다는 점을 가지고 있다고 보시면 됩니다.
 자료 출처 (https://jwprogramming.tistory.com/55)
+
+----------------------------------------------------------------
+
+Preflight 란?
+CORS 관련하여 검색을 하다 보면 preflight라는 단어를 자주 보게 된다.
+
+preflight는 우리말로 하면 말 그대로 미리 보내는 것 , 사전 전달이라고 할 수 있는데 이 뜻을 잘 생각해보면 어떤 역할을 하는 것인지 이해가 쉬울 것 같다.
+
+기본적으로 브라우저는 cross-origin 요청을 전송하기 전에 OPTIONS 메소드로 preflight를 전송한다.
+
+이때 Response로 Access-Control-Allow-Origin과 Access-Control-Allow-Methods가 넘어오는데 이는 서버에서 어떤 origin과 어떤 method를 허용하는지 브라우저에게 알려주는 역할을 한다.
+
+브라우저가 결과를 성공적으로 확인하고 나면 cross-origin 요청을 보내서 그 이후 과정을 진행한다.
+
+아래 소스코드는 chromium 에서 preflight 요청을 생성하는 부분만 따로 가져온 것으로 중간쯤 보면 OPTIONS 메소드를 비롯해 preflight 관련 헤더를 넣는 것을 확인할 수 있다.
+
+소스코드 전체 과정을 이해할 필요까진 없고 이렇게 브라우저에서 preflight 요청을 생성한다 라는 것만 참고하고 넘어가면 될 것 같다.
+
+자료 출처 https://hwanchang.tistory.com/3
 
 ================================================================
 
