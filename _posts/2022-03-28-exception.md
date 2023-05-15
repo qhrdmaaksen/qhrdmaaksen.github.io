@@ -166,5 +166,18 @@ Conversion of type 'string | undefined' to type 'number' may be a mistake becaus
 해결: const PORT = (process.env.PORT as unknown as number) || 5000; 로 변경해 해결함
 
 
+is not assignable to type 'IntrinsicAttributes'
+(타입 'IntrinsicAttributes'에 할당할 수 없습니다.)
+해결: 타입스크립트에서는 타입을 명시해야하는데 명시하지 않아 발생한 에러이며 타입을 명시해 해결함
+
+
+Property 'info' does not exist on type 'IntrinsicAttributes'
+(속성 'info'는 'IntrinsicAttributes'에 존재하지 않습니다.)
+해결: 타입스크립트에서는 info 에 대한 속성 타입을 명시해야하는데 명시하지 않아 발생한 에러이며 타입을 명시해 해결함
+
+
+
+
+
 
 ```
