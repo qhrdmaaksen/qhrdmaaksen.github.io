@@ -35,13 +35,13 @@ title: "깃 기초 사용법을 알아두자!!"
     개발 툴이 따로있다면 내가 사용해본 툴이라면 터미널 옵션에서 열어주기
   </dt>
   <dd>
-    
+
   </dd>
   <dt>
     git init
   </dt>
   <dd>
-    git initialize ( 깃 초기화 해주기)  
+    git initialize ( 깃 초기화 해주기)
   </dd>
   <dt>
     git remote add origin git@github.com:company/projectname.git
@@ -62,7 +62,7 @@ title: "깃 기초 사용법을 알아두자!!"
   먼저 깃 저장소에서 pull 받아준다 그렇지않으면 충돌일어남
   </dd>
   <dt>
-    git add . 
+    git add .
   </dt>
   <dd>
     git add 추가된 내용 추가해주기!
@@ -79,7 +79,7 @@ title: "깃 기초 사용법을 알아두자!!"
   <dd>
   </dd>
     <dt>
-    git push origin master 
+    git push origin master
   </dt>
   <dd>
     commit 된 내용을 깃 저장소에 push 하기
@@ -111,13 +111,13 @@ title: "깃 기초 사용법을 알아두자!!"
     cmd 에서 git clone git@github.com:company/projectname.git newFolder
   </dd>
   <dt>
-    newFolder에 깃 복제 
+    newFolder에 깃 복제
   </dt>
   <dd>
     cmd에서 프로젝트가 들어갈 상위폴더지정해준 상태라면 cd newFolder 까지 이동
   </dd>
   <dt>
-    cmd 에서 code .  
+    cmd 에서 code .
   </dt>
   <dd>
     코드가 내 tool 에 이동 확인
@@ -139,9 +139,9 @@ title: "깃 기초 사용법을 알아두자!!"
     git push origin newEmployee
   </dt>
   <dd>
-    gitHub 회사 newEmployee 브랜치에 작업물 push 
+    gitHub 회사 newEmployee 브랜치에 작업물 push
     compare & pull request 눌러서 간단한 코멘트 남기고 create pull request
-    위에 code issues pull request(1)  pull request에 요청떠있나 한번확인 
+    위에 code issues pull request(1)  pull request에 요청떠있나 한번확인
   </dd>
   <dt>
     git pull origin master
@@ -170,7 +170,7 @@ git pull origin ex:master --allow-unrelated-histories
   </dd>
   ----------------------------------------
   <dt>
-    git commit 이력 보기 
+    git commit 이력 보기
   </dt>
   <dd>
   git reflog
@@ -205,10 +205,10 @@ git pull origin ex:master --allow-unrelated-histories
     git branch --set-upstream-to=origin/master master
   </dd>
   <dt>
-    git pull 을 할때 만약 Aborting 이 뜬다면 
-  </dt>git 
+    git pull 을 할때 만약 Aborting 이 뜬다면
+  </dt>git
   <dd>
-  git reset --hard 후 다시 git pull 
+  git reset --hard 후 다시 git pull
   </dd>
   <dt>
     git remote 삭제
@@ -218,23 +218,23 @@ git pull origin ex:master --allow-unrelated-histories
     git remote remove master
   </dd>
   <dt>
-    git remote 변경  
+    git remote 변경
   </dt>
   <dd>
     git remote rename (저장소) (변경할 저장소)
   </dd>
   <dt>
     --error- message
-    fatal: Unable to create 'repository/.git/index.lock': File exists. 
+    fatal: Unable to create 'repository/.git/index.lock': File exists.
 Another git process seems to be running in this repository, e.g.an editor opened by 'git commit'.
   </dt>
   <dd>
     ide 가 아닌 terminal 에서 폴더 경로 설정 뒤 rm -f ./.git/index.lock 입력 해주고 commit , push 작업 해주면 해결됨
   </dd>
   <dt>
-    error rejected failed to push some refs to 
+    error rejected failed to push some refs to
   </dt>
-  <dd> 
+  <dd>
     깃허브에 현재 내 local 에 없는 파일이 존재하며 내 local 에서 푸쉬할때 나타남 (업데이트 해주면됨)
       git pull origin (ex:master) 후에 git push origin (ex:master) 로 해결
   </dd>
@@ -283,16 +283,29 @@ git commit --amend 를 사용하고 커밋을 수정할 수 있는 창이 뜨면
     (최대한 사용자제, 팀원이 PUSH 된 커밋 LOG 를 가지고있으면 수정해야함)
   </dd>
   <dt>
-    
+    2. commit 삭제
+가장 최근의 커밋 기록을 제거
   </dt>
   <dd>
-
+  git reset HEAD^
   </dd>
   <dt>
-    
+    특정 개수만큼의 커밋 기록을 제거
+
+  # 가장 최근의 커밋 기록을 1개 제거 (위와 동일)
+  git reset --hard HEAD~1
+  # 가장 최근의 커밋 기록을 2개 제거
+  git reset --hard HEAD~2
+특정 커밋으로 복구 (특정 커밋 이후를 모두 제거)
+
+  git reset --hard <commit id>
+
   </dt>
   <dd>
-
+3. 원격지 commit 갱신
+git push -f origin <branch name>
+변경된 내용을 원격 브랜치에 적용할 때는,
+충돌이 발생할 수 있으니 -f 를 사용하여 강제로 업데이트해야합니다.
   </dd>
 </dl>
 

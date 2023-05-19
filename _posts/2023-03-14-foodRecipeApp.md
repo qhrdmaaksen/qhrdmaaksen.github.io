@@ -170,10 +170,52 @@ preflight는 우리말로 하면 말 그대로 미리 보내는 것 , 사전 전
 
 ================================================================
 
+useEffect와 useLayoutEffect의 차이
+
+예전에 데이터에 따라 DOM 조작이 필요했었는데, 이때 화면의 깜빡임을 없애기 위해 useEffect 대신 useLayoutEffect를 사용했었다.
+
+그러나 정확히 이 둘의 차이가 무엇인지 생각해보면, 대답할 수 없었다.
+
+useEffect
+React의 render phase에 따르면, 변형(mutations), 구독(subscriptions), 타이머, 로깅 등의 사이드 이펙트들이 컴포넌트 함수 내부에 있어서는 안된다. (추후 다른 글로 작성할 예정)
+
+이를 해결하기 위해 useEffect를 사용하는데, useEffect는 화면 렌더링이 완료된 후 혹은 어떤 값이 변경되었을 때 사이드 이펙트를 수행한다.
+
+실행 시점
+useEffect로 전달된 함수는 layout과 paint가 완료된 후에 비동기적으로 실행된다.
+
+이때 만약 DOM에 영향을 주는 코드가 있을 경우, 사용자는 화면의 깜빡임과 동시에 화면 내용이 달라지는 것을 볼 수 있다. 중요한 정보일 경우, 화면이 다 렌더되기 전에 동기화해주는 것이 좋은데, 이를 위해 useLayoutEffect라는 훅이 나왔으며, 기능은 동일하되 실행 시점만 다르다.
+
+React 18부터는 useEffect에서도 layout과 paint 전에 동기적으로 함수를 실행할 수 있는 flushSync라는 함수가 추가되었다. 하지만 강제로 실행하는 것이다보니, 성능상 이슈가 있을 수 있다.
+
+useLayoutEffect
+useLayoutEffect는 useEffect와 동일하지만, 렌더링 후 layout과 paint 전에 동기적으로 실행된다.
+
+때문에 설령 DOM을 조작하는 코드가 존재하더라도, 사용자는 깜빡임을 보지 않는다.
+
+예제
+간단하게 DOM을 조작하는 코드를 만들었다.
 
 
+버튼 클릭 시, 버튼의 bottom을 가져와 텍스트가 위치할 top을 계산하여 화면에 보여주는 것으로, useEffct로 하느냐 useLayoutEffect로 하느냐의 차이만 존재한다.
+
+그런데 너무 빨라서 두 개의 차이를 잘 보지 못할 수 있는데, 클릭한 것을 0.25배속하여 만들어보았다.
+
+예시
+0.25배속이기 때문에 인내심을 요한다
+
+사실 0.25배속으로 해도 두 개의 차이가 크게 나타나지 않는다. 찰나의 순간 깜빡임이 있느냐 없느냐의 차이다.
+
+따라서 스크롤 위치를 찾거나 어떤 element의 스타일 요소를 변경하는 등 직접적으로 DOM을 조작하는 곳 제외하고는 useEffect를 사용하는 것을 추천한다. 공식 문서에서도 useEffect를 먼저 사용한 후에, 문제가 생긴다면 그때 useLayoutEffect를 사용하는 것을 추천하고 있다.
+
+서버 렌더링에서 useLayoutEffect 사용하기
+Next.js와 같은 서버 렌더링을 사용하는 경우, 자바스크립트가 모두 다운로드 될 때까지 useEffect와 useLayoutEffect 그 어느 것도 실행되지 않는다. 따라서 서버에서 렌더링되는 컴포넌트에서 useLayoutEffect를 사용하는 경우, React에서 경고를 띄운다.
+
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See <https://fb.me/react-uselayouteffect-ssr> for common fixes.
+useLayoutEffect는 페인트 전에 실행되기 때문에 서버에서 렌더되는 화면과 클라이언트에서 렌더되는 화면이 다를 수 있다. 따라서 useLayoutEffect는 오직 클라이언트 사이드에서만 실행되어야 한다는 경고 메세지다.
 
 
+출처 : https://www.howdy-mj.me/react/useEffect-and-useLayoutEffect
 
 
 ```
