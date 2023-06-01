@@ -105,6 +105,8 @@ frontend
 -26- yarn add axios (axios는 http 통신을 위한 패키지)
 -27- yarn add cogo-toast (cogo-toast는 토스트 패키지)
 -28- yarn add prop-types (prop-types는 props의 타입을 검사하는 패키지)
+-29- yarn add react-icons (react-icons는 아이콘 패키지)
+-30- yarn add swr (swr은 데이터를 캐싱하고 관리하는 패키지)
 
 
 - 공부하며 알게된 내용들
@@ -216,6 +218,28 @@ useLayoutEffect는 페인트 전에 실행되기 때문에 서버에서 렌더�
 
 
 출처 : https://www.howdy-mj.me/react/useEffect-and-useLayoutEffect
+
+================================================================
+
+(string) 과 ToString() 과 as string 의 차이
+object obj = "Hello";
+object obj1 = 1;
+string str1 = (string)obj // result : "Hello"
+string str2 = obj.ToString(); // result : "Hello"
+string str3 = obj as string; // result : "Hello"
+string str4 = obj1 as string; // result : null
+
+- (string) : 강제 형변환, object 값이 string 형식이어야만 함, string 형식이 아닌 경우 System.InvalidCastException 예외 발생
+- ToString() : ToString() method 를 호출하면 obj 의 문자열 표현을 가져오게 됨, obj 가 null 인 경우 System.NullReferenceException 예외 발생
+- as string : obj 가 string 형식이면 string 으로 형변환, obj 가 string 형식이 아니라면 null 반환
+
+
+================================================================
+
+Suspense 는 아직 렌더링이 준비되지 않은 컴포넌트가 있을때 로딩 화면을 보여주고 로딩이 완료되면 해당 컴포넌트를 보여주는 React에 내장되어 있는 기능
+
+================================================================
+
 
 
 ```
