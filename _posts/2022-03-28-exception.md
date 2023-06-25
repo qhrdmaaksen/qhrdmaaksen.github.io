@@ -299,5 +299,15 @@ Range요청의 헤더 필드 에 지정된 범위를 충족할 수 없습니다.
 클라이언트가 네트워크 액세스 권한을 얻기 위해 인증해야 함을 나타냅니다.
 
 
+Cannot read properties of null (reading 'edgesOut')
+해결: 
+1. node_modules 폴더 삭제
+2. npm cache clean --force
+3. npm install
+4. npm 으로 하려고 했던 작업하면됨
+
+
+
+
 
 ```
