@@ -308,6 +308,10 @@ Cannot read properties of null (reading 'edgesOut')
 
 
 
+An unexpected error occurred: "EPERM: operation not permitted, unlink
+(예기치 않은 오류가 발생했습니다. "EPERM: 작업이 허용되지 않음, unlink)
+해결: 개발 서버 작동중에서 npm install을 하면 발생하는 오류
+
 
 
 ```
