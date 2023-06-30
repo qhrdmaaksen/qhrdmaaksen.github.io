@@ -313,5 +313,14 @@ An unexpected error occurred: "EPERM: operation not permitted, unlink
 해결: 개발 서버 작동중에서 npm install을 하면 발생하는 오류
 
 
+Conversion error: Jekyll::Converters::Scss encountered an error while converting 'assets/css/style.scss':
+                    No such file or directory @ dir_chdir - /github/workspace/docs
+(변환 오류: Jekyll::Converters::Scss가 'assets/css/style.scss'를 변환하는 동안 오류가 발생했습니다:
+                    No such file or directory @ dir_chdir - /github/workspace/docs)
+github 페이지에 빌드시 발생했던 오류
+해결: docs 로 폴더명 변경 후 깃 커밋 및 푸쉬 후 내 저장소에 docs 폴더 올려놓고 save 해서 해결함
+- docs 폴더 명을 지정 했지만 내가 로컬에서만 docs 폴더를 만들고 깃허브에 올리지 않아서 발생한 오류였음
+
+
 
 ```

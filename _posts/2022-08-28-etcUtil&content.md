@@ -304,6 +304,24 @@ storybook 스토리북
 디자인 시스템을 고민하고있을때 storybook github 들어가서 코드를 참고할 수 있음
 
 mdx 타이포 그래피를 사용하면 스토리북에서 mdx 문법을 사용할 수 있음
+
+
+1. 라이브러리로 사용될 저장소 만들기
+2. npm 환경 초기화 (npm init -y)
+3. 스토리북 설치 (vite, react)
+4. styled-components 설치
+5. 불필요한 스토리북 파일 제거
+6. 스토리북 디렉터리 경로 수정 후 config 반영
+7. 번들러 설치 (rollup)
+8. 진입점 파일 생성 src/index.js
+9. esbuild 설치
+10. peerDependencies 설치 및 설정
+11. ESM, CJS output 설정 변경
+12. npm login & npm 패키지명 중복 확인
+13. npm publish
+-----------------
+14. 사용할 라이브러리에서 배포한 npm package 설치
+15. github pages <= StoryBook 배포
 ================================================================
 github code 에서 . 만 눌러도 웹 vs code 에디터가 열림
 ================================================================
