@@ -33,12 +33,23 @@ position
 - fixed 는 스크롤을 내려도 항상 화면에 고정되어 있다 (뷰포트 기준으로 배치)
 - sticky 는 스크롤 영역 기준으로 배치 (fixed 처럼 동작하지만 스크롤 영역 기준으로 배치)
 
+z-index
+- z-index 는 형제 요소들끼리만 비교한다
+
+display: none; 은 스크린 리더기에 읽히지 않는다
 
 
+border-box 는 width, height 를 포함한다
+- content-box 는 width, height 를 포함하지 않는다
+- box-sizing: border-box; 를 사용하면 width, height 를 포함한다
 
 
+css 는 위에서 아래로 읽는다
+- 같은 요소에 같은 속성이 있을 경우 아래에 있는 속성이 적용된다
 
 
+svg
+- svg 는 이미지를 확대해도 깨지지 않는다
 
 
 
