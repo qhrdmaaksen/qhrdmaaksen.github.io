@@ -53,7 +53,14 @@ svg
 
 
 
+밑바닥이 일치 하는 경우 
+- vertical-align
 
+
+100% 를 차지하지 않고 싶은 경우 
+- inline-flex 를 사용한다 (inline-block)
+100% 를 차지하고 싶은 경우
+- flex 를 사용한다 (block)
 
 
 
