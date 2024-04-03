@@ -92,7 +92,7 @@ ex)
  * I : It
  * S : Simple
  * S : Stupid
- * 
+ *
  * 리액트의 상태를 만들때 연관된것들 끼리 묶어서 처리하면 에러 방지 및 코드 간결화
 */
 ex)
@@ -145,10 +145,12 @@ function FlatState() {
     fetch(url)
       .then(() => {
         // fetch 성공
+        setPromiseState(PROMISE_STATE.LOADING);
         setPromiseState(PROMISE_STATE.FINISH);
       })
       .catch(() => {
         // fetch 실패
+        setPromiseState(PROMISE_STATE.LOADING);
         setPromiseState(PROMISE_STATE.ERROR);
       })
   }
@@ -156,10 +158,72 @@ function FlatState() {
   if(promiseState === PROMISE_STATE.LOADING) return <LoadingComponent />
   if(promiseState === PROMISE_STATE.FINISH) return <FinishComponent />
   if(promiseState === PROMISE_STATE.ERROR) return <ErrorComponent />
-  }
 }
 
 
+
+/**
+ * 연관된 상태는 객체로 묶어내자
+ * 동일한 코드가 반복될 때 그 반복을 멈출 수 있는 지 생각을 한번 해보자
+ */
+
+/* Before */
+function ObjectState () {
+  const [isLoading, setIsLoading] = useState(false)
+  const [isFinish, setIsFinish] = useState(false)
+  const [isError, setIsError] = useState(false)
+
+  const fetchData = () => {
+    setIsLoading(true)
+
+    fetch(url)
+      .then(() => {
+        setIsLoading(false)
+        setIsFinish(true)
+      })
+      .catch(() => {
+        setIsLoading(false)
+        setIsError(true)
+      })
+  }
+  if(isLoading === true) return <LoadingComponent />
+  if(isFinish === true) return <FinishComponent />
+  if(isError === true) return <ErrorComponent />
+}
+
+/* After */
+function ObjectState () {
+  const [fetchState, setFetchState] = useState({
+    isLoading: false,
+    isFinish: false,
+    isError: false,
+  })
+
+  const fetchData () => {
+    /* fetch 시도 */
+    setFetchState((prevState) => {
+      ...prevState,
+      isLoading: true,
+    })
+    fetch(url)
+      .then(() => {
+        setFetchState((prevState) => {
+          ...prevState,
+          isLoading: false,
+          isFinish: true,
+        })
+      })
+      .catch(() => {
+        setFetchState((prevState) => {
+          ...prevState,
+          isError: true,
+        })
+      })
+  }
+  if(fetchState.isLoading) return <LoadingComponent />
+  if(fetchState.isFinish) return <FinishComponent />
+  if(fetchState.isError) return <ErrorComponent />
+}
 
 
 ```
