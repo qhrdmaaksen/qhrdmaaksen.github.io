@@ -220,10 +220,209 @@ function ObjectState () {
         })
       })
   }
-  if(fetchState.isLoading) return <LoadingComponent />
+  if(fetchState.isLoading) {
+    return <LoadingComponent />
+  }
   if(fetchState.isFinish) return <FinishComponent />
   if(fetchState.isError) return <ErrorComponent />
 }
+
+
+/**
+ * useState 를 useReducer 로 리팩터링
+ * 구조화된 상태를 원한다면 useReducer 를 사용하자
+ * */
+
+const INIT_STATE = {
+  isLoading: false,
+  isSuccess: false,
+  isFail: false,
+}
+
+const ACTION_TYPE = {
+  FETCH_LOADING: 'FETCH_LOADING',
+  FETCH_SUCCESS: 'FETCH_SUCCESS',
+  FETCH_FAIL: 'FETCH_FAIL'
+}
+
+const reducer = (state, action) => {
+  switch (action.type {
+    case "FETCH_LOADING":
+      return {...state, isLoading: true, isSuccess: false, isFail: false}
+    case "FETCH_SUCCESS":
+      return {...state, isLoading: false, isSuccess: true, isFail: false}
+    case "FETCH_FAIL":
+      return {...state, isLoading: false, isSuccess: false, isFail: true}
+
+    default:
+      return INIT_STATE;
+  }
+}
+
+function stateToReducer () {
+  const [state, dispatch] = useReducer(reducer, INIT_STATE)
+
+  const fetchData () => {
+    dispatch({ type: ACTION_TYPE.FETCH_LOADING})
+
+    fetch(url)
+      .then(() => {
+        dispatch({ type: ACTION_TYPE.FETCH_SUCCESS})
+      })
+      .catch(() => {
+        dispatch({ type: ACTION_TYPE.FETCH_FAIL})
+      })
+  }
+
+  if(state.isLoading) return <LoadingComponent />
+  if(state.isSuccess) return <SuccessComponent />
+  if(state.isFail) return <FailComponent />
+}
+
+
+/**
+ * 상태로직 Custom Hooks 로 뽑아내기
+ * Custom Hooks 을 사용하면 코드를 확장성 있고 재사용 가능하게 작성할 수 있다.
+ */
+
+/* Before */
+const INIT_STATE = {
+  isLoading: false,
+  isSuccess: false,
+  isFail: false,
+}
+
+const ACTION_TYPE = {
+  FETCH_LOADING: 'FETCH_LOADING',
+  FETCH_SUCCESS: 'FETCH_SUCCESS',
+  FETCH_FAIL: 'FETCH_FAIL'
+}
+
+const reducer = (state, action) => {
+  switch (action.type {
+    case "FETCH_LOADING":
+      return {...state, isLoading: true, isSuccess: false, isFail: false}
+    case "FETCH_SUCCESS":
+      return {...state, isLoading: false, isSuccess: true, isFail: false}
+    case "FETCH_FAIL":
+      return {...state, isLoading: false, isSuccess: false, isFail: true}
+
+    default:
+      return INIT_STATE;
+  }
+}
+
+function stateToReducer () {
+  const [state, dispatch] = useReducer(reducer, INIT_STATE)
+
+  const fetchData () => {
+    dispatch({ type: ACTION_TYPE.FETCH_LOADING})
+
+    fetch(url)
+      .then(() => {
+        dispatch({ type: ACTION_TYPE.FETCH_SUCCESS})
+      })
+      .catch(() => {
+        dispatch({ type: ACTION_TYPE.FETCH_FAIL})
+      })
+  }
+
+  if(state.isLoading) return <LoadingComponent />
+  if(state.isSuccess) return <SuccessComponent />
+  if(state.isFail) return <FailComponent />
+}
+
+
+/* After */
+const INIT_STATE = {
+  isLoading: false,
+  isSuccess: false,
+  isFail: false,
+}
+
+const ACTION_TYPE = {
+  FETCH_LOADING: 'FETCH_LOADING',
+  FETCH_SUCCESS: 'FETCH_SUCCESS',
+  FETCH_FAIL: 'FETCH_FAIL'
+}
+
+const reducer = (state, action) => {
+  switch (action.type {
+    case "FETCH_LOADING":
+      return {...state, isLoading: true, isSuccess: false, isFail: false}
+    case "FETCH_SUCCESS":
+      return {...state, isLoading: false, isSuccess: true, isFail: false}
+    case "FETCH_FAIL":
+      return {...state, isLoading: false, isSuccess: false, isFail: true}
+
+    default:
+      return INIT_STATE;
+  }
+}
+
+const useFetchData = (url) => {
+  const [state, dispatch] = useReducer(reducer, INIT_STATE)
+
+  useEffect (() => {
+    const fetchData = async () => {
+    dispatch({ type: ACTION_TYPE.FETCH_LOADING})
+
+    await fetch(url)
+      .then(() => {
+        dispatch({ type: ACTION_TYPE.FETCH_SUCCESS})
+      })
+      .catch(() => {
+        dispatch({ type: ACTION_TYPE.FETCH_FAIL})
+      })
+  }
+    fetchData()
+  }, [url])
+  return state
+}
+
+
+function CustomHooks () {
+  const {isLoading, isFail, isSuccess} = useFetchData('url')
+}
+
+if(isLoading) return <LoadingComponent />
+if(isFail) return <FailComponent />
+if(isSuccess) return <SuccessComponent />
+
+
+/**
+ * 이전 상태 활용하기
+ * update function 을 사용해서 prev state 를 고려한다면 예상치못한 
+ * 결과를 예방할 수 있다
+ *  */
+
+ex)
+/* before */
+setAge(age+ 1);
+/* after */
+setAge((prevAge) => prevAge + 1);
+/* before */
+function PrevState () {
+  const [age, setAge] = useState(42)
+
+  function updateState() {
+    setAge(age + 1 );// setAge(42=>43)
+    setAge(age + 1 );// setAge(42=>43)
+    setAge(age + 1 );// setAge(42=>43)
+  }
+}
+/* after */
+function PrevState () {
+  const [age, setAge] = useState(42)
+
+  function updateState() {
+    setAge((prevAge) => prevAge +1);// setAge(42=>43)
+    setAge((prevAge) => prevAge +1);// setAge(43=>44)
+    setAge((prevAge) => prevAge +1);// setAge(44=>45)
+  }
+}
+
+
 
 
 ```
