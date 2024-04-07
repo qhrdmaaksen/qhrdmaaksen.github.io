@@ -1,4 +1,4 @@
----
+a---
 layout: post
 title: "클린코드 리액트"
 ---
@@ -392,8 +392,11 @@ if(isSuccess) return <SuccessComponent />
 
 /**
  * 이전 상태 활용하기
- * update function 을 사용해서 prev state 를 고려한다면 예상치못한 
+ * -update function 을 사용해서 prev state 를 고려한다면 예상치못한 
  * 결과를 예방할 수 있다
+ * -이전 state 를 꺼내서 사용하는 방식으로 바꿔줘야 랜더링이나 
+ * 특히 인풋을 핸들링하는 경우 불필요한 에러를 내지 않을 수 있다
+ * -이전 상태를 완전히 덮어 씌우고 싶은 경우 값을 일방적으로 할당하는 경우를 생각할 수 있다.
  *  */
 
 ex)
@@ -423,6 +426,134 @@ function PrevState () {
 }
 
 
+/**
+ * 불필요한 props 복사를하지 말자 (데이터의 흐름을 끊는것이기 때문)
+ * -컴포넌트에 들어오기전에 값 비싸고 무거운 연산들은 끝내는게 좋다 (연산된 값을 props 로 넘기기)
+ * -비싸지 않은 경우 컴포넌트 내부의 변수로도 간단히 사용 가능
+ * -props 로 내려오는 값을 조작하는 행위로 조작을 무겁게 하는경우 useMemo 를 사용하자 (연산 최적화)
+ * -props 바로 사용하기
+ */
 
+/* before */
+function CopyProps ({value}) {
+  const [copyValue] = useState(value)
+  return <div>{copyValue}</div>
+}
+
+/* after */
+function CopyProps ({value}) {
+  return <div>{value}</div>>
+}
+
+/* before */
+function CopyProps ({value}) {
+  const copyValue = 값_비싸고_무거운_연산(value)
+  return <div>{copyValue}</div>
+}
+/* after */
+function CopyProps ({value}) {
+  const copyValue = useMemo(() => 값_비싸고_무거운_연산(value), [value])
+  return <div>{copyValue}</div>
+}
+
+
+/**
+ * 중괄호
+ * - jsx 에서 중괄호의 필요사항
+ * 1.논리적인 변수나 숫자
+ * 2.boolean, object 에 해당되는 배열이나 함수, 표현식을 표현할수있는 창구
+ * - string 일땐 curly braces 사용하지 말자
+ * - 이중 줄괄호 안에는 일반적으로 in-line 객체를 넣었다고 생각하자
+ * - 전혀 신경쓰고 싶지 않다면 eslint or prettier 로 설정해놓자
+ */
+ex code
+function CurlyBraces() {
+  const style = {
+    backgroundColor: 'blue',
+    width: 1000,
+  }
+  return (
+    <header
+      className='clean-header'
+      id="clean-code"
+
+      style={style}
+      style={{
+        backgroundColor: 'blue',
+        width: 1000,
+      }}
+
+      value={1}
+      value={true}
+      value={[]}
+      value={() => {}}
+      value={1 + 2}
+      value={isLogin && hasCookie}
+    >
+    </header>
+  )
+}
+
+
+/**
+ * props 축약 (shorthand props)
+ */
+
+/* before */
+function component (props) {
+  <HeaderComponent hasPadding={props.hasPadding}>
+    <ChildComponent isDarkMode={props.isDarkMode} isLogin={props.isLogin} />
+  </HeaderComponent>
+}
+/* after */
+function component ({hasPadding, ...props}) {
+  <HeaderComponent hasPadding={hasPadding}>
+    <ChildComponent {...props} />
+  </HeaderComponent>
+}
+
+/* before */
+function ShorthandProps (props) {
+  return (
+    <header
+      className="clean-header"
+      title="CleanCodeReact"
+      isDarkMode={true}
+      isLogin={true}
+      hasPadding={true}
+      isFixed={true}
+      isAdmin={true}
+    >
+      <ChildComponent name={props.name} />
+    </header>
+  )
+}
+/* after */
+function ShorthandProps ({hasPadding,isAdmin, ...props}) {
+  return (
+    <header
+      className="clean-header"
+      title="CleanCodeReact"
+      hasPadding={hasPadding}
+      isAdmin={isAdmin}
+      isDarkMode
+      isLogin
+      isFixed
+    >
+      <ChildComponent {...props}} />
+    </header>
+  )
+}
+
+
+/**
+ * singleQuote vs doubleQuote
+ */
+{/* O */}
+  <a href="www.google.com">Google</a
+{/* X */}
+  <input class='classExCode' type="button" value='CleanCodeReact'/>
+{/* X */}
+  <Clean style={{ backgroundPosition: "left"}} />
 
 ```
