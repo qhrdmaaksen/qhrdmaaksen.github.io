@@ -548,12 +548,161 @@ function ShorthandProps ({hasPadding,isAdmin, ...props}) {
 
 /**
  * singleQuote vs doubleQuote
+ * 1. 팀에서 일반적인 규칙 => 일관성을 지키기 위함
+ * 2. HTML? JavaScript? 에서 사용 
+ * 3. prettier Or eslint 로 규칙 정해 사용하면 신경 쓸 필요 없다.
+ * 4. 일반 HTML 속성은 일반적으로 작은 따옴표 대신 큰 따옴표를 사용
+ * 하기에 따라서 JSX 속성은 이 규칙을 사용
+ * 5. JSX 속성에는 항상 큰 따옴표를 사용하고 다른 모든 JS 에는 작은 따옴표를 사용
  */
-{/* O */}
-  <a href="www.google.com">Google</a
-{/* X */}
+{/* O - html은 보통 더블 쿼터를 많이사용한다.*/}
+  <a href="www.google.com">Google</a>
+{/* X - 일관성이지 않기에 헷갈릴 수 있다.*/}
   <input class='classExCode' type="button" value='CleanCodeReact'/>
-{/* X */}
+{/* X - 자바스크립트 표현식으로는 싱글쿼터 사용*/}
   <Clean style={{ backgroundPosition: "left"}} />
+
+
+
+/* PROPS 네이밍 */
+/**
+ * 1. react 에서 컴포넌트는 pascal case 로 시작함(대문자로 시작하며 워딩이 바뀔때마다 대문자)
+ * 2. camel case 사용하기
+ * 3. 무조건 true 라면 isShow={true}가 아닌 isShow 로 축약
+ * 4. 컴포넌트라면 대문자로 시작하기
+*/
+ex code)
+/* before */
+<ChildComponent
+  class="mt-0"
+  Clean="code"
+  clean_code="react"
+  otherComponent={OtherComponent}
+  isShow={true}
+/>
+/* after */
+<ChildComponent
+  className="mt-0"
+  clean="code"
+  cleanCode="react"
+  OtherComponent={OtherComponent}
+  isShow
+/>
+function ChildComponent ({clean, cleanCode, OtherComponent}) {
+}
+
+
+
+/* 인라인 스타일 주의 */
+/* JSX 에서 인라인 스타일을 사용하려면 중괄호 안에 camelCase key 를 가진 객체를 넣어야 한다. */
+/* before */
+function inlineStyle () {
+  return (
+    <button style="background-color: 'red'; font-size: '14px';">
+      clean code
+    </button>
+  )
+}
+/* after01 */
+const myStyle = {backgroundColor: 'red', fontSize: '14px'}
+function inlineStyle () {
+  return (
+    <button style={myStyle}>
+      clean code
+    </button>
+  )
+}
+/* after02 */
+const myButtonStyle = {
+  redButton: {backgroundColor: 'red', fontSize: '14px'},
+  blueButton: {backgroundColor: 'blue', fontSize: '14px'},
+}
+function inlineStyle () {
+  return (
+    <>
+      <button style={myButtonStyle.redButton}>
+        redButton Click
+      </button>
+      <button style={myButtonStyle.blueButton}>
+        blueButton Click
+      </button>
+    </>
+  )
+}
+
+
+
+/**
+ *  CSS in JS 인라인 스타일을 지양하자 
+ *  
+ * 성능에 민감하다.
+ * 장점
+ *  1. 외부로 분리했기 때문에 이제 스타일 렌더링 될때마다 직렬화되지 않는다 => 한번만 된다.
+ *  2. 동적인 스타일을 실수로 건드는 확률이 적어진다.
+ *  3. 스타일 관련 코드를 분리해서 로직에 집중하고 JSX 를 볼 때 조금 더 간결하게 볼 수 있다.
+ *  4. 타입 안정성
+ * */
+/* before01 */
+export function Card ({ title, children}) {
+  return (
+    <div
+      css={css`
+        backgroundColor: 'white',
+        border: '1px solid #111',
+        borderRadius: '0.5rem',
+        padding: '1rem',
+      `}
+    >
+      <h5 
+        css={css`
+          fontSize: '1.25rem',
+        `}
+      >
+        {title}
+      </h5>
+      {children}
+    </div>
+  )
+}
+/* before02 */
+export function Card ({ title, children}) {
+  return (
+    <div css={css({
+      backgroundColor: 'white',
+    border: '1px solid #111',
+    borderRadius: '0.5rem',
+    padding: '1rem',
+  })}>
+      <h5 css={cardCss.title}>
+        {title}
+      </h5>
+      {children}
+    </div>
+  )
+}
+/* after */
+import { css } from '@emotion/react';
+
+const cardCss = {
+  self: css({
+    backgroundColor: 'white',
+    border: '1px solid #111',
+    borderRadius: '0.5rem',
+    padding: '1rem',
+  }),
+  title: css({
+    fontSize: '1.25rem',
+  })
+}
+export function Card ({ title, children}) {
+  return (
+    <div css={cardCss.self}>
+      <h5 css={cardCss.title}>
+        {title}
+      </h5>
+      {children}
+    </div>
+  )
+}
 
 ```
