@@ -1251,6 +1251,50 @@ useEffect(() => {
 * one depth 로 표현하거나 base 규칙을 따르거나 하자*/
 
 
-/*SPA 에서의 새로 고침*/
+/*SPA 에서의 새로 고침
+* window.location.reload()
+* 성능저하, 상태 손실, 불필요한 서버 요청등의문제가 발생할 수 있다.*/
+/*excode*/
+export default function login(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+  const handleLogin = async () => {
+    try {
+      if (isSuccess === true) {
+        setIsLoggedIn(true);
+        // spa 입장에선 앱을 완전히 종료하고 다시 실행하는 행위
+        window.location.reload()
+      }
+    } catch(error) {
+        alert('로그인 실패')
+    }
+  }
+}
+
+
+/*Primitive UI
+* 도메인 네임보다는 Semantic 한 primitive ui 를 묘사한다
+* */
+/*before*/
+<TodoList />
+<TodoItem />
+/*after*/
+<List />
+<Item />
+
+/*excode*/
+// Button 컴포넌트 생성 시 semantic 준수하기 위해 html 확장 프롭스를 사용하는 방식을 생각해보자
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+  // 추가적인 프롭스
+}
+const Button = (props: ButtonProps) => {
+  return (
+    <button {...props}>
+      {children}
+    </button>
+  )
+}
+<Button type="text">Button</Button>  
+}
 
 ```
